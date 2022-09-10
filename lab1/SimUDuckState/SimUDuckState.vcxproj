@@ -17,7 +17,42 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Behavior\Dance\DanceMinuet.h" />
+    <ClInclude Include="Behavior\Dance\DanceNoWay.h" />
+    <ClInclude Include="Behavior\Dance\DanceWaltz.h" />
+    <ClInclude Include="Behavior\Dance\IDanceBehavior.h" />
+    <ClInclude Include="Behavior\Fly\FlyNoWay.h" />
+    <ClInclude Include="Behavior\Fly\FlyWithRocketPower.h" />
+    <ClInclude Include="Behavior\Fly\FlyWithWings.h" />
+    <ClInclude Include="Behavior\Fly\IFlyBehavior.h" />
+    <ClInclude Include="Behavior\Quack\CommonQuack.h" />
+    <ClInclude Include="Behavior\Quack\IQuackBehavior.h" />
+    <ClInclude Include="Behavior\Quack\MuteQuack.h" />
+    <ClInclude Include="Behavior\Quack\Squeak.h" />
+    <ClInclude Include="DecoyDuck.h" />
+    <ClInclude Include="Duck.h" />
+    <ClInclude Include="MallardDuck.h" />
+    <ClInclude Include="RedHeadDuck.h" />
+    <ClInclude Include="RubberDuck.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Behavior\Dance\DanceMinuet.cpp" />
+    <ClCompile Include="Behavior\Dance\DanceNoWay.cpp" />
+    <ClCompile Include="Behavior\Dance\DanceWaltz.cpp" />
+    <ClCompile Include="Behavior\Fly\FlyNoWay.cpp" />
+    <ClCompile Include="Behavior\Fly\FlyWithRocketPower.cpp" />
+    <ClCompile Include="Behavior\Fly\FlyWithWings.cpp" />
+    <ClCompile Include="Behavior\Quack\CommonQuack.cpp" />
+    <ClCompile Include="Behavior\Quack\MuteQuack.cpp" />
+    <ClCompile Include="Behavior\Quack\Squeak.cpp" />
+    <ClCompile Include="DecoyDuck.cpp" />
+    <ClCompile Include="Duck.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MallardDuck.cpp" />
+    <ClCompile Include="RedHeadDuck.cpp" />
+    <ClCompile Include="RubberDuck.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -53,27 +88,24 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared" >
+  <ImportGroup Label="Shared">
   </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -130,8 +162,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-
-  <ItemGroup></ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
