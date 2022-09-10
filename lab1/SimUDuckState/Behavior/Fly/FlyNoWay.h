@@ -3,5 +3,5 @@
 class FlyNoWay : public IFlyBehavior
 {
 public:
-	void Fly() override;
+	bool Fly();
 };

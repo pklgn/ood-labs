@@ -2,5 +2,6 @@
 
 class DanceMinuet : public IDanceBehavior
 {
-	void Dance() override;
+public:
+	void Dance();
 };

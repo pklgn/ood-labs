@@ -1,6 +1,6 @@
 #include "IDanceBehavior.h"
 
-class DanceWaltz : public IDanceBehavior
+class DanceNoWay : public IDanceBehavior
 {
 public:
 	void Dance();

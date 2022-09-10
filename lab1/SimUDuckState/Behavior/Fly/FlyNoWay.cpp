@@ -1,7 +1,9 @@
 #include <iostream>
 #include "FlyNoWay.h"
 
-void FlyNoWay::Fly()
+bool FlyNoWay::Fly()
 {
 	std::cout << "Flying no way!\n";
+
+	return false;
 }

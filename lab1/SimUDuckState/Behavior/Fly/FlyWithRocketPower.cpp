@@ -1,7 +1,9 @@
 #include <iostream>
 #include "FlyWithRocketPower.h"
 
-void FlyWithRocketPower::Fly()
+bool FlyWithRocketPower::Fly()
 {
 	std::cout << "Flying with rocket power!\n";
+
+	return true;
 }
