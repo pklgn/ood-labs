@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimUDuckFunctional", "SimUD
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimUDuckStateCount", "SimUDuckStateCount\SimUDuckStateCount.vcxproj", "{7AD9754E-7F4E-4CED-A7E6-63E2D535F3A0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimUDuckFunctionalCount", "SimUDuckFunctionalCount\SimUDuckFunctionalCount.vcxproj", "{0EC34295-CEC8-4300-957B-FD18940FA4C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{7AD9754E-7F4E-4CED-A7E6-63E2D535F3A0}.Release|x64.Build.0 = Release|x64
 		{7AD9754E-7F4E-4CED-A7E6-63E2D535F3A0}.Release|x86.ActiveCfg = Release|Win32
 		{7AD9754E-7F4E-4CED-A7E6-63E2D535F3A0}.Release|x86.Build.0 = Release|Win32
+		{0EC34295-CEC8-4300-957B-FD18940FA4C1}.Debug|x64.ActiveCfg = Debug|x64
+		{0EC34295-CEC8-4300-957B-FD18940FA4C1}.Debug|x64.Build.0 = Debug|x64
+		{0EC34295-CEC8-4300-957B-FD18940FA4C1}.Debug|x86.ActiveCfg = Debug|Win32
+		{0EC34295-CEC8-4300-957B-FD18940FA4C1}.Debug|x86.Build.0 = Debug|Win32
+		{0EC34295-CEC8-4300-957B-FD18940FA4C1}.Release|x64.ActiveCfg = Release|x64
+		{0EC34295-CEC8-4300-957B-FD18940FA4C1}.Release|x64.Build.0 = Release|x64
+		{0EC34295-CEC8-4300-957B-FD18940FA4C1}.Release|x86.ActiveCfg = Release|Win32
+		{0EC34295-CEC8-4300-957B-FD18940FA4C1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
