@@ -9,6 +9,8 @@ using count_type = size_t;
 class Duck
 {
 public:
+	using count_type = size_t;
+
 	void PerformFly();
 	void PerformQuack() const;
 	void PerformDance() const;

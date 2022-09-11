@@ -19,7 +19,7 @@ void Duck::PerformDance() const
 	m_danceBehavior->Dance();
 }
 
-count_type Duck::GetFlightsCount() const
+Duck::count_type Duck::GetFlightsCount() const
 {
 	return m_flightsCount;
 }
