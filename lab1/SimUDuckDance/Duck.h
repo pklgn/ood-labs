@@ -4,11 +4,11 @@
 #include "Behavior/Quack/IQuackBehavior.h"
 #include "Behavior/Dance/IDanceBehavior.h"
 
-using count_type = size_t;
-
 class Duck
 {
 public:
+	virtual ~Duck() = default;
+
 	void PerformFly();
 	void PerformQuack() const;
 	void PerformDance() const;
@@ -18,6 +18,7 @@ public:
 	void SetFlyBehavior(IFlyBehavior*);
 	void SetQuackBehavior(IQuackBehavior*);
 	void SetDanceBehavior(IDanceBehavior*);
+
 protected:
 	Duck() = default;
 

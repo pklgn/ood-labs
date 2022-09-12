@@ -3,5 +3,5 @@
 class FlyWithWings : public IFlyBehavior
 {
 public:
-	bool Fly();
+	bool Fly() override;
 };

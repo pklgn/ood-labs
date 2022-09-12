@@ -8,6 +8,8 @@
 class Duck
 {
 public:
+	virtual ~Duck() = default;
+
 	void PerformFly();
 	void PerformQuack() const;
 	void PerformDance() const;
@@ -17,8 +19,6 @@ public:
 	void SetFlyBehavior(std::function<void()>&);
 	void SetQuackBehavior(std::function<void()>&);
 	void SetDanceBehavior(std::function<void()>&);
-
-	virtual ~Duck() = default;
 
 protected:
 	std::function<void()> m_flyBehavior;

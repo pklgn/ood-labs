@@ -3,5 +3,5 @@
 class DanceNoWay : public IDanceBehavior
 {
 public:
-	void Dance();
+	void Dance() override;
 };

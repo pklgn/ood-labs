@@ -9,7 +9,8 @@ public:
 	count_type GetFlightsCount();
 
 protected:
+	count_type m_flightsCount = 0;
+
 	virtual void CountFlight() = 0;
 	void PrintFlightsCount();
-	count_type m_flightsCount = 0;
 };

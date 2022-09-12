@@ -1,8 +1,7 @@
 #pragma once
 
-class IQuackBehavior
+struct IQuackBehavior
 {
-public:
 	virtual void Quack() = 0;
 	virtual ~IQuackBehavior() = default;
 };

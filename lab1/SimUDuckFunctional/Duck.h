@@ -10,6 +10,8 @@ class Duck
 public:
 	using count_type = size_t;
 
+	virtual ~Duck() = default;
+
 	void PerformFly();
 	void PerformQuack() const;
 	void PerformDance() const;
