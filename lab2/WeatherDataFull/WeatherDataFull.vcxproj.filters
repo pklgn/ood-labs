@@ -27,6 +27,12 @@
     <ClInclude Include="WeatherData\Displays\Display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WeatherData\Displays\StatisticsDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WeatherData\Displays\StatisticsDisplayComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -36,6 +42,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WeatherData\Displays\Display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WeatherData\Displays\StatisticsDisplay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WeatherData\Displays\StatisticsDisplayComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

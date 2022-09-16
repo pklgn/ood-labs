@@ -1,10 +1,9 @@
 #pragma once
 
 #include "../WeatherData.h"
-#include "../../Dependents/Dependents.hpp"
+#include "StatisticsDisplayComponent.h"
 
-class Display : public IObserver<SWeatherInfo>
-
+class StatisticsDisplay : public IObserver<SWeatherInfo>
 {
 private:
 	/* ћетод Update сделан приватным, чтобы ограничить возможность его вызова напр€мую
@@ -12,4 +11,8 @@ private:
 	остаетс€ публичным
 	*/
 	void Update(SWeatherInfo const& data) override;
+
+	StatisticsDisplayComponent m_temprature;
+	StatisticsDisplayComponent m_humidity;
+	StatisticsDisplayComponent m_pressure;
 };

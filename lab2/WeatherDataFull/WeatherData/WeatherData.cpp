@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "WeatherData.h"
 
 double WeatherData::GetTemperature() const

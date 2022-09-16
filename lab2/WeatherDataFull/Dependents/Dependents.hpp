@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <set>
+#include "../pch.h"
 
 /*
 Шаблонный интерфейс IObserver. Его должен реализовывать класс, 

@@ -142,6 +142,8 @@
     <ClInclude Include="Dependents\Dependents.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="WeatherData\Displays\Display.h" />
+    <ClInclude Include="WeatherData\Displays\StatisticsDisplay.h" />
+    <ClInclude Include="WeatherData\Displays\StatisticsDisplayComponent.h" />
     <ClInclude Include="WeatherData\WeatherData.h" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +154,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="WeatherData\Displays\Display.cpp" />
+    <ClCompile Include="WeatherData\Displays\StatisticsDisplay.cpp" />
+    <ClCompile Include="WeatherData\Displays\StatisticsDisplayComponent.cpp" />
     <ClCompile Include="WeatherData\WeatherData.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
