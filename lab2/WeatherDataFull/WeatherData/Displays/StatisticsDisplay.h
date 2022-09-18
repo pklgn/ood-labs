@@ -5,6 +5,9 @@
 
 class StatisticsDisplay : public IObserver<SWeatherInfo>
 {
+public:
+	StatisticsDisplay(std::ostream&);
+
 private:
 	/* Метод Update сделан приватным, чтобы ограничить возможность его вызова напрямую
 	Классу Observable он будет доступен все равно, т.к. в интерфейсе IObserver он

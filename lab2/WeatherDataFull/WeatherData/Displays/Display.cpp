@@ -1,10 +1,15 @@
 #include "../../pch.h"
 #include "Display.h"
 
+Display::Display(std::ostream& output)
+	: m_output(output)
+{
+}
+
 void Display::Update(SWeatherInfo const& data)
 {
-	std::cout << "Current Temprature:\t" << data.temperature << std::endl;
-	std::cout << "Current Humidity:\t" << data.humidity << std::endl;
-	std::cout << "Current Pressure:\t" << data.pressure << std::endl;
-	std::cout << "-----------------" << std::endl;
+	m_output << "Current Temprature: " << data.temperature << std::endl;
+	m_output << "Current Humidity: " << data.humidity << std::endl;
+	m_output << "Current Pressure: " << data.pressure << std::endl;
+	m_output << "------------------" << std::endl;
 }

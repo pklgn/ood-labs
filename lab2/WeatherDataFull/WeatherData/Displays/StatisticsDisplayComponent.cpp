@@ -1,6 +1,8 @@
 #include "StatisticsDisplayComponent.h"
 
-StatisticsDisplayComponent::StatisticsDisplayComponent(std::string& name): m_componentName(name)
+StatisticsDisplayComponent::StatisticsDisplayComponent(const ComponentType& type, std::ostream& output)
+	: m_componentType(type)
+	, m_output(output)
 {
 }
 
@@ -18,8 +20,26 @@ void StatisticsDisplayComponent::Update(double value)
 	m_acc += value;
 	++m_countAcc;
 
-	std::cout << "Max " << m_componentName << " " << m_max << std::endl;
-	std::cout << "Min " << m_componentName << " " << m_min << std::endl;
-	std::cout << "Average " << (m_countAcc > 0 ? m_acc / m_countAcc : 0) << std::endl;
-	std::cout << "----------------" << std::endl;
+	m_output << std::setprecision(2) << std::fixed;
+	m_output << ComponentTypeToString() << ":" << std::endl;
+	m_output << "Max " << m_max << std::endl;
+	m_output << "Min " << m_min << std::endl;
+	m_output << "Avg " << (m_countAcc > 0 ? m_acc / m_countAcc : 0) << std::endl;
+	m_output << "----------------" << std::endl;
+	m_output << std::setprecision(-1) << std::defaultfloat;
+}
+
+std::string StatisticsDisplayComponent::ComponentTypeToString()
+{
+	switch (m_componentType)
+	{
+	case ComponentType::TEMPRATURE:
+		return "TEMPRATURE";
+	case ComponentType::HUMIDITY:
+		return "HUMIDITY";
+	case ComponentType::PRESSURE:
+		return "PRESSURE";
+	default:
+		return "";
+	}
 }
