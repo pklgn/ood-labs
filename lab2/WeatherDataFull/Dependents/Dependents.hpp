@@ -2,6 +2,9 @@
 
 #include "../pch.h"
 
+template <class T>
+class Observable;
+
 /*
 Шаблонный интерфейс IObserver. Его должен реализовывать класс, 
 желающий получать уведомления от соответствующего IObservable
@@ -14,6 +17,41 @@ class IObserver
 public:
 	virtual ~IObserver() = default;
 	virtual void Update(T const& data) = 0;
+
+	virtual void RegisterObservable(Observable<T>& observable) = 0;
+	virtual void RemoveObservable(Observable<T>& observable) = 0;
+};
+
+template <class T>
+class Observer : public IObserver<T>
+{
+public:
+	using ObservableType = Observable<T>;
+
+	~Observer()
+	{
+		for_each(m_observables.begin(), m_observables.end(), [&](auto& observable) { observable->RemoveObserver(*this); });
+	}
+
+	void RegisterObservable(ObservableType& observable) override
+	{
+		if (observable.CheckRegistration(*this))
+		{
+			m_observables.insert(&observable);
+		}
+	}
+
+	void RemoveObservable(ObservableType& observable) override
+	{
+		auto search = m_observables.find(&observable);
+		if (!observable.CheckRegistration(*this) && search != m_observables.end())
+		{
+			m_observables.erase(search);
+		}
+	}
+
+private:
+	std::set<ObservableType*> m_observables;
 };
 
 /*
@@ -25,8 +63,8 @@ class IObservable
 {
 public:
 	virtual ~IObservable() = default;
-	virtual void RegisterObserver(IObserver<T>& observer) = 0;
-	virtual void RemoveObserver(IObserver<T>& observer) = 0;
+	virtual void RegisterObserver(Observer<T>& observer) = 0;
+	virtual void RemoveObserver(Observer<T>& observer) = 0;
 	virtual void NotifyObservers() = 0;
 };
 
@@ -35,16 +73,23 @@ template <class T>
 class Observable : public IObservable<T>
 {
 public:
-	using ObserverType = IObserver<T>;
+	using ObserverType = Observer<T>;
+
+	~Observable()
+	{
+		std::for_each(m_observers.begin(), m_observers.end(), [&](auto& observer) { RemoveObserver(*observer); });
+	}
 
 	void RegisterObserver(ObserverType& observer) override
 	{
 		m_observers.insert(&observer);
+		observer.RegisterObservable(*this);
 	}
 
 	void RemoveObserver(ObserverType& observer) override
 	{
 		m_observers.erase(&observer);
+		observer.RemoveObservable(*this);
 	}
 
 	void NotifyObservers() override
@@ -56,10 +101,15 @@ public:
 		}
 	}
 
+	bool CheckRegistration(ObserverType& observer)
+	{
+		return m_observers.find(&observer) != m_observers.end();
+	}
+
 protected:
 	// Классы-наследники должны перегрузить данный метод, 
 	// в котором возвращать информацию об изменениях в объекте
-	virtual T GetChangedData()const = 0;
+	virtual T GetChangedData() const = 0;
 
 private:
 	std::set<ObserverType*> m_observers;
