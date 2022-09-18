@@ -3,7 +3,7 @@
 #include "../WeatherData.h"
 #include "StatisticsDisplayComponent.h"
 
-class StatisticsDisplay : public IObserver<SWeatherInfo>
+class StatisticsDisplay : public Observer<SWeatherInfo>
 {
 public:
 	StatisticsDisplay(std::ostream&);

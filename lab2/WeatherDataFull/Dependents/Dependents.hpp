@@ -30,7 +30,13 @@ public:
 
 	~Observer()
 	{
-		for_each(m_observables.begin(), m_observables.end(), [&](auto& observable) { observable->RemoveObserver(*this); });
+		typename std::set<ObservableType*>::iterator iter = m_observables.begin();
+		while (iter != m_observables.end())
+		{
+			auto* observable = *iter;
+			++iter;
+			observable->RemoveObserver(*this);
+		}
 	}
 
 	void RegisterObservable(ObservableType& observable) override
@@ -77,7 +83,14 @@ public:
 
 	~Observable()
 	{
-		std::for_each(m_observers.begin(), m_observers.end(), [&](auto& observer) { RemoveObserver(*observer); });
+		//std::for_each(m_observers.begin(), m_observers.end(), [&](auto& observer) { RemoveObserver(*observer); });
+		typename std::set<ObserverType*>::iterator iter = m_observers.begin();
+		while (iter != m_observers.end())
+		{
+			auto* observer = *iter;
+			++iter;
+			RemoveObserver(*observer);
+		}
 	}
 
 	void RegisterObserver(ObserverType& observer) override
