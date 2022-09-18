@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "FlyWithWings.h"
 
 void FlyWithWings::Fly()
@@ -12,3 +12,5 @@ void FlyWithWings::CountFlight()
 {
 	++m_flightsCount;
 }
+
+// TODO: сделать подсчет в каждом поведении независимо 

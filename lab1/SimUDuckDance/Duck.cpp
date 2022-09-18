@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Duck.h"
 
 void Duck::PerformFly()
@@ -35,3 +35,5 @@ void Duck::SetDanceBehavior(IDanceBehavior* behavior)
 {
 	m_danceBehavior.reset(behavior);
 }
+
+// TODO: передавать unique_ptr

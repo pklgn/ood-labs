@@ -10,7 +10,7 @@ class Duck
 public:
 	virtual ~Duck() = default;
 
-	void PerformFly();
+	void PerformFly() const;
 	void PerformQuack() const;
 	void PerformDance() const;
 

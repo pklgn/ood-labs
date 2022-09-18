@@ -3,14 +3,14 @@
 
 std::function<void()> GetCommonQuackFunction()
 {
-	return [&]() {
+	return []() {
 		std::cout << "Quacking!\n";
 	};
 }
 
 std::function<void()> GetMuteQuackFunction()
 {
-	return [&]() {
+	return []() {
 		std::cout << "Mute quacking!\n";
 	};
 }

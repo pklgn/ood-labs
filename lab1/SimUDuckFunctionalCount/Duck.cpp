@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Duck.h"
 
-void Duck::PerformFly()
+void Duck::PerformFly() const
 {
 	m_flyBehavior();
 }
