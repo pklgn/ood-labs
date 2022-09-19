@@ -8,7 +8,7 @@ StatisticsDisplay::StatisticsDisplay(std::ostream& output)
 {
 }
 
-void StatisticsDisplay::Update(SWeatherInfo const& data, Observable<SWeatherInfo>& observable)
+void StatisticsDisplay::Update(SWeatherInfo const& data, IObservable<SWeatherInfo>& observable)
 {
 	m_temprature.Update(data.temperature);
 	m_humidity.Update(data.humidity);

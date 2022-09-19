@@ -2,7 +2,7 @@
 
 #include "../WeatherData.h"
 
-class Display : public IObserver<SWeatherInfo>
+class Display : public Observer<SWeatherInfo>
 {
 public:
 	Display(std::ostream&);
@@ -13,5 +13,5 @@ private:
 	Классу Observable он будет доступен все равно, т.к. в интерфейсе IObserver он
 	остается публичным
 	*/
-	void Update(SWeatherInfo const& data, Observable<SWeatherInfo>& observable) override;
+	void Update(SWeatherInfo const& data, IObservable<SWeatherInfo>& observable) override;
 };

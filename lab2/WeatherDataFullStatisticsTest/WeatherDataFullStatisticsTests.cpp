@@ -74,3 +74,21 @@ TEST_CASE("Check display and statistics display update simultaneously")
 	REQUIRE(output.str() == "Current Temprature: 5\nCurrent Humidity: 1\nCurrent Pressure: 763\n------------------\n");
 	output.str("");
 }
+
+TEST_CASE("Check desctructor")
+{
+	WeatherData wd;
+	std::ostringstream output;
+
+	{
+		Display display(output);
+		wd.RegisterObserver(display);
+		wd.SetMeasurements(3, 0.8, 761);
+		std::stringstream expextedOutput("Current Temprature: 3\nCurrent Humidity: 0.8\nCurrent Pressure: 761\n------------------\n");
+		REQUIRE(output.str() == expextedOutput.str());
+		output.str("");
+	}
+
+	wd.SetMeasurements(3, 0.8, 761);
+	REQUIRE_NOTHROW(wd.SetMeasurements(3, 0.8, 761));
+}

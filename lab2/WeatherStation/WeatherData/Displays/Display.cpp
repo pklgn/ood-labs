@@ -6,7 +6,7 @@ Display::Display(std::ostream& output)
 {
 }
 
-void Display::Update(SWeatherInfo const& data, Observable<SWeatherInfo>& observable)
+void Display::Update(SWeatherInfo const& data, IObservable<SWeatherInfo>& observable)
 {
 	m_output << "Current Temprature: " << data.temperature << std::endl;
 	m_output << "Current Humidity: " << data.humidity << std::endl;

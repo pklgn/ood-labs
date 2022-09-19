@@ -2,8 +2,8 @@
 
 #include "../pch.h"
 
-template <class T>
-class Observable;
+template <typename T>
+class IObservable;
 
 /*
 Шаблонный интерфейс IObserver. Его должен реализовывать класс, 
@@ -16,7 +16,48 @@ class IObserver
 {
 public:
 	virtual ~IObserver() = default;
-	virtual void Update(T const& data, Observable<T>& observable) = 0;
+	virtual void Update(T const& data, IObservable<T>& observable) = 0;
+
+	virtual void RegisterObservable(IObservable<T>& observable) = 0;
+	virtual void RemoveObservable(IObservable<T>& observable) = 0;
+};
+
+template <class T>
+class Observer : public IObserver<T>
+{
+public:
+	using ObservableType = IObservable<T>;
+
+	~Observer()
+	{
+		typename std::set<ObservableType*>::iterator iter = m_observables.begin();
+		while (iter != m_observables.end())
+		{
+			auto* observable = *iter;
+			++iter;
+			observable->RemoveObserver(*this);
+		}
+	}
+
+private:
+	void RegisterObservable(ObservableType& observable) override
+	{
+		if (observable.CheckRegistration(*this))
+		{
+			m_observables.insert(&observable);
+		}
+	}
+
+	void RemoveObservable(ObservableType& observable) override
+	{
+		auto search = m_observables.find(&observable);
+		if (!observable.CheckRegistration(*this) && search != m_observables.end())
+		{
+			m_observables.erase(search);
+		}
+	}
+
+	std::set<ObservableType*> m_observables;
 };
 
 /*
@@ -31,6 +72,7 @@ public:
 	virtual void RegisterObserver(IObserver<T>& observer) = 0;
 	virtual void RemoveObserver(IObserver<T>& observer) = 0;
 	virtual void NotifyObservers() = 0;
+	virtual bool CheckRegistration(IObserver<T>& observer) = 0;
 };
 
 // Реализация интерфейса IObservable
@@ -40,18 +82,27 @@ class Observable : public IObservable<T>
 public:
 	using ObserverType = IObserver<T>;
 
+	~Observable()
+	{
+		typename std::set<ObserverType*>::iterator iter = m_observers.begin();
+		while (iter != m_observers.end())
+		{
+			auto* observer = *iter;
+			++iter;
+			RemoveObserver(*observer);
+		}
+	}
+
 	void RegisterObserver(ObserverType& observer) override
 	{
 		m_observers.insert(&observer);
+		observer.RegisterObservable(*this);
 	}
 
 	void RemoveObserver(ObserverType& observer) override
 	{
-		auto search = m_observers.find(&observer);
-		if (search != m_observers.end())
-		{
-			m_observers.erase(search);
-		}
+		m_observers.erase(&observer);
+		observer.RemoveObservable(*this);
 	}
 
 	void NotifyObservers() override
@@ -71,7 +122,11 @@ public:
 				iter = m_observers.erase(iter);
 			}
 		}
-		//std::for_each(m_observers.begin(), m_observers.end(), [&](auto& observer) { observer->Update(data, *this); });
+	}
+	
+	bool CheckRegistration(ObserverType& observer)
+	{
+		return m_observers.find(&observer) != m_observers.end();
 	}
 
 protected:

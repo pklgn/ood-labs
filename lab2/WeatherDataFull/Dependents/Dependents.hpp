@@ -2,8 +2,8 @@
 
 #include "../pch.h"
 
-template <class T>
-class Observable;
+template <typename T>
+class IObservable;
 
 /*
 Шаблонный интерфейс IObserver. Его должен реализовывать класс, 
@@ -18,15 +18,15 @@ public:
 	virtual ~IObserver() = default;
 	virtual void Update(T const& data) = 0;
 
-	virtual void RegisterObservable(Observable<T>& observable) = 0;
-	virtual void RemoveObservable(Observable<T>& observable) = 0;
+	virtual void RegisterObservable(IObservable<T>& observable) = 0;
+	virtual void RemoveObservable(IObservable<T>& observable) = 0;
 };
 
 template <class T>
 class Observer : public IObserver<T>
 {
 public:
-	using ObservableType = Observable<T>;
+	using ObservableType = IObservable<T>;
 
 	~Observer()
 	{
@@ -39,6 +39,7 @@ public:
 		}
 	}
 
+private:
 	void RegisterObservable(ObservableType& observable) override
 	{
 		if (observable.CheckRegistration(*this))
@@ -56,7 +57,6 @@ public:
 		}
 	}
 
-private:
 	std::set<ObservableType*> m_observables;
 };
 
@@ -69,9 +69,10 @@ class IObservable
 {
 public:
 	virtual ~IObservable() = default;
-	virtual void RegisterObserver(Observer<T>& observer) = 0;
-	virtual void RemoveObserver(Observer<T>& observer) = 0;
+	virtual void RegisterObserver(IObserver<T>& observer) = 0;
+	virtual void RemoveObserver(IObserver<T>& observer) = 0;
 	virtual void NotifyObservers() = 0;
+	virtual bool CheckRegistration(IObserver<T>& observer) = 0;
 };
 
 // Реализация интерфейса IObservable
@@ -79,11 +80,10 @@ template <class T>
 class Observable : public IObservable<T>
 {
 public:
-	using ObserverType = Observer<T>;
+	using ObserverType = IObserver<T>;
 
 	~Observable()
 	{
-		//std::for_each(m_observers.begin(), m_observers.end(), [&](auto& observer) { RemoveObserver(*observer); });
 		typename std::set<ObserverType*>::iterator iter = m_observers.begin();
 		while (iter != m_observers.end())
 		{
