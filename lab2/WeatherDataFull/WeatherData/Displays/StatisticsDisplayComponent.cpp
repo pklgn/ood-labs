@@ -29,6 +29,8 @@ void StatisticsDisplayComponent::Update(double value)
 	m_output << std::setprecision(-1) << std::defaultfloat;
 }
 
+// TODO: отображение вынести в display
+
 std::string StatisticsDisplayComponent::ComponentTypeToString()
 {
 	switch (m_componentType)
