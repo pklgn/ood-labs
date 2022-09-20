@@ -42,19 +42,12 @@ public:
 private:
 	void RegisterObservable(ObservableType& observable) override
 	{
-		if (observable.CheckRegistration(*this))
-		{
-			m_observables.insert(&observable);
-		}
+		m_observables.insert(&observable);
 	}
 
 	void RemoveObservable(ObservableType& observable) override
 	{
-		auto search = m_observables.find(&observable);
-		if (!observable.CheckRegistration(*this) && search != m_observables.end())
-		{
-			m_observables.erase(search);
-		}
+		m_observables.erase(&observable);
 	}
 
 	std::set<ObservableType*> m_observables;
@@ -72,7 +65,6 @@ public:
 	virtual void RegisterObserver(IObserver<T>& observer) = 0;
 	virtual void RemoveObserver(IObserver<T>& observer) = 0;
 	virtual void NotifyObservers() = 0;
-	virtual bool CheckRegistration(IObserver<T>& observer) = 0;
 };
 
 // Реализация интерфейса IObservable
@@ -122,11 +114,6 @@ public:
 				iter = m_observers.erase(iter);
 			}
 		}
-	}
-	
-	bool CheckRegistration(ObserverType& observer)
-	{
-		return m_observers.find(&observer) != m_observers.end();
 	}
 
 protected:
