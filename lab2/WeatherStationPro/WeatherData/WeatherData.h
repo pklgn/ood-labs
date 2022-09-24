@@ -7,6 +7,13 @@ enum class Location
 {
 	INSIDE,
 	OUTSIDE,
+	UNKNOWN,
+};
+
+struct SWindInfo
+{
+	double speed = 0;
+	double angle = 0;
 };
 
 struct SWeatherInfo
@@ -14,10 +21,15 @@ struct SWeatherInfo
 	double temperature = 0;
 	double humidity = 0;
 	double pressure = 0;
-	Location location;
+	Location location = Location::UNKNOWN;
 };
 
-template <Location Location = Location::INSIDE>
+struct SWeatherWindInfo
+{
+	SWeatherInfo weatherInfo;
+	SWindInfo windInfo;
+};
+
 class WeatherData : public Observable<SWeatherInfo>
 {
 public:
@@ -34,9 +46,11 @@ public:
 
 	Location GetLocation() const;
 
+	SWindInfo GetWindInfo() const;
+
 	void MeasurementsChanged();
 
-	void SetMeasurements(double temp, double humidity, double pressure);
+	void SetMeasurements(SWeatherWindInfo&);
 
 protected:
 	SWeatherInfo GetChangedData() const override;
@@ -46,4 +60,5 @@ private:
 	double m_humidity = 0.0;
 	double m_pressure = 760.0;
 	Location m_location;
+	SWindInfo m_windInfo;
 };
