@@ -112,7 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -148,6 +148,8 @@
     <ClInclude Include="WeatherData\Displays\Display.h" />
     <ClInclude Include="WeatherData\Displays\StatisticsDisplay.h" />
     <ClInclude Include="WeatherData\Displays\StatisticsDisplayComponent.h" />
+    <ClInclude Include="WeatherData\Displays\StatisticsDisplayAngleComponent.h" />
+    <ClInclude Include="WeatherData\Displays\Tools\AngleTransform.h" />
     <ClInclude Include="WeatherData\WeatherData.h" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +162,8 @@
     <ClCompile Include="WeatherData\Displays\Display.cpp" />
     <ClCompile Include="WeatherData\Displays\StatisticsDisplay.cpp" />
     <ClCompile Include="WeatherData\Displays\StatisticsDisplayComponent.cpp" />
+    <ClCompile Include="WeatherData\Displays\StatisticsDisplayAngleComponent.cpp" />
+    <ClCompile Include="WeatherData\Displays\Tools\AngleTransform.cpp" />
     <ClCompile Include="WeatherData\WeatherData.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

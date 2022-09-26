@@ -1,11 +1,6 @@
 #include "../pch.h"
 #include "WeatherData.h"
 
-WeatherData::WeatherData(Location location)
-	: m_location(location)
-{
-}
-
 double WeatherData::GetTemperature() const
 {
 	return m_temperature;
@@ -21,11 +16,6 @@ double WeatherData::GetPressure() const
 	return m_pressure;
 }
 
-Location WeatherData::GetLocation() const
-{
-	return m_location;
-}
-
 SWindInfo WeatherData::GetWindInfo() const
 {
 	return m_windInfo;
@@ -36,14 +26,13 @@ void WeatherData::MeasurementsChanged()
 	WeatherData::NotifyObservers();
 }
 
-void WeatherData::SetMeasurements(SWeatherWindInfo& weatherWindInfo)
+void WeatherData::SetMeasurements(SWeatherInfo& weatherInfo)
 {
-	auto& [weatherInfo, windInfo] = weatherWindInfo;
 	m_temperature = weatherInfo.temperature;
 	m_humidity = weatherInfo.humidity;
 	m_pressure = weatherInfo.pressure;
-	
-	m_windInfo = windInfo;
+
+	m_windInfo = weatherInfo.wind;
 
 	MeasurementsChanged();
 }
@@ -54,7 +43,7 @@ SWeatherInfo WeatherData::GetChangedData() const
 	info.temperature = GetTemperature();
 	info.humidity = GetHumidity();
 	info.pressure = GetPressure();
-	info.location = GetLocation();
+	info.wind = GetWindInfo();
 
 	return info;
 }

@@ -33,6 +33,12 @@
     <ClInclude Include="WeatherData\WeatherData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WeatherData\Displays\StatisticsDisplayAngleComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WeatherData\Displays\Tools\AngleTransform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -48,6 +54,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WeatherData\WeatherData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WeatherData\Displays\StatisticsDisplayAngleComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WeatherData\Displays\Tools\AngleTransform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

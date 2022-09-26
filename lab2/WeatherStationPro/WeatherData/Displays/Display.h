@@ -15,6 +15,4 @@ protected:
 	остается публичным
 	*/
 	void Update(SWeatherInfo const& data) override;
-
-	std::string GetLocationToString(Location);
 };

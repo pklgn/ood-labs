@@ -85,6 +85,3 @@ protected:
 private:
 	std::multimap<unsigned short, ObserverType*> m_observers;
 };
-
-
-// TODO: multimap
