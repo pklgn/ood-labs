@@ -2,7 +2,7 @@
 
 #include "../WeatherData.h"
 
-class Display : public IObserver<SWeatherInfo>
+class Display : public IObserver<SWeatherInfo, Location>
 {
 public:
 	Display(std::ostream&);
@@ -14,7 +14,5 @@ protected:
 	Классу Observable он будет доступен все равно, т.к. в интерфейсе IObserver он
 	остается публичным
 	*/
-	void Update(SWeatherInfo const& data) override;
-
-	std::string GetLocationToString(Location location);
+	void Update(SWeatherInfo const& data, Location const& metaData) override;
 };

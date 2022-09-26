@@ -14,7 +14,8 @@ enum class ComponentType
 class StatisticsDisplayComponent
 {
 public:
-	void Update(double data);
+	void UpdateData(double data);
+	void PrintData() const;
 	StatisticsDisplayComponent(const ComponentType&, std::ostream&);
 
 private:

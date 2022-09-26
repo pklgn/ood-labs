@@ -23,6 +23,13 @@ StatisticsDisplayComponent::StatisticsDisplayComponent(const ComponentType& type
 
 void StatisticsDisplayComponent::Update(double value)
 {
+	UpdateStatistics(value);
+
+	PrintComponentInfo();
+}
+
+void StatisticsDisplayComponent::UpdateStatistics(double value)
+{
 	if (m_min > value)
 	{
 		m_min = value;
@@ -31,10 +38,13 @@ void StatisticsDisplayComponent::Update(double value)
 	{
 		m_max = value;
 	}
-	
+
 	m_acc += value;
 	++m_countAcc;
+}
 
+void StatisticsDisplayComponent::PrintComponentInfo()
+{
 	m_output << std::setprecision(2) << std::fixed;
 	m_output << ComponentTypeToString(m_componentType) << ":" << std::endl;
 	m_output << "Max " << m_max << std::endl;

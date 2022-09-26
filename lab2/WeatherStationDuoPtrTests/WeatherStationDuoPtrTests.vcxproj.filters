@@ -15,21 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WeatherStationDuoTests.cpp">
+    <ClCompile Include="WeatherStationDuoPtrTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LocationTestDisplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MockDisplay.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LocationTestDisplay.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MockDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

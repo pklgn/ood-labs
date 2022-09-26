@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{41e7d6af-7dbd-404d-945a-6034b8769607}</ProjectGuid>
-    <RootNamespace>WeatherStationDuoTests</RootNamespace>
+    <ProjectGuid>{e89e2ea4-3fb6-47e5-b3ac-b72148621cd2}</ProjectGuid>
+    <RootNamespace>WeatherStationDuoMetaTests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -110,9 +110,6 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <PostBuildEvent>
-      <Command>$(TargetDir)WeatherStationDuoTests.exe</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -131,21 +128,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WeatherStationDuo\WeatherStationDuo.vcxproj">
-      <Project>{36c45075-bd19-4f75-bb6d-32b867564242}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="LocationTestDisplay.cpp" />
     <ClCompile Include="MockDisplay.cpp" />
-    <ClCompile Include="WeatherStationDuoTests.cpp" />
+    <ClCompile Include="WeatherStationDuoMetaTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LocationTestDisplay.h" />
     <ClInclude Include="MockDisplay.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="cpp.hint" />
+    <ProjectReference Include="..\WeatherStationDuoMeta\WeatherStationDuoMeta.vcxproj">
+      <Project>{b7b9a78f-7506-44fa-8fa5-08fc6403bf7b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

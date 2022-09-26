@@ -15,10 +15,9 @@ struct SWeatherInfo
 	double temperature = 0;
 	double humidity = 0;
 	double pressure = 0;
-	Location location = Location::UNKNOWN;
 };
 
-class WeatherData : public Observable<SWeatherInfo>
+class WeatherData : public Observable<SWeatherInfo, Location>
 {
 public:
 	WeatherData(Location location = Location::UNKNOWN);
@@ -40,6 +39,8 @@ public:
 
 protected:
 	SWeatherInfo GetChangedData() const override;
+
+	Location GetMetaData() const override;
 
 private:
 	double m_temperature = 0.0;

@@ -14,8 +14,9 @@ enum class ComponentType
 class StatisticsDisplayComponent
 {
 public:
-	void Update(double data);
 	StatisticsDisplayComponent(const ComponentType&, std::ostream&);
+	
+	void Update(double data);
 
 private:
 	std::ostream& m_output;
@@ -25,4 +26,7 @@ private:
 	double m_max = -std::numeric_limits<double>::infinity();
 	double m_acc = 0;
 	unsigned m_countAcc = 0;
+
+	void UpdateStatistics(double);
+	void PrintComponentInfo();
 };

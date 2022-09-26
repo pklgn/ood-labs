@@ -1,7 +1,7 @@
 #include "../../pch.h"
 #include "Display.h"
 
-std::string Display::GetLocationToString(Location location)
+std::string GetLocationToString(Location location)
 {
 	switch (location)
 	{
@@ -21,9 +21,9 @@ Display::Display(std::ostream& output)
 {
 }
 
-void Display::Update(SWeatherInfo const& data)
+void Display::Update(SWeatherInfo const& data, Location const& location)
 {
-	m_output << "Location: " << GetLocationToString(data.location) << std::endl;
+	m_output << "Location: " << GetLocationToString(location) << std::endl;
 	m_output << "Current Temprature: " << data.temperature << std::endl;
 	m_output << "Current Humidity: " << data.humidity << std::endl;
 	m_output << "Current Pressure: " << data.pressure << std::endl;
