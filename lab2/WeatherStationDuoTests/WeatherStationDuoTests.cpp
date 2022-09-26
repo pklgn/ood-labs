@@ -18,8 +18,8 @@ TEST_CASE("Check priority")
 
 	wd.SetMeasurements(3, 0.8, 761);
 
-	std::stringstream expectedOutput("21");
-	REQUIRE(output.str() == expectedOutput.str());
+	std::stringstream prospectiveOutput("21");
+	REQUIRE(output.str() == prospectiveOutput.str());
 	output.str("");
 }
 
@@ -35,6 +35,11 @@ TEST_CASE("Check correct displaying of the WD location by SetMeasurements update
 
 	iWD.SetMeasurements(3, 0.8, 761);
 
-	std::stringstream expectedOutput("INSIDE");
-	REQUIRE(expectedOutput.str() == output.str());
+	std::stringstream prospectiveOutput("INSIDE");
+	REQUIRE(prospectiveOutput.str() == output.str());
+	output.str("");
+
+	oWD.SetMeasurements(3, 0.8, 761);
+	prospectiveOutput.str("OUTSIDE");
+	REQUIRE(prospectiveOutput.str() == output.str());
 }

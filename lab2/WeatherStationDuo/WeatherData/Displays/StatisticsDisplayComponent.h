@@ -18,12 +18,11 @@ public:
 	StatisticsDisplayComponent(const ComponentType&, std::ostream&);
 
 private:
+	std::ostream& m_output;
+	ComponentType m_componentType;
+
 	double m_min = std::numeric_limits<double>::infinity();
 	double m_max = -std::numeric_limits<double>::infinity();
 	double m_acc = 0;
 	unsigned m_countAcc = 0;
-	ComponentType m_componentType;
-	std::ostream& m_output;
-
-	std::string ComponentTypeToString();
 };

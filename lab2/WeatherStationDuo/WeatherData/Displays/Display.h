@@ -16,5 +16,5 @@ protected:
 	*/
 	void Update(SWeatherInfo const& data) override;
 
-	std::string GetLocationToString(Location);
+	std::string GetLocationToString(Location location);
 };
