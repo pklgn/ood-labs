@@ -21,9 +21,15 @@
     <ClInclude Include="Dependents\Dependents.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WeatherData\WeatherData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WeatherData\WeatherData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

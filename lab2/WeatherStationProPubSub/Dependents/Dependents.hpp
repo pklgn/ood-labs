@@ -3,12 +3,12 @@
 #include "../pch.h"
 
 template <typename T>
-class IObservable;
+class IPublisher;
 
 class IEvent
 {
 public:
-	virtual unsigned int GetId() = 0;
+	virtual unsigned int GetId() const = 0;
 };
 
 /*
@@ -18,13 +18,12 @@ public:
 передаваемого Наблюдателю в метод Update
 */
 template <typename T>
-class IObserver
+class ISubscriber
 {
 public:
-	virtual ~IObserver() = default;
+	virtual ~ISubscriber() = default;
 
-	template <typename UpdateDataType>
-	virtual void Update(T const& data, std::function<T> const& handler) = 0;
+	virtual void Update(IPublisher<T>& publisher, std::function<void()>& pullHandler) = 0;
 };
 
 /*
@@ -32,59 +31,54 @@ public:
 инициировать рассылку уведомлений зарегистрированным наблюдателям.
 */
 template <typename T>
-class IObservable
+class IPublisher
 {
 public:
-	virtual ~IObservable() = default;
+	virtual ~IPublisher() = default;
 
-	template <typename ReturnType>
-	virtual void RegisterObserver(IObserver const& observer, const IEvent& event, const std::function<ReturnType()>& handler) = 0;
-	virtual void RemoveObserver(const IEvent& event, IObserver const& observer) = 0;
-	virtual void NotifyObservers(const IEvent& event) = 0;
+	virtual void RegisterObserver(ISubscriber<T> & subscriber,  IEvent& event, std::function<void()>& pullHandler) = 0;
+	virtual void RemoveObserver(ISubscriber<T> & subscriber,  IEvent* event) = 0;
+	virtual void NotifyObservers(IEvent* event) = 0;
 };
 
 // Реализация интерфейса IObservable
 template <class T>
-class Observable : public IObservable<T>
+class Publisher : public IPublisher<T>
 {
 public:
-	using ObserverType = IObserver<T>;
-	using Subcriber = std::pair<IObserver*, std::function*>;
+	using ObserverType = ISubscriber<T>;
 
-	void RegisterObserver(IObserver const& observer, const IEvent& event, const std::function<ReturnType()>& handler) override
+	void RegisterObserver(ISubscriber<T> & subscriber, IEvent& event, std::function<void()>& pullHandler) override
 	{
-		RemoveObserver(observer, event);
-		Subcriber subscriber = std::make_pair(&observer, &handler);
-		m_subsribers.emplace(event, subscriber);
+		RemoveObserver(subscriber, &event);
+		m_subsribers.insert(&event, std::make_pair(&subscriber, pullHandler));
 	}
 
-	void RemoveObserver(IObserver const& observer, const IEvent& event) override
+	void RemoveObserver(ISubscriber<T> & subscriber,  IEvent* event) override
 	{
 		auto search = std::find_if(m_subsribers.begin(), m_subsribers.end(),
 			[&](auto eventSubscriberPair) {
-				auto [observerPtr, handlerPtr] = eventSubscriberPair.second;
-				return observerPtr == &observer;
+				auto [subscriberPtr, pullHandler] = eventSubscriberPair.second;
+				return subscriberPtr == &subscriber && eventSubscriberPair.first->GetId() == event->GetId();
 			});
 
-		if (search != m_observers.end())
+		if (search != m_subsribers.end())
 		{
-			m_observers.erase(search);
+			m_subsribers.erase(search);
 		}
 	}
 
-	void NotifyObservers(const IEvent& event) override
+	void NotifyObservers(IEvent* event) override
 	{
-		T data = GetChangedData();
-		
 		auto iter = m_subsribers.begin();
 		while (iter != m_subsribers.end())
 		{
-			auto [subscriberEvent, subscriber] = *iter;
-			auto [observerPtr, handlerPtr] = subscriber;
+			auto& [subscriberEvent, subscriber] = *iter;
+			auto& [subscriberPtr, pullHandler] = subscriber;
 			++iter;
-			if (event.GetId() == subscriberEvent.GetId())
+			if (event->GetId() == subscriberEvent->GetId())
 			{
-				observerPtr->handlerPtr();
+				subscriberPtr->Update(*this, pullHandler);
 			}
 		}
 	}
@@ -95,5 +89,5 @@ protected:
 	virtual T GetChangedData() const = 0;
 
 private:
-	std::multimap<IEvent, Subcriber> m_subsribers;
+	std::multiset<unsigned int, std::pair<ISubscriber<T>*, std::function<void()>&>> m_subsribers;
 };

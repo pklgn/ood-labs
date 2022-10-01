@@ -10,6 +10,7 @@
 // add headers that you want to pre-compile here
 #include <functional>
 #include <map>
+#include <set>
 #include <utility>
 
 #endif //PCH_H
