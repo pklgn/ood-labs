@@ -22,7 +22,9 @@ class IObserver
 {
 public:
 	virtual ~IObserver() = default;
-	virtual void Update(T const& data) = 0;
+
+	template <typename UpdateDataType>
+	virtual void Update(T const& data, std::function<T> const& handler) = 0;
 };
 
 /*
@@ -74,8 +76,8 @@ public:
 	{
 		T data = GetChangedData();
 		
-		auto iter = m_observers.begin();
-		while (iter != m_observers.end())
+		auto iter = m_subsribers.begin();
+		while (iter != m_subsribers.end())
 		{
 			auto [subscriberEvent, subscriber] = *iter;
 			auto [observerPtr, handlerPtr] = subscriber;
