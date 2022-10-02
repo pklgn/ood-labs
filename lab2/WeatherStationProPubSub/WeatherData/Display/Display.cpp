@@ -10,5 +10,6 @@ Display::Display(std::ostream& output)
 void Display::Update(const std::function<void()>& handler)
 {
 	handler();
-	m_output << "------------------" << std::endl;
+
+	m_output << "Local weather forecast provided by Meteum\n\n";
 }

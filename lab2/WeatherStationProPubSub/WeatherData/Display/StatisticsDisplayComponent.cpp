@@ -43,7 +43,7 @@ void StatisticsDisplayComponent::UpdateData(double value)
 void StatisticsDisplayComponent::PrintData() const
 {
 	m_output << std::setprecision(2) << std::fixed;
-	m_output << ComponentTypeToString(m_componentType) << ":" << std::endl;
+	m_output << ComponentTypeToString(m_componentType) << " statistics:" << std::endl;
 	m_output << "Max " << m_max << std::endl;
 	m_output << "Min " << m_min << std::endl;
 	m_output << "Avg " << GetAverageValue() << std::endl;

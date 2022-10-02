@@ -21,37 +21,51 @@ SWindInfo WeatherData::GetWindInfo() const
 	return m_windInfo;
 }
 
-void WeatherData::MeasurementsChanged(SWeatherInfo& weatherInfo)
+std::vector<WeatherEvent> WeatherData::GetTriggeredEvents(SWeatherInfo& weatherInfo)
 {
+	std::vector<WeatherEvent> triggeredEvents;
+
 	if (m_temperature != weatherInfo.temperature)
 	{
-		PublishToBroker(WeatherEvent::TEMPRATURE);
+		triggeredEvents.push_back(WeatherEvent::TEMPRATURE);
 	}
 	if (m_humidity != weatherInfo.humidity)
 	{
-		PublishToBroker(WeatherEvent::HUMIDITY);
+		triggeredEvents.push_back(WeatherEvent::HUMIDITY);
 	}
 	if (m_pressure != weatherInfo.pressure)
 	{
-		PublishToBroker(WeatherEvent::PRESSURE);
+		triggeredEvents.push_back(WeatherEvent::PRESSURE);
 	}
 	if (m_windInfo.speed != weatherInfo.wind.speed)
 	{
-		PublishToBroker(WeatherEvent::WIND_SPEED);
+		triggeredEvents.push_back(WeatherEvent::WIND_SPEED);
 	}
 	if (m_windInfo.angle != weatherInfo.wind.angle)
 	{
-		PublishToBroker(WeatherEvent::WIND_ANGLE);
+		triggeredEvents.push_back(WeatherEvent::WIND_ANGLE);
+	}
+
+	return triggeredEvents;
+}
+
+void WeatherData::MeasurementsChanged(std::vector<WeatherEvent>& triggeredEvents)
+{
+	for (auto& event : triggeredEvents)
+	{
+		OnPublish(event);
 	}
 }
 
 void WeatherData::SetMeasurements(SWeatherInfo& weatherInfo)
 {
-	MeasurementsChanged(weatherInfo);
+	std::vector<WeatherEvent> triggeredEvents = GetTriggeredEvents(weatherInfo);
 
 	m_temperature = weatherInfo.temperature;
 	m_humidity = weatherInfo.humidity;
 	m_pressure = weatherInfo.pressure;
 
 	m_windInfo = weatherInfo.wind;
+
+	MeasurementsChanged(triggeredEvents);
 }

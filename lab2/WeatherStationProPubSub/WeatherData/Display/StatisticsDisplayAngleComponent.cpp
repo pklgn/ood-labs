@@ -34,5 +34,3 @@ StatisticsDisplayAngleComponent::StatisticsDisplayAngleComponent(const Component
 {
 
 }
-
-// TODO: сделать независимым

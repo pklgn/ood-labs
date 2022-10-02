@@ -39,6 +39,12 @@
     <ClInclude Include="WeatherData\Display\StatisticsDisplayComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WeatherData\Handlers\Handlers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WeatherData\Handlers\StatisticsHandlers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

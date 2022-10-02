@@ -2,7 +2,7 @@
 
 #include "../WeatherData.h"
 
-class Display : public Subscriber<WeatherEvent>
+class Display : public ISubscriber<WeatherEvent>
 {
 public:
 	Display(std::ostream&);
@@ -14,5 +14,5 @@ protected:
 	Классу Observable он будет доступен все равно, т.к. в интерфейсе IObserver он
 	остается публичным
 	*/
-	virtual void Update(const std::function<void()>& handler) override;
+	void Update(const std::function<void()>& handler) override;
 };

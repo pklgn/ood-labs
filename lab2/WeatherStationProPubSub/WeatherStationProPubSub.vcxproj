@@ -147,6 +147,8 @@
     <ClInclude Include="WeatherData\Display\StatisticsDisplayAngleComponent.h" />
     <ClInclude Include="WeatherData\Display\StatisticsDisplayComponent.h" />
     <ClInclude Include="WeatherData\Display\Tools\AngleTransform.h" />
+    <ClInclude Include="WeatherData\Handlers\Handlers.h" />
+    <ClInclude Include="WeatherData\Handlers\StatisticsHandlers.h" />
     <ClInclude Include="WeatherData\WeatherData.h" />
   </ItemGroup>
   <ItemGroup>

@@ -2,16 +2,6 @@
 
 #include "../pch.h"
 
-enum class WeatherEvent
-{
-	TEMPRATURE,
-	PRESSURE,
-	HUMIDITY,
-	WIND_SPEED,
-	WIND_ANGLE,
-	NO_EVENT,
-};
-
 template <typename T>
 class ISubscriber;
 
@@ -32,8 +22,8 @@ struct SubscriberWithEventAction
 	}
 
 	ISubscriber<T>* m_ptr;
-	const T m_event;
-	const std::function<void()>& m_action;
+	T m_event;
+	std::function<void()> m_action;
 };
 
 
@@ -43,17 +33,15 @@ class IBroker
 public:
 	virtual ~IBroker() = default;
 
-	virtual void AddSubscriber(ISubscriber<T>* subscriberPtr, const T& event, std::function<void()>& handler, size_t priority = 0) = 0;
+	virtual void AddSubscriber(ISubscriber<T>* subscriberPtr, const T& event, const std::function<void()>& handler, size_t priority = 0) = 0;
 
 	virtual void RemoveSubscriber(ISubscriber<T>* subscriberPtr, const T& event) = 0;
-
-	virtual void RegisterToPublisher(IPublisher<T>* publisherPtr) = 0;
 
 	virtual void OnPublish(const T& event) = 0;
 };
 
 /*
-Шаблонный интерфейс IObserver. Его должен реализовывать класс, 
+Шаблонный интерфейс ISubscriber. Его должен реализовывать класс, 
 желающий получать уведомления от соответствующего IObservable
 Параметром шаблона является тип аргумента,
 передаваемого Наблюдателю в метод Update
@@ -64,35 +52,20 @@ class ISubscriber
 public:
 	virtual ~ISubscriber() = default;
 
-	virtual void SubscribeToBroker(IBroker<T>* broker, const T& event, std::function<void()>& handler, size_t priority = 0) = 0;
-
-	virtual void UnubscribeFromBroker(IBroker<T>* ptr, const T& event) = 0;
-
 	virtual void Update(const std::function<void()>&) = 0;
 };
 
 template <class T>
 class Subscriber : public ISubscriber<T>
 {
-public:
-	void SubscribeToBroker(IBroker<T>* broker, const T& event, std::function<void()>& handler, size_t priority = 0) override
+	void Update(const std::function<void()>& handler) override
 	{
-		m_events.insert(event);
-		broker->AddSubscriber(this, event, handler, priority);
+		handler();
 	}
-
-	void UnubscribeFromBroker(IBroker<T>* broker, const T& event) override
-	{
-		m_events.erase(event);
-		broker->RemoveSubscriber(this, event);
-	}
-
-private:
-	std::set<T> m_events;
 };
 
 /*
-Шаблонный интерфейс IObservable. Позволяет подписаться и отписаться на оповещения, а также
+Шаблонный интерфейс IPublisher. Позволяет подписаться и отписаться на оповещения, а также
 инициировать рассылку уведомлений зарегистрированным наблюдателям.
 */
 template <typename T>
@@ -141,11 +114,10 @@ template <class T>
 class Broker : public IBroker<T>
 {
 public:
-	void AddSubscriber(ISubscriber<T>* subscriberPtr, const T& event, std::function<void()>& handler, size_t priority = 0) override
+	void AddSubscriber(ISubscriber<T>* subscriberPtr, const T& event, const std::function<void()>& handler, size_t priority = 0) override
 	{
 		RemoveSubscriber(subscriberPtr, event);
-		SubscriberWithEventAction<T> s = SubscriberWithEventAction<T>(subscriberPtr, event, handler);
-		m_subscribers.emplace(priority, s);
+		m_subscribers.emplace(priority, SubscriberWithEventAction<T>(subscriberPtr, event, handler));
 	}
 
 	void RemoveSubscriber(ISubscriber<T>* targetSubscriberPtr, const T& targetEvent) override
@@ -162,14 +134,9 @@ public:
 		}
 	}
 
-	void RegisterToPublisher(IPublisher<T>* publisher) override
-	{
-		publisher->RegisterBroker(this);
-	}
-
 	void OnPublish(const T& event) override
 	{
-		for (auto [_, subscriber] : m_subscribers)
+		for (auto& [_, subscriber] : m_subscribers)
 		{
 			if (subscriber.m_event == event)
 			{
@@ -179,7 +146,5 @@ public:
 	}
 
 private:
-	//IPublisher<T>* m_publisherPtr;
-
-	std::multimap<size_t, SubscriberWithEventAction<T>&> m_subscribers;
+	std::multimap<size_t, SubscriberWithEventAction<T>> m_subscribers;
 };

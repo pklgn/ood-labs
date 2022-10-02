@@ -17,9 +17,4 @@ protected:
 	void Update(const std::function<void()>& handler) override;
 
 	StatisticsDisplayComponent m_temprature;
-	StatisticsDisplayComponent m_humidity;
-	StatisticsDisplayComponent m_pressure;
-	StatisticsDisplayComponent m_windSpeed;
-	StatisticsDisplayAngleComponent m_windAngle;
-
 };
