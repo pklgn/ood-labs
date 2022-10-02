@@ -86,8 +86,6 @@ class Publisher : public IPublisher<T>
 {
 
 public:
-	virtual ~Publisher() = default;
-
 	void RegisterBroker(IBroker<T>* pBroker) override
 	{
 		m_brokerPtr = pBroker;
