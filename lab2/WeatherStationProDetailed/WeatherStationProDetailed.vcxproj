@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -142,11 +142,14 @@
   <ItemGroup>
     <ClInclude Include="Dependents\Dependents.hpp" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="WeatherData\Displays\Display.h" />
     <ClInclude Include="WeatherData\Displays\StatisticsDisplay.h" />
     <ClInclude Include="WeatherData\Displays\StatisticsDisplayAngleComponent.h" />
     <ClInclude Include="WeatherData\Displays\StatisticsDisplayComponent.h" />
-    <ClInclude Include="WeatherData\Displays\Tools\AngleTransform.h" />
+    <ClInclude Include="WeatherData\Display\Display.h" />
+    <ClInclude Include="WeatherData\Display\StatisticsDisplay.h" />
+    <ClInclude Include="WeatherData\Display\StatisticsDisplayAngleComponent.h" />
+    <ClInclude Include="WeatherData\Display\StatisticsDisplayComponent.h" />
+    <ClInclude Include="WeatherData\Display\Tools\AngleTransform.h" />
     <ClInclude Include="WeatherData\WeatherData.h" />
   </ItemGroup>
   <ItemGroup>
@@ -156,11 +159,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="WeatherData\Displays\Display.cpp" />
     <ClCompile Include="WeatherData\Displays\StatisticsDisplay.cpp" />
     <ClCompile Include="WeatherData\Displays\StatisticsDisplayAngleComponent.cpp" />
     <ClCompile Include="WeatherData\Displays\StatisticsDisplayComponent.cpp" />
-    <ClCompile Include="WeatherData\Displays\Tools\AngleTransform.cpp" />
+    <ClCompile Include="WeatherData\Display\Display.cpp" />
+    <ClCompile Include="WeatherData\Display\StatisticsDisplay.cpp" />
+    <ClCompile Include="WeatherData\Display\StatisticsDisplayAngleComponent.cpp" />
+    <ClCompile Include="WeatherData\Display\StatisticsDisplayComponent.cpp" />
+    <ClCompile Include="WeatherData\Display\Tools\AngleTransform.cpp" />
     <ClCompile Include="WeatherData\WeatherData.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

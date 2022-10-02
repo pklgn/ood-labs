@@ -23,46 +23,35 @@ SWindInfo WeatherData::GetWindInfo() const
 
 void WeatherData::MeasurementsChanged(SWeatherInfo& weatherInfo)
 {
-	if (weatherInfo.temperature.has_value())
+	if (m_temperature != weatherInfo.temperature)
 	{
-		PublishToBroker(WeatherEvent::TEMPRATURE, weatherInfo.temperature.value());
+		PublishToBroker(WeatherEvent::TEMPRATURE);
 	}
-	if (weatherInfo.humidity.has_value())
+	if (m_humidity != weatherInfo.humidity)
 	{
-		PublishToBroker(WeatherEvent::HUMIDITY, weatherInfo.humidity.value());
+		PublishToBroker(WeatherEvent::HUMIDITY);
 	}
-	if (weatherInfo.pressure.has_value())
+	if (m_pressure != weatherInfo.pressure)
 	{
-		PublishToBroker(WeatherEvent::PRESSURE, weatherInfo.pressure.value());
+		PublishToBroker(WeatherEvent::PRESSURE);
 	}
-	if (weatherInfo.wind.has_value())
+	if (m_windInfo.speed != weatherInfo.wind.speed)
 	{
-		PublishToBroker(WeatherEvent::WIND_SPEED, weatherInfo.wind.value().speed);
+		PublishToBroker(WeatherEvent::WIND_SPEED);
 	}
-	if (weatherInfo.wind.has_value())
+	if (m_windInfo.angle != weatherInfo.wind.angle)
 	{
-		PublishToBroker(WeatherEvent::WIND_ANGLE, weatherInfo.wind.value().angle);
+		PublishToBroker(WeatherEvent::WIND_ANGLE);
 	}
 }
 
 void WeatherData::SetMeasurements(SWeatherInfo& weatherInfo)
 {
-	m_temperature = weatherInfo.temperature.value_or(m_temperature);
-	m_humidity = weatherInfo.humidity.value_or(m_humidity);
-	m_pressure = weatherInfo.pressure.value_or(m_pressure);
+	m_temperature = weatherInfo.temperature;
+	m_humidity = weatherInfo.humidity;
+	m_pressure = weatherInfo.pressure;
 
-	m_windInfo = weatherInfo.wind.value_or(m_windInfo);
+	m_windInfo = weatherInfo.wind;
 
 	MeasurementsChanged(weatherInfo);
-}
-
-SWeatherInfo WeatherData::GetChangedData() const
-{
-	SWeatherInfo info;
-	info.temperature = GetTemperature();
-	info.humidity = GetHumidity();
-	info.pressure = GetPressure();
-	info.wind = GetWindInfo();
-
-	return info;
 }

@@ -4,7 +4,7 @@
 #include "StatisticsDisplayComponent.h"
 #include "StatisticsDisplayAngleComponent.h"
 
-class StatisticsDisplay : public Subscriber
+class StatisticsDisplay : public Subscriber<WeatherEvent>
 {
 public:
 	StatisticsDisplay(std::ostream&);
@@ -14,7 +14,7 @@ protected:
 	Классу Observable он будет доступен все равно, т.к. в интерфейсе IObserver он
 	остается публичным
 	*/
-	void Update(double newValue, WeatherEvent) override;
+	void Update(std::function<void()>& handler) override;
 
 	StatisticsDisplayComponent m_temprature;
 	StatisticsDisplayComponent m_humidity;

@@ -12,13 +12,13 @@ struct SWindInfo
 
 struct SWeatherInfo
 {
-	std::optional<double> temperature = std::nullopt;
-	std::optional<double> humidity = std::nullopt;
-	std::optional<double> pressure = std::nullopt;
-	std::optional<SWindInfo> wind = std::nullopt;
+	double temperature = 0;
+	double humidity = 0;
+	double pressure = 0;
+	SWindInfo wind;
 };
 
-class WeatherData : public Publisher<SWeatherInfo>
+class WeatherData : public Publisher<WeatherEvent>
 {
 public:
 	// Температура в градусах Цельсия
@@ -35,9 +35,6 @@ public:
 	void MeasurementsChanged(SWeatherInfo&);
 
 	void SetMeasurements(SWeatherInfo&);
-
-protected:
-	SWeatherInfo GetChangedData() const override;
 
 private:
 	double m_temperature = 0.0;
