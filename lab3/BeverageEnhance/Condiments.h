@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+#include <stdexcept>
 #include "IBeverage.h"
 
 // Базовый декоратор "Добавка к напитку". Также является напитком
@@ -192,4 +192,81 @@ protected:
 
 private:
 	unsigned m_mass;
+};
+
+// Добавка "Сливки"
+class Cream : public CondimentDecorator
+{
+public:
+	Cream(IBeveragePtr&& beverage)
+		: CondimentDecorator(move(beverage))
+	{
+	}
+
+protected:
+	double GetCondimentCost() const override
+	{
+		return 25;
+	}
+	std::string GetCondimentDescription() const override
+	{
+		return "Cream";
+	}
+};
+
+class Chocolate : public CondimentDecorator
+{
+public:
+	Chocolate(IBeveragePtr&& beverage, unsigned quantity)
+		: CondimentDecorator(move(beverage))
+		, m_quantity(quantity)
+	{
+		if (m_quantity > 5)
+		{
+			m_quantity = 5;
+		}
+	}
+
+protected:
+	double GetCondimentCost() const override
+	{
+		return 10 * m_quantity;
+	}
+	std::string GetCondimentDescription() const override
+	{
+		return "Chocolate with " + std::to_string(m_quantity) + " slice(s)";
+	}
+
+private:
+	unsigned m_quantity;
+};
+
+enum class LiquorType
+{
+	NUT,
+	CHOCOLATE,
+};
+
+class Liquor : public CondimentDecorator
+{
+public:
+	Liquor(IBeveragePtr&& beverage, LiquorType liquorType)
+		: CondimentDecorator(move(beverage))
+		, m_liquorType(liquorType)
+	{
+	}
+
+protected:
+	double GetCondimentCost() const override
+	{
+		return 50;
+	}
+	std::string GetCondimentDescription() const override
+	{
+		return std::string(m_liquorType == LiquorType::NUT ? "Nutty" : "Chocolate")
+			+ " liquor";
+	}
+
+private:
+	LiquorType m_liquorType;
 };
