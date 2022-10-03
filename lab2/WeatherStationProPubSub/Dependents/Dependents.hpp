@@ -3,97 +3,146 @@
 #include "../pch.h"
 
 template <typename T>
-class IObservable;
+class ISubscriber;
 
-class IEvent
+template <typename T>
+class IPublisher;
+
+template <typename T>
+class IBroker;
+
+template <class T>
+struct SubscriberWithEventAction
+{
+	SubscriberWithEventAction(ISubscriber<T>* ptr, const T& event, const std::function<void()>& action)
+		: m_ptr(ptr)
+		, m_event(event)
+		, m_action(action)
+	{
+	}
+
+	ISubscriber<T>* m_ptr;
+	T m_event;
+	std::function<void()> m_action;
+};
+
+
+template <typename T>
+class IBroker
 {
 public:
-	virtual unsigned int GetId() = 0;
+	virtual ~IBroker() = default;
+
+	virtual void AddSubscriber(ISubscriber<T>* subscriberPtr, const T& event, const std::function<void()>& handler, size_t priority = 0) = 0;
+
+	virtual void RemoveSubscriber(ISubscriber<T>* subscriberPtr, const T& event) = 0;
+
+	virtual void OnPublish(const T& event) = 0;
 };
 
 /*
-Шаблонный интерфейс IObserver. Его должен реализовывать класс, 
+Шаблонный интерфейс ISubscriber. Его должен реализовывать класс, 
 желающий получать уведомления от соответствующего IObservable
 Параметром шаблона является тип аргумента,
 передаваемого Наблюдателю в метод Update
 */
 template <typename T>
-class IObserver
+class ISubscriber
 {
 public:
-	virtual ~IObserver() = default;
+	virtual ~ISubscriber() = default;
 
-	template <typename UpdateDataType>
-	virtual void Update(T const& data, std::function<T> const& handler) = 0;
+	virtual void Update(const std::function<void()>&) = 0;
+};
+
+template <class T>
+class Subscriber : public ISubscriber<T>
+{
+	void Update(const std::function<void()>& handler) override
+	{
+		handler();
+	}
 };
 
 /*
-Шаблонный интерфейс IObservable. Позволяет подписаться и отписаться на оповещения, а также
+Шаблонный интерфейс IPublisher. Позволяет подписаться и отписаться на оповещения, а также
 инициировать рассылку уведомлений зарегистрированным наблюдателям.
 */
 template <typename T>
-class IObservable
+class IPublisher
 {
 public:
-	virtual ~IObservable() = default;
+	virtual ~IPublisher() = default;
 
-	template <typename ReturnType>
-	virtual void RegisterObserver(IObserver const& observer, const IEvent& event, const std::function<ReturnType()>& handler) = 0;
-	virtual void RemoveObserver(const IEvent& event, IObserver const& observer) = 0;
-	virtual void NotifyObservers(const IEvent& event) = 0;
+	virtual void RegisterBroker(IBroker<T>* pBroker) = 0;
+
+	virtual void PublishToBroker(const T& event) = 0;
+
+	virtual void RemoveBroker(IBroker<T>* pBroker) = 0;
 };
 
-// Реализация интерфейса IObservable
 template <class T>
-class Observable : public IObservable<T>
+class Publisher : public IPublisher<T>
 {
-public:
-	using ObserverType = IObserver<T>;
-	using Subcriber = std::pair<IObserver*, std::function*>;
 
-	void RegisterObserver(IObserver const& observer, const IEvent& event, const std::function<ReturnType()>& handler) override
+public:
+	void RegisterBroker(IBroker<T>* pBroker) override
 	{
-		RemoveObserver(observer, event);
-		Subcriber subscriber = std::make_pair(&observer, &handler);
-		m_subsribers.emplace(event, subscriber);
+		m_brokerPtr = pBroker;
 	}
 
-	void RemoveObserver(IObserver const& observer, const IEvent& event) override
+	void PublishToBroker(const T& event) override
 	{
-		auto search = std::find_if(m_subsribers.begin(), m_subsribers.end(),
-			[&](auto eventSubscriberPair) {
-				auto [observerPtr, handlerPtr] = eventSubscriberPair.second;
-				return observerPtr == &observer;
-			});
-
-		if (search != m_observers.end())
+		if (m_brokerPtr)
 		{
-			m_observers.erase(search);
+			m_brokerPtr->OnPublish(event);
 		}
 	}
 
-	void NotifyObservers(const IEvent& event) override
+	void RemoveBroker(IBroker<T>* pBroker) override
 	{
-		T data = GetChangedData();
-		
-		auto iter = m_subsribers.begin();
-		while (iter != m_subsribers.end())
+		m_brokerPtr = nullptr;
+	}
+
+protected:
+	IBroker<T>* m_brokerPtr;
+};
+
+template <class T>
+class Broker : public IBroker<T>
+{
+public:
+	void AddSubscriber(ISubscriber<T>* subscriberPtr, const T& event, const std::function<void()>& handler, size_t priority = 0) override
+	{
+		RemoveSubscriber(subscriberPtr, event);
+		m_subscribers.emplace(priority, SubscriberWithEventAction<T>(subscriberPtr, event, handler));
+	}
+
+	void RemoveSubscriber(ISubscriber<T>* targetSubscriberPtr, const T& targetEvent) override
+	{
+		auto search = std::find_if(m_subscribers.begin(), m_subscribers.end(),
+			[&](auto& prioritySubscriberPair) {
+				return prioritySubscriberPair.second.m_ptr == targetSubscriberPtr &&
+					prioritySubscriberPair.second.m_event == targetEvent;
+			});
+
+		if (search != m_subscribers.end())
 		{
-			auto [subscriberEvent, subscriber] = *iter;
-			auto [observerPtr, handlerPtr] = subscriber;
-			++iter;
-			if (event.GetId() == subscriberEvent.GetId())
+			m_subscribers.erase(search);
+		}
+	}
+
+	void OnPublish(const T& event) override
+	{
+		for (auto& [_, subscriber] : m_subscribers)
+		{
+			if (subscriber.m_event == event)
 			{
-				observerPtr->handlerPtr();
+				subscriber.m_ptr->Update(subscriber.m_action);
 			}
 		}
 	}
 
-protected:
-	// Классы-наследники должны перегрузить данный метод, 
-	// в котором возвращать информацию об изменениях в объекте
-	virtual T GetChangedData() const = 0;
-
 private:
-	std::multimap<IEvent, Subcriber> m_subsribers;
+	std::multimap<size_t, SubscriberWithEventAction<T>> m_subscribers;
 };

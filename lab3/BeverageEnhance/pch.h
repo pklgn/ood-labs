@@ -8,14 +8,5 @@
 #define PCH_H
 
 // add headers that you want to pre-compile here
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <set>
-#include <map>
-#include <climits>
-#include <iomanip>
-#include <functional>
-#include <io.h>
 
 #endif //PCH_H

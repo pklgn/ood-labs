@@ -4,6 +4,16 @@
 #include "../pch.h"
 #include "../Dependents/Dependents.hpp"
 
+enum class WeatherEvent
+{
+	TEMPRATURE,
+	PRESSURE,
+	HUMIDITY,
+	WIND_SPEED,
+	WIND_ANGLE,
+	NO_EVENT,
+};
+
 struct SWindInfo
 {
 	double speed = 0;
@@ -18,7 +28,7 @@ struct SWeatherInfo
 	SWindInfo wind;
 };
 
-class WeatherData : public Publisher<WeatherEvent>
+class WeatherData : public Broker<WeatherEvent>
 {
 public:
 	// Температура в градусах Цельсия
@@ -32,7 +42,9 @@ public:
 
 	SWindInfo GetWindInfo() const;
 
-	void MeasurementsChanged(SWeatherInfo&);
+	std::vector<WeatherEvent> GetTriggeredEvents(SWeatherInfo&);
+
+	void MeasurementsChanged(std::vector<WeatherEvent>&);
 
 	void SetMeasurements(SWeatherInfo&);
 

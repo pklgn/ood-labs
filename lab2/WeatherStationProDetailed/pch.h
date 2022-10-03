@@ -15,5 +15,6 @@
 #include <map>
 #include <climits>
 #include <iomanip>
+#include <functional>
 
 #endif //PCH_H
