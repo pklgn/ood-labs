@@ -11,7 +11,6 @@ enum class WeatherEvent
 	HUMIDITY,
 	WIND_SPEED,
 	WIND_ANGLE,
-	NO_EVENT,
 };
 
 struct SWindInfo
@@ -42,8 +41,6 @@ public:
 
 	SWindInfo GetWindInfo() const;
 
-	std::vector<WeatherEvent> GetTriggeredEvents(SWeatherInfo&);
-
 	void MeasurementsChanged(std::vector<WeatherEvent>&);
 
 	void SetMeasurements(SWeatherInfo&);
@@ -53,4 +50,6 @@ private:
 	double m_humidity = 0.0;
 	double m_pressure = 760.0;
 	SWindInfo m_windInfo;
+
+	std::vector<WeatherEvent> GetTriggeredEvents(SWeatherInfo&);
 };
