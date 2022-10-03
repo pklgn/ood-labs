@@ -2,7 +2,7 @@
 
 #include "../WeatherData.h"
 
-class Display : public ISubscriber<WeatherEvent>
+class Display : public Subscriber<WeatherEvent>
 {
 public:
 	Display(std::ostream&);
