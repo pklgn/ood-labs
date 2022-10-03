@@ -46,9 +46,14 @@ class Cappuccino : public Coffee
 {
 public:
 	Cappuccino(CappuccinoPortionType portionType = CappuccinoPortionType::COMMON) 
-		: Coffee("Cappuccino" + (portionType == CappuccinoPortionType::DOUBLE) ? " double" : " common")
+		: Coffee("Cappuccino")
 		, m_portionType(portionType)
 	{
+	}
+
+	std::string GetDescription() const override
+	{
+		return Beverage::GetDescription() + " " + ((m_portionType == CappuccinoPortionType::DOUBLE) ? "double" : "common");
 	}
 
 	double GetCost() const override 
@@ -71,9 +76,14 @@ class Latte : public Coffee
 {
 public:
 	Latte(LattePortionType portionType = LattePortionType::COMMON) 
-		: Coffee("Latte" + (portionType == LattePortionType::DOUBLE) ? " double" : " common")
+		: Coffee("Latte")
 		, m_portionType(portionType)
 	{
+	}
+
+	std::string GetDescription() const override
+	{
+		return Beverage::GetDescription() + " " + ((m_portionType == LattePortionType::DOUBLE) ? "double" : "common");
 	}
 
 	double GetCost() const override 
@@ -122,7 +132,7 @@ public:
 
 	std::string GetDescription() const override
 	{
-		Beverage::GetDescription() + " " + GetTypeDescription();
+		return Beverage::GetDescription() + " " + GetTypeDescription();
 	}
 
 	double GetCost() const override 
@@ -168,7 +178,7 @@ public:
 
 	std::string GetDescription() const override
 	{
-		Beverage::GetDescription() + " " + GetTypeDescription();
+		return Beverage::GetDescription() + " " + GetTypeDescription();
 	}
 
 	double GetCost() const override 

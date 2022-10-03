@@ -217,7 +217,7 @@ protected:
 class Chocolate : public CondimentDecorator
 {
 public:
-	Chocolate(IBeveragePtr&& beverage, unsigned quantity)
+	Chocolate(IBeveragePtr&& beverage, unsigned quantity = 1)
 		: CondimentDecorator(move(beverage))
 		, m_quantity(quantity)
 	{
