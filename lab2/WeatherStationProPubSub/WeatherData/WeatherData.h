@@ -27,7 +27,7 @@ struct SWeatherInfo
 	SWindInfo wind;
 };
 
-class WeatherData : public Broker<WeatherEvent>
+class WeatherData : public Observable<WeatherEvent>
 {
 public:
 	// Температура в градусах Цельсия
