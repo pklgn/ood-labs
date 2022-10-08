@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BeverageEnhance", "Beverage
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BeverageEnhanceTests", "BeverageEnhanceTests\BeverageEnhanceTests.vcxproj", "{47A15E3E-AD83-4304-9D9B-97884C4C713B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataStreams", "DataStreams\DataStreams.vcxproj", "{DDFD71A7-4FF6-41EA-9A7F-0982EE8FD613}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{47A15E3E-AD83-4304-9D9B-97884C4C713B}.Release|x64.Build.0 = Release|x64
 		{47A15E3E-AD83-4304-9D9B-97884C4C713B}.Release|x86.ActiveCfg = Release|Win32
 		{47A15E3E-AD83-4304-9D9B-97884C4C713B}.Release|x86.Build.0 = Release|Win32
+		{DDFD71A7-4FF6-41EA-9A7F-0982EE8FD613}.Debug|x64.ActiveCfg = Debug|x64
+		{DDFD71A7-4FF6-41EA-9A7F-0982EE8FD613}.Debug|x64.Build.0 = Debug|x64
+		{DDFD71A7-4FF6-41EA-9A7F-0982EE8FD613}.Debug|x86.ActiveCfg = Debug|Win32
+		{DDFD71A7-4FF6-41EA-9A7F-0982EE8FD613}.Debug|x86.Build.0 = Debug|Win32
+		{DDFD71A7-4FF6-41EA-9A7F-0982EE8FD613}.Release|x64.ActiveCfg = Release|x64
+		{DDFD71A7-4FF6-41EA-9A7F-0982EE8FD613}.Release|x64.Build.0 = Release|x64
+		{DDFD71A7-4FF6-41EA-9A7F-0982EE8FD613}.Release|x86.ActiveCfg = Release|Win32
+		{DDFD71A7-4FF6-41EA-9A7F-0982EE8FD613}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
