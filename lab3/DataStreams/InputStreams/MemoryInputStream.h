@@ -12,6 +12,6 @@ public:
 	std::streamsize ReadBlock(void* dstBuffer, std::streamsize size) override;
 
 private:
-	std::vector<uint8_t> m_memoryStorage;
-	std::vector<uint8_t>::iterator m_memoryStorageIterator;
+	std::vector<uint8_t> m_inputStorage;
+	std::vector<uint8_t>::iterator m_inputStorageIterator;
 };

@@ -144,12 +144,14 @@
     <ClInclude Include="InputStreams\MemoryInputStream.h" />
     <ClInclude Include="OutputStreams\FileOutputStream.h" />
     <ClInclude Include="OutputStreams\IOutputStream.h" />
+    <ClInclude Include="OutputStreams\MemoryOutputStream.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputStreams\FileInputStream.cpp" />
     <ClCompile Include="InputStreams\MemoryInputStream.cpp" />
     <ClCompile Include="OutputStreams\FileOutputStream.cpp" />
+    <ClCompile Include="OutputStreams\MemoryOutputStream.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

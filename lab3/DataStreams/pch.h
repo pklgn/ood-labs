@@ -18,5 +18,6 @@
 #include "OutputStreams/IOutputStream.h"
 #include "OutputStreams/FileOutputStream.h"
 #include "InputStreams/MemoryInputStream.h"
+#include "OutputStreams/MemoryOutputStream.h"
 
 #endif //PCH_H

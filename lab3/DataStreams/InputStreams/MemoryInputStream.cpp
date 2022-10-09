@@ -1,14 +1,14 @@
 #include "../pch.h"
 
 MemoryInputStream::MemoryInputStream(const std::vector<uint8_t>& input)
-	: m_memoryStorage(input)
-	, m_memoryStorageIterator(m_memoryStorage.begin())
+	: m_inputStorage(input)
+	, m_inputStorageIterator(m_inputStorage.begin())
 {
 }
 
 bool MemoryInputStream::IsEOF() const
 {
-	return m_memoryStorageIterator != m_memoryStorage.end();
+	return m_inputStorageIterator != m_inputStorage.end();
 }
 
 uint8_t MemoryInputStream::ReadByte()
@@ -18,7 +18,7 @@ uint8_t MemoryInputStream::ReadByte()
 		throw std::ios_base::failure("EOF was found while reading the file\n");
 	}
 
-	return *m_memoryStorageIterator++;
+	return *m_inputStorageIterator++;
 }
 
 std::streamsize MemoryInputStream::ReadBlock(void* dstBuffer, std::streamsize size)
@@ -28,9 +28,9 @@ std::streamsize MemoryInputStream::ReadBlock(void* dstBuffer, std::streamsize si
 		throw std::ios_base::failure("EOF was found while reading the file\n");
 	}
 
-	std::streamsize actualSize = std::min(size, std::distance(m_memoryStorageIterator, m_memoryStorage.end()));
+	std::streamsize actualSize = std::min(size, std::distance(m_inputStorageIterator, m_inputStorage.end()));
 
-	std::memcpy(dstBuffer, &(*m_memoryStorageIterator), actualSize);
+	std::memcpy(dstBuffer, &(*m_inputStorageIterator), actualSize + sizeof(uint8_t));
 
 	return actualSize;
 }
