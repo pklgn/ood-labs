@@ -11,28 +11,22 @@ FileInputStream::FileInputStream(const std::string& fileName)
 
 bool FileInputStream::IsEOF() const
 {
-	if (m_inputFile.fail())
-	{
-		throw std::ios_base::failure("Specified file seems not good");
-	}
-
 	return m_inputFile.eof();
 }
 
 uint8_t FileInputStream::ReadByte()
 {
-	uint8_t byte;
-
 	if (IsEOF())
 	{
 		throw std::ios_base::failure("EOF was found\n");
 	}
 
-	m_inputFile >> byte;
+	uint8_t byte = 0;
+	ReadBlock(&byte, 1);
 
-	if (!m_inputFile)
+	if (IsEOF())
 	{
-		throw std::ios_base::failure("Error was found while reading the file\n");
+		throw std::ios_base::failure("Trying to read EOF\n");
 	}
 
 	return byte;
@@ -40,6 +34,11 @@ uint8_t FileInputStream::ReadByte()
 
 std::streamsize FileInputStream::ReadBlock(void* dstBuffer, std::streamsize size)
 {
+	if (dstBuffer == nullptr)
+	{
+		throw std::ios_base::failure("Couldn't read data to null memory pointer\n");
+	}
+
 	try
 	{
 		m_inputFile.read(reinterpret_cast<char*>(dstBuffer), size);
