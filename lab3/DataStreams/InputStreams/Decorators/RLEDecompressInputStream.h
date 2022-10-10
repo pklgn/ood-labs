@@ -1,7 +1,5 @@
 #pragma once
 
-typedef std::pair<uint32_t, uint8_t> RLEPair;
-
 class RLEDecompressInputStream : public DecompressInputStream
 {
 public:

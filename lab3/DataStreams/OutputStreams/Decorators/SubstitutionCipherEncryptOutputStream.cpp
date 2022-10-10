@@ -11,6 +11,7 @@ SubstitutionCipherEncryptOutputStream::SubstitutionCipherEncryptOutputStream(uin
 
 	std::shuffle(m_encryptTable.begin(), m_encryptTable.end(), std::mt19937(m_encryptKey));
 }
+//TODO: вынести в стат класс реализацию создания таблицы
 
 uint8_t SubstitutionCipherEncryptOutputStream::EncryptByte(uint8_t data)
 {

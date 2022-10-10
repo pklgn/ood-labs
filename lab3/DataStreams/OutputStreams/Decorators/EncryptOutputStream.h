@@ -1,7 +1,5 @@
 #pragma once
 
-typedef std::unique_ptr<IOutputStream> IOutputStreamPtr;
-
 class EncryptOutputStream : public IOutputStream
 {
 public:

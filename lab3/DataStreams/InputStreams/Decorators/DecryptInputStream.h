@@ -1,7 +1,5 @@
 #pragma once
 
-typedef std::unique_ptr<IInputStream> IInputStreamPtr;
-
 class DecryptInputStream : public IInputStream
 {
 public:
