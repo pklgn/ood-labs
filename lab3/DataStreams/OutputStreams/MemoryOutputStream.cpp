@@ -14,10 +14,21 @@ void MemoryOutputStream::WriteByte(uint8_t data)
 
 void MemoryOutputStream::WriteBlock(const void* srcData, std::streamsize size)
 {
+	if (srcData == nullptr)
+	{
+		throw std::ios_base::failure("Couldn't write from null memory pointer\n");
+	}
+
+	if (size == 0)
+	{
+		return;
+	}
+
 	try
 	{
+		auto writeStartPosition = m_outputStorage.size();
 		m_outputStorage.resize(m_outputStorage.size() + size);
-		std::memcpy(&m_outputStorage.back(), srcData, size * sizeof(uint8_t));
+		std::memcpy(&m_outputStorage[writeStartPosition], srcData, size * sizeof(uint8_t));
 	}
 	catch (...)
 	{

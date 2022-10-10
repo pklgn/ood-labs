@@ -141,20 +141,52 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="InputStreams\Decorators\DecryptInputStream.h" />
+    <ClInclude Include="InputStreams\Decorators\DecompressInputStream.h" />
+    <ClInclude Include="InputStreams\Decorators\RLEDecompressInputStream.h" />
+    <ClInclude Include="InputStreams\Decorators\SubstitutionCipherDecryptInputStream.h" />
     <ClInclude Include="InputStreams\FileInputStream.h" />
     <ClInclude Include="InputStreams\IInputStream.h" />
     <ClInclude Include="InputStreams\MemoryInputStream.h" />
+    <ClInclude Include="OutputStreams\Decorators\CompressOutputStream.h" />
+    <ClInclude Include="OutputStreams\Decorators\EncryptOutputStream.h" />
+    <ClInclude Include="OutputStreams\Decorators\RLECompressOutputStream.h" />
+    <ClInclude Include="OutputStreams\Decorators\SubstitutionCipherEncryptOutputStream.h" />
     <ClInclude Include="OutputStreams\FileOutputStream.h" />
     <ClInclude Include="OutputStreams\IOutputStream.h" />
     <ClInclude Include="OutputStreams\MemoryOutputStream.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="InputStreams\Decorators\DecryptInputStream.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="InputStreams\Decorators\DecompressInputStream.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="InputStreams\Decorators\RLEDecompressInputStream.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="InputStreams\Decorators\SubstitutionCipherDecryptInputStream.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="InputStreams\FileInputStream.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="InputStreams\MemoryInputStream.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="OutputStreams\Decorators\CompressOutputStream.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="OutputStreams\Decorators\EncryptOutputStream.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="OutputStreams\Decorators\RLECompressOutputStream.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="OutputStreams\Decorators\SubstitutionCipherEncryptOutputStream.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="OutputStreams\FileOutputStream.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>

@@ -21,15 +21,15 @@ uint8_t FileInputStream::ReadByte()
 		throw std::ios_base::failure("EOF was found\n");
 	}
 
-	uint8_t byte = 0;
-	ReadBlock(&byte, 1);
+	uint8_t* byte = new uint8_t;
+	ReadBlock(byte, 1);
 
 	if (IsEOF())
 	{
 		throw std::ios_base::failure("Trying to read EOF\n");
 	}
 
-	return byte;
+	return *byte;
 }
 
 std::streamsize FileInputStream::ReadBlock(void* dstBuffer, std::streamsize size)

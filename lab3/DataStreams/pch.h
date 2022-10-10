@@ -13,11 +13,25 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <random>
+#include <numeric>
 #include "InputStreams/IInputStream.h"
 #include "InputStreams/FileInputStream.h"
 #include "OutputStreams/IOutputStream.h"
 #include "OutputStreams/FileOutputStream.h"
 #include "InputStreams/MemoryInputStream.h"
 #include "OutputStreams/MemoryOutputStream.h"
+
+#include "InputStreams/Decorators/DecryptInputStream.h"
+#include "InputStreams/Decorators/SubstitutionCipherDecryptInputStream.h"
+
+#include "OutputStreams/Decorators/EncryptOutputStream.h"
+#include "OutputStreams/Decorators/SubstitutionCipherEncryptOutputStream.h"
+
+#include "InputStreams/Decorators/DecompressInputStream.h"
+#include "InputStreams/Decorators/RLEDecompressInputStream.h"
+
+#include "OutputStreams/Decorators/CompressOutputStream.h"
+#include "OutputStreams/Decorators/RLECompressOutputStream.h"
 
 #endif //PCH_H
