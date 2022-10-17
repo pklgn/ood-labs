@@ -13,8 +13,6 @@ void RegularPolygon::Draw(ICanvas& canvas) const
 {
 	canvas.SetColor(GetColor());
 	
-	//Point leftTop = { m_center.x + m_radius, m_center.y - m_radius };
-
 	canvas.DrawEllipse(m_center, m_radius, m_radius, m_vertexCount);
 }
 

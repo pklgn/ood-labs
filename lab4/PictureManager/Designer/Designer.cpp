@@ -19,3 +19,5 @@ PictureDraft Designer::CreateDraft(std::istream& is)
 
 	return pictureDraft;
 }
+
+//TODO: prototype pattern

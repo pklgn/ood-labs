@@ -9,4 +9,6 @@ class IShapeFactory
 {
 public:
 	virtual ShapePtr CreateShape(const std::string& description) = 0;
+
+	virtual ~IShapeFactory() = default;
 };

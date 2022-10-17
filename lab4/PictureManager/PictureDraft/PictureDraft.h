@@ -8,6 +8,7 @@ class PictureDraft
 {
 public:
 	size_t GetShapeCount() const;
+	// return raw pointer
 	Storage::const_iterator GetShape(size_t index) const;
 	void AddShape(ShapePtr&&);
 

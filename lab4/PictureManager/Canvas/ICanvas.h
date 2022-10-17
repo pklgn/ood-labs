@@ -1,4 +1,5 @@
 #pragma once
+#include <istream>
 
 const size_t ELLIPSE_POINT_COUNT = 30;
 

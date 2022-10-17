@@ -45,6 +45,7 @@ void Canvas::DrawEllipse(const Point& center, float width, float height, size_t 
 
 	m_renderWindow.draw(ellipse);
 }
+//TODO: pass renderTarget 
 
 void Canvas::CaptureShapes(const std::string& outputFileName)
 {
