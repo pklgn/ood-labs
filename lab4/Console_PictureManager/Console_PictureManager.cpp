@@ -3,10 +3,8 @@
 
 #include <iostream>
 #include <fstream>
-#include "../PictureManager/Designer/IDesigner.h"
 #include "../PictureManager/Designer/Designer.h"
 #include "../PictureManager/Painter/Painter.h"
-#include "../PictureManager/Canvas/ICanvas.h"
 #include "../PictureManager/Canvas/Canvas.h"
 
 int main()
