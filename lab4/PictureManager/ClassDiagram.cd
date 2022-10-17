@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Designer" Collapsed="true">
+    <Position X="3.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAUAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Designer\Designer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ellipse" Collapsed="true">
+    <Position X="5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAASAAAAAgAUIAAAAAAAIAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Shapes\Ellipse.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ICanvas" Collapsed="true">
+    <Position X="7.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAEAAEgAAAAAAAA=</HashCode>
+      <FileName>Canvas\ICanvas.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IDesigner" Collapsed="true">
+    <Position X="4.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Designer\IDesigner.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IShapeFactory" Collapsed="true">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shapes\Factory\IShapeFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Painter">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Painter\Painter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PictureDraft" Collapsed="true">
+    <Position X="8.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIABCAAAAAAAAAAAAAAAQAAAAAAAABAAAAAAAgAA=</HashCode>
+      <FileName>PictureDraft\PictureDraft.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Rectangle" Collapsed="true">
+    <Position X="1.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAwAAABAAAAAAAIAgAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Shapes\Rectangle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RegularPolygon" Collapsed="true">
+    <Position X="6.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAkAEAAAQAAAAIAAAAAgAABAAAAAAAAA=</HashCode>
+      <FileName>Shapes\RegularPolygon.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shape" Collapsed="true">
+    <Position X="4.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAgAAAAAAAAABAAAAAACAAAAAAAgAAAA=</HashCode>
+      <FileName>Shapes\Shape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShapeFactory" Collapsed="true">
+    <Position X="1" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shapes\Factory\ShapeFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Triangle" Collapsed="true">
+    <Position X="3.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAgABAAAAAAAAAAAA4AAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shapes\Triangle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Canvas" Collapsed="true">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAIAgAAAAAAAAAAAAkgAAAgAAAA=</HashCode>
+      <FileName>Canvas\Canvas.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Point" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Canvas\ICanvas.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
