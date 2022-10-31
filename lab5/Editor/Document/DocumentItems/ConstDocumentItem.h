@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <variant>
 
 #include "../Image/IImage.h"
 #include "../Paragraph/IParagraph.h"
@@ -10,6 +11,7 @@
 class ConstDocumentItem
 {
 public:
+	ConstDocumentItem(std::shared_ptr<IBaseDocumentItem>);
 	// ¬озвращает указатель на константное изображение, либо nullptr,
 	// если элемент не €вл€етс€ изображением
 	std::shared_ptr<const IImage> GetImage() const;
@@ -17,4 +19,7 @@ public:
 	std::shared_ptr<const IParagraph> GetParagraph() const;
 
 	virtual ~ConstDocumentItem() = default;
+
+protected:
+	std::shared_ptr<IBaseDocumentItem> m_item;
 };
