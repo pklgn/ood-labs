@@ -1,64 +1,70 @@
 #pragma once
-#include <memory>
-#include <optional>
-#include <string>
+#include <deque>
+#include <vector>
 
-#include "DocumentItems/ConstDocumentItem.h"
+#include "../History/History.h"
 #include "DocumentItems/DocumentItem.h"
-#include "Image/IImage.h"
-#include "Paragraph/IParagraph.h"
+#include "IDocument.h"
 
-/*
-Интерфес документа
-*/
-class IDocument
+class HTMLDocument : public IDocument
 {
 public:
+	inline static const Path noPath = "";
+
+	HTMLDocument();
 	// Вставляет параграф текста в указанную позицию (сдвигая последующие элементы)
 	// Если параметр position не указан, вставка происходит в конец документа
-	virtual std::shared_ptr<IParagraph> InsertParagraph(const std::string& text,
+	std::shared_ptr<IParagraph> InsertParagraph(const std::string& text,
 		std::optional<size_t> position = std::nullopt)
-		= 0;
+		override;
 
 	// Вставляет изображение в указанную позицию (сдвигая последующие элементы)
 	// Параметр path задает путь к вставляемому изображению
 	// При вставке изображение должно копироваться в подкаталог images
 	// под автоматически сгенерированным именем
-	virtual std::shared_ptr<IImage> InsertImage(const Path& path, int width, int height,
+	std::shared_ptr<IImage> InsertImage(const Path& path, int width, int height,
 		std::optional<size_t> position = std::nullopt)
-		= 0;
+		override;
 
 	// Возвращает количество элементов в документе
-	virtual size_t GetItemsCount() const = 0;
+	size_t GetItemsCount() const override;
 
 	// Доступ к элементам изображения
-	virtual ConstDocumentItem GetItem(size_t index) const = 0;
-	virtual DocumentItem GetItem(size_t index) = 0;
+	ConstDocumentItem GetItem(size_t index) const override;
+	DocumentItem GetItem(size_t index) override;
 
 	// Удаляет элемент из документа
-	virtual void DeleteItem(size_t index) = 0;
+	void DeleteItem(size_t index) override;
 
 	// Возвращает заголовок документа
-	virtual std::string GetTitle() const = 0;
+	std::string GetTitle() const override;
 	// Изменяет заголовок документа
-	virtual void SetTitle(const std::string& title) = 0;
+	void SetTitle(const std::string& title) override;
 
 	// Сообщает о доступности операции Undo
-	virtual bool CanUndo() const = 0;
+	bool CanUndo() const override;
 	// Отменяет команду редактирования
-	virtual void Undo() = 0;
+	void Undo() override;
 
 	// Сообщает о доступности операции Redo
-	virtual bool CanRedo() const = 0;
+	bool CanRedo() const override;
 	// Выполняет отмененную команду редактирования
-	virtual void Redo() = 0;
+	void Redo() override;
 
 	// Сохраняет документ в формате html. Изображения сохраняются в подкаталог images.
 	// Пути к изображениям указываются относительно пути к сохраняемому HTML файлу
-	virtual void Save() const = 0;
+	void Save() const override;
 
-	virtual Path GetSavePath() const = 0;
-	virtual void SetSavePath(const Path&) = 0;
+	Path GetSavePath() const override;
+	void SetSavePath(const Path&) override;
 
-	virtual ~IDocument() = default;
+	std::vector<DocumentItem> GetDocumentItems() const;
+
+private:
+	size_t ValidatePosition(const std::optional<size_t>& position);
+
+	std::string m_title;
+	History m_history;
+	std::vector<DocumentItem> m_items;
+	Path m_savePath;
 };
