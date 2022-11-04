@@ -1,24 +1,24 @@
 #pragma once
 #include <deque>
 
-#include "../Command/ICommand.h"
+#include "IHistory.h"
 
-class History
+class History : public IHistory
 {
 public:
-	const size_t commandsDepthLevel = 10;
+	const size_t COMMANDS_DEPTH_LEVEL = 10;
 
-	bool CanUndo() const;
-	bool CanRedo() const;
+	bool CanUndo() const override;
+	bool CanRedo() const override;
 
-	void Undo();
-	void Redo();
+	void Undo() override;
+	void Redo() override;
 
-	void AddAndExecuteCommand(ICommandPtr&&);
+	void AddAndExecuteCommand(ICommandPtr&&) override;
 
 private:
 	std::deque<ICommandPtr> m_commands;
 	size_t m_nextCommandIndex = 0;
 };
 
-//TODO: сделать интерфейс истории
+//FIXED: РґРѕР±Р°РІРёС‚СЊ РёРЅС‚РµСЂС„РµР№СЃ
