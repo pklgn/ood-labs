@@ -45,7 +45,15 @@ bool Menu::ExecuteCommand(const std::string& command)
 
 	if (it != m_items.end())
 	{
-		it->command();
+		try
+		{
+			it->command();
+		}
+		catch (const std::exception& e)
+		{
+			m_output << e.what() << std::endl;
+			throw;
+		}
 	}
 	else
 	{
