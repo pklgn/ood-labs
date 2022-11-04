@@ -1,6 +1,7 @@
 #include "../pch.h"
 #include "AbstractCommand.h"
 
+
 void AbstractCommand::Execute()
 {
 	if (!m_executed)

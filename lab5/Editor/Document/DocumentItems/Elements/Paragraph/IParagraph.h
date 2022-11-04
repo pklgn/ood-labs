@@ -4,7 +4,7 @@
 #include "../IElement.h"
 
 /* Параграф текста*/
-class IParagraph : IElement
+class IParagraph : public IElement
 {
 public:
 	virtual std::string GetText() const = 0;

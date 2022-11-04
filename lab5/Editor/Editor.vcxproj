@@ -145,7 +145,6 @@
     <ClInclude Include="Document\Commands\DeleteItemCommand.h" />
     <ClInclude Include="Document\Commands\InsertImageCommand.h" />
     <ClInclude Include="Document\Commands\InsertParagraphCommand.h" />
-    <ClInclude Include="Document\Commands\ListDocumentItemsCommand.h" />
     <ClInclude Include="Document\Commands\SetTitleCommand.h" />
     <ClInclude Include="Document\DocumentItems\ConstDocumentItem.h" />
     <ClInclude Include="Document\DocumentItems\DocumentItem.h" />
@@ -189,8 +188,9 @@
     <ClCompile Include="Document\Commands\InsertParagraphCommand.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Document\Commands\ListDocumentItemsCommand.cpp" />
-    <ClCompile Include="Document\Commands\SetTitleCommand.cpp" />
+    <ClCompile Include="Document\Commands\SetTitleCommand.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="Document\DocumentItems\ConstDocumentItem.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
     </ClCompile>

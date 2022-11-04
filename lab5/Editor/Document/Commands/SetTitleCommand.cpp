@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "../../pch.h"
 #include "SetTitleCommand.h"
 
 SetTitleCommand::SetTitleCommand(std::string& target, const std::string& newValue)

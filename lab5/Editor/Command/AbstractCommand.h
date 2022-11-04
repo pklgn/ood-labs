@@ -1,5 +1,4 @@
 #pragma once
-
 #include "ICommand.h"
 
 class AbstractCommand : public ICommand

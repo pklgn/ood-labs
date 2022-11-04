@@ -78,9 +78,6 @@
     <ClInclude Include="Document\Commands\SetTitleCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Document\Commands\ListDocumentItemsCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\Commands\EditorInsertImageCommand\EditorInsertImageCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -171,9 +168,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Document\Commands\SetTitleCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Document\Commands\ListDocumentItemsCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Commands\EditorInsertImageCommand\EditorInsertImageCommand.cpp">

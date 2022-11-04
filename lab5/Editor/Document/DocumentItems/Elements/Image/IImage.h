@@ -8,7 +8,7 @@ using Path = std::string;
 /*
 Изображение
 */
-class IImage : IElement
+class IImage : public IElement
 {
 public:
 	// Возвращает путь относительно каталога документа
