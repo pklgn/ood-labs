@@ -51,9 +51,6 @@
     <ClInclude Include="Document\Image\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Document\DocumentItems\IBaseDocumentItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Editor\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -91,6 +88,36 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Commands\EditorDeleteItemCommand\EditorDeleteItemCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document\DocumentItems\Paragraph\IParagraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document\DocumentItems\Paragraph\Paragraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document\DocumentItems\Image\IImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document\DocumentItems\Image\Image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="History\IHistory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document\DocumentItems\Elements\IElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document\DocumentItems\Elements\Image\IImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document\DocumentItems\Elements\Image\Image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document\DocumentItems\Elements\Paragraph\IParagraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Document\DocumentItems\Elements\Paragraph\Paragraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -156,6 +183,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Editor\Commands\EditorDeleteItemCommand\EditorDeleteItemCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Document\DocumentItems\Paragraph\Paragraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Document\DocumentItems\Image\Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Document\DocumentItems\Elements\Image\Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Document\DocumentItems\Elements\Paragraph\Paragraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

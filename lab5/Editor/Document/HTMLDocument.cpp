@@ -1,20 +1,19 @@
 #include "../pch.h"
+#include <ctime>
+#include <filesystem>
 #include <format>
 #include <fstream>
 #include <stdexcept>
 #include <string>
-#include <ctime>
-#include <filesystem>
 
+#include "Commands/DeleteItemCommand.h"
+#include "Commands/InsertImageCommand.h"
+#include "Commands/InsertParagraphCommand.h"
+#include "DocumentItems/Elements/Image/Image.h"
+#include "DocumentItems/Elements/Paragraph/Paragraph.h"
+#include "HTMLDocument.h"
 
 namespace fs = std::filesystem;
-
-#include "HTMLDocument.h"
-#include "Image/Image.h"
-#include "Paragraph/Paragraph.h"
-#include "Commands/InsertParagraphCommand.h"
-#include "Commands/InsertImageCommand.h"
-#include "Commands/DeleteItemCommand.h"
 
 std::string Trim(const std::string& str);
 std::string HTMLEncode(const std::string& data);
@@ -142,11 +141,6 @@ void HTMLDocument::SetSavePath(const Path& path)
 	{
 		m_savePath.push_back('/');
 	}
-}
-
-std::vector<DocumentItem> HTMLDocument::GetDocumentItems() const
-{
-	return m_items;
 }
 
 size_t HTMLDocument::ValidatePosition(const std::optional<size_t>& position)

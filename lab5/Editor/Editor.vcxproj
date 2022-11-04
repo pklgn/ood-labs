@@ -149,7 +149,15 @@
     <ClInclude Include="Document\Commands\SetTitleCommand.h" />
     <ClInclude Include="Document\DocumentItems\ConstDocumentItem.h" />
     <ClInclude Include="Document\DocumentItems\DocumentItem.h" />
-    <ClInclude Include="Document\DocumentItems\IBaseDocumentItem.h" />
+    <ClInclude Include="Document\DocumentItems\Elements\IElement.h" />
+    <ClInclude Include="Document\DocumentItems\Elements\Image\IImage.h" />
+    <ClInclude Include="Document\DocumentItems\Elements\Image\Image.h" />
+    <ClInclude Include="Document\DocumentItems\Elements\Paragraph\IParagraph.h" />
+    <ClInclude Include="Document\DocumentItems\Elements\Paragraph\Paragraph.h" />
+    <ClInclude Include="Document\DocumentItems\Image\IImage.h" />
+    <ClInclude Include="Document\DocumentItems\Image\Image.h" />
+    <ClInclude Include="Document\DocumentItems\Paragraph\IParagraph.h" />
+    <ClInclude Include="Document\DocumentItems\Paragraph\Paragraph.h" />
     <ClInclude Include="Document\HTMLDocument.h" />
     <ClInclude Include="Document\IDocument.h" />
     <ClInclude Include="Document\Image\IImage.h" />
@@ -165,6 +173,7 @@
     <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="Editor\Menu.h" />
     <ClInclude Include="History\History.h" />
+    <ClInclude Include="History\IHistory.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +197,14 @@
     <ClCompile Include="Document\DocumentItems\DocumentItem.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Document\DocumentItems\Elements\Image\Image.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Document\DocumentItems\Elements\Paragraph\Paragraph.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Document\DocumentItems\Image\Image.cpp" />
+    <ClCompile Include="Document\DocumentItems\Paragraph\Paragraph.cpp" />
     <ClCompile Include="Document\HTMLDocument.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
