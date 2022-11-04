@@ -1,13 +1,18 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <functional>
 
 #include "../Command/ICommand.h"
 
 class Menu
 {
 public:
-	void AddItem(const std::string& shortcut, const std::string& description, ICommandPtr&& command);
+	using Command = std::function<void()>;
+
+	Menu(std::istream& input, std::ostream& output);
+
+	void AddItem(const std::string& shortcut, const std::string& description, const Command& command);
 
 	void Run();
 
@@ -20,17 +25,21 @@ private:
 
 	struct Item
 	{
-		Item(const std::string& shortcut, const std::string& description, ICommandPtr&& command)
+		Item(const std::string& shortcut, const std::string& description, const Command& command)
 			: shortcut(shortcut)
 			, description(description)
-			, command(std::move(command))
+			, command(command)
 		{
 		}
 
 		std::string shortcut;
 		std::string description;
-		ICommandPtr command;
+		Command command;
 	};
+
 	std::vector<Item> m_items;
 	bool m_exit = false;
+
+	std::istream& m_input;
+	std::ostream& m_output;
 };

@@ -1,16 +1,22 @@
 #include "../pch.h"
 #include "Menu.h"
 
-void Menu::AddItem(const std::string& shortcut, const std::string& description, ICommandPtr&& command)
+Menu::Menu(std::istream& input, std::ostream& output)
+	: m_input(input)
+	, m_output(output)
 {
-	m_items.emplace_back(shortcut, description, std::move(command));
+}
+
+void Menu::AddItem(const std::string& shortcut, const std::string& description, const Command& command)
+{
+	m_items.emplace_back(shortcut, description, command);
 }
 
 void Menu::Run()
 {
 	std::string command;
-	while ((std::cout << ">")
-		&& getline(std::cin, command)
+	while ((m_output << ">")
+		&& getline(m_input, command)
 		&& ExecuteCommand(command))
 	{
 	}
@@ -18,10 +24,10 @@ void Menu::Run()
 
 void Menu::ShowInstructions() const
 {
-	std::cout << "Commands list:\n";
+	m_output << "Commands list:\n";
 	for (auto& item : m_items)
 	{
-		std::cout << "  " << item.shortcut << ": " << item.description << "\n";
+		m_output << "  " << item.shortcut << ": " << item.description << "\n";
 	}
 }
 
@@ -39,11 +45,11 @@ bool Menu::ExecuteCommand(const std::string& command)
 
 	if (it != m_items.end())
 	{
-		it->command->Execute();
+		it->command();
 	}
 	else
 	{
-		std::cout << "Unknown command\n";
+		m_output << "Unknown command\n";
 	}
 	
 	return !m_exit;
