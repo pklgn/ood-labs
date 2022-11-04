@@ -1,25 +1,25 @@
 #pragma once
 #include <memory>
-#include <variant>
 
-#include "../Image/IImage.h"
-#include "../Paragraph/IParagraph.h"
+#include "Elements/IElement.h"
+#include "Elements/Image/IImage.h"
+#include "Elements/Paragraph/IParagraph.h"
 
 /*
-Неизменяемый элемент документа
+РќРµРёР·РјРµРЅСЏРµРјС‹Р№ СЌР»РµРјРµРЅС‚ РґРѕРєСѓРјРµРЅС‚Р°
 */
 class ConstDocumentItem
 {
 public:
-	ConstDocumentItem(std::shared_ptr<IBaseDocumentItem>);
-	// Возвращает указатель на константное изображение, либо nullptr,
-	// если элемент не является изображением
+	ConstDocumentItem(std::shared_ptr<IElement>);
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєРѕРЅСЃС‚Р°РЅС‚РЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ, Р»РёР±Рѕ nullptr,
+	// РµСЃР»Рё СЌР»РµРјРµРЅС‚ РЅРµ СЏРІР»СЏРµС‚СЃСЏ РёР·РѕР±СЂР°Р¶РµРЅРёРµРј
 	std::shared_ptr<const IImage> GetImage() const;
-	// Возвращает указатель на константный параграф, либо nullptr, если элемент не является параграфом
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РєРѕРЅСЃС‚Р°РЅС‚РЅС‹Р№ РїР°СЂР°РіСЂР°С„, Р»РёР±Рѕ nullptr, РµСЃР»Рё СЌР»РµРјРµРЅС‚ РЅРµ СЏРІР»СЏРµС‚СЃСЏ РїР°СЂР°РіСЂР°С„РѕРј
 	std::shared_ptr<const IParagraph> GetParagraph() const;
-
 	virtual ~ConstDocumentItem() = default;
 
+
 protected:
-	std::shared_ptr<IBaseDocumentItem> m_item;
+	std::shared_ptr<IElement> m_item;
 };

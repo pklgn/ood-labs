@@ -1,7 +1,7 @@
 #include "../../pch.h"
 #include "DocumentItem.h"
 
-DocumentItem::DocumentItem(std::shared_ptr<IBaseDocumentItem> item)
+DocumentItem::DocumentItem(std::shared_ptr<IElement> item)
 	: ConstDocumentItem(item)
 {
 }
