@@ -58,6 +58,10 @@ public:
 	Path GetSavePath() const override;
 	void SetSavePath(const Path&) override;
 
+	void ReplaceText(size_t index, const std::string&);
+
+	void ResizeImage(size_t index, size_t width, size_t height);
+
 protected:
 	Path CopyImage(const Path& srcPath);
 

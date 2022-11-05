@@ -10,6 +10,7 @@
 #include "Commands/InsertImageCommand.h"
 #include "Commands/InsertParagraphCommand.h"
 #include "Commands/SetTitleCommand.h"
+#include "Commands/ReplaceTextCommand.h"
 #include "DocumentItems/Elements/Image/Image.h"
 #include "DocumentItems/Elements/Paragraph/Paragraph.h"
 #include "HTMLDocument.h"
@@ -66,11 +67,21 @@ size_t HTMLDocument::GetItemsCount() const
 
 ConstDocumentItem HTMLDocument::GetItem(size_t index) const
 {
+	if (m_items.size() <= index)
+	{
+		throw std::out_of_range("Item index is out of range");
+	}
+
 	return m_items.at(index);
 }
 
 DocumentItem HTMLDocument::GetItem(size_t index)
 {
+	if (m_items.size() <= index)
+	{
+		throw std::out_of_range("Item index is out of range");
+	}
+
 	return m_items.at(index);
 }
 
@@ -149,6 +160,18 @@ void HTMLDocument::SetSavePath(const Path& path)
 	}
 
 	m_savePath = fsPath.string();
+}
+
+void HTMLDocument::ReplaceText(size_t index, const std::string& newText)
+{
+	auto item = GetItem(index);
+	auto paragraph = item.GetParagraph();
+	if (paragraph == nullptr)
+	{
+		throw std::runtime_error("Couldn't replace text for non-paragraph document item");
+	}
+
+	m_history.AddAndExecuteCommand(std::make_unique<ReplaceTextCommand>(paragraph, newText));
 }
 
 size_t HTMLDocument::ValidatePosition(const std::optional<size_t>& position)
