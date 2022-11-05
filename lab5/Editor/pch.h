@@ -9,10 +9,11 @@
 
 // add headers that you want to pre-compile here
 #include <algorithm>
+#include <cstdio>
 #include <iostream>
 #include <memory>
 #include <optional>
 #include <stdexcept>
-#include <cstdio>
+#include <sstream>
 
 #endif // PCH_H

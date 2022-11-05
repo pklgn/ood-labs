@@ -28,7 +28,7 @@ void SaveHtmlDocumentImageItem(std::ofstream&, std::shared_ptr<const IImage>);
 void SaveHtmlDocumentParagraphItem(std::ofstream&, std::shared_ptr<const IParagraph>);
 
 HTMLDocument::HTMLDocument()
-	: m_title(HTML_DOCUMENT_FILENAME_PREFIX + GetCurrentDateTimeString() + ".html")
+	: m_title(HTML_DOCUMENT_FILENAME_PREFIX + GetCurrentDateTimeString())
 {
 	SetSavePath(fs::current_path().string());
 }
@@ -188,14 +188,14 @@ void SaveHtmlDocumentImageItem(std::ofstream& output, std::shared_ptr<const IIma
 		   << "src=" << HTMLEncode(imagePtr->GetPath()) << "\n\t"
 		   << "width=" << imagePtr->GetWidth() << "\n\t"
 		   << "height=" << imagePtr->GetHeight() << "\n\t"
-		   << "/>";
+		   << "/>\n";
 }
 
 void SaveHtmlDocumentParagraphItem(std::ofstream& output, std::shared_ptr<const IParagraph> paragraphPtr)
 {
 	output << "<p>"
-		   << HTMLEncode(paragraphPtr->GetText())
-		   << "</p>";
+		   << HTMLEncode(Trim(paragraphPtr->GetText()))
+		   << "</p>\n";
 }
 
 std::string HTMLEncode(const std::string& data)

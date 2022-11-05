@@ -52,7 +52,6 @@ bool Menu::ExecuteCommand(const std::string& command)
 		catch (const std::exception& e)
 		{
 			m_output << e.what() << std::endl;
-			throw;
 		}
 	}
 	else
