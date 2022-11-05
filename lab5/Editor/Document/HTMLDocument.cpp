@@ -15,7 +15,8 @@
 
 const std::string IMAGE_FILENAME_PREFIX = "img";
 const std::string HTML_DOCUMENT_FILENAME_PREFIX = "Untitled";
-const std::string IMAGES_DIRECTORY = "images/";
+const std::string IMAGES_DIRECTORY = "images";
+const auto PLATFORM_SEPARATOR = std::filesystem::path::preferred_separator;
 
 namespace fs = std::filesystem;
 
@@ -47,13 +48,12 @@ std::shared_ptr<IParagraph> HTMLDocument::InsertParagraph(const std::string& tex
 //TODO: вынести построение относительного пути в функцию
 std::shared_ptr<IImage> HTMLDocument::InsertImage(const Path& path, size_t width, size_t height, std::optional<size_t> position)
 {
-	Path relativeImagePath = GetRelativeImagePath(path);
-	std::ofstream(m_savePath + relativeImagePath, std::ios::binary) << std::ifstream(path, std::ios::binary).rdbuf();
+	Path imagePath = CopyImage(path);
 
 	auto insertPosition = ValidatePosition(position);
-	auto imagePtr = std::make_shared<Image>(width, height, relativeImagePath);
+	auto imagePtr = std::make_shared<Image>(width, height, imagePath);
 
-	m_history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(m_items, imagePtr, insertPosition, m_savePath + relativeImagePath));
+	m_history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(m_items, imagePtr, insertPosition, imagePath));
 
 	return imagePtr;
 }
@@ -141,11 +141,13 @@ Path HTMLDocument::GetSavePath() const
 
 void HTMLDocument::SetSavePath(const Path& path)
 {
-	m_savePath = Trim(path);
-	if (m_savePath.back() != '/')
+	fs::path fsPath = path;
+	if (!fsPath.empty() && fsPath.generic_string().back() != PLATFORM_SEPARATOR)
 	{
-		m_savePath.push_back('/');
+		fsPath += PLATFORM_SEPARATOR;
 	}
+
+	m_savePath = fsPath.string();
 }
 
 size_t HTMLDocument::ValidatePosition(const std::optional<size_t>& position)
@@ -250,5 +252,24 @@ Path GetRelativeImagePath(const Path& path)
 	fs::path filePath = path;
 	std::string imageFileName = IMAGE_FILENAME_PREFIX + GetCurrentDateTimeString() + filePath.extension().string();
 
-	return IMAGES_DIRECTORY + imageFileName;
+	fs::path relativePath;
+	relativePath += IMAGES_DIRECTORY;
+	relativePath += PLATFORM_SEPARATOR;
+	relativePath += imageFileName;
+
+	return relativePath.string();
+}
+
+Path HTMLDocument::CopyImage(const Path& srcPath)
+{
+	if (!fs::exists(IMAGES_DIRECTORY))
+	{
+		fs::create_directory(IMAGES_DIRECTORY);
+	}
+
+	fs::path imagePath = m_savePath + GetRelativeImagePath(srcPath);
+
+	fs::copy_file(Trim(srcPath), imagePath);
+
+	return imagePath.string();
 }

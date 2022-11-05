@@ -58,6 +58,9 @@ public:
 	Path GetSavePath() const override;
 	void SetSavePath(const Path&) override;
 
+protected:
+	Path CopyImage(const Path& srcPath);
+
 private:
 	size_t ValidatePosition(const std::optional<size_t>& position);
 
