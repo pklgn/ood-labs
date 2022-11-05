@@ -35,7 +35,7 @@ protected:
 
 	void Exit();
 
-	size_t ReadInsertPosition();
+	size_t ReadPosition();
 
 private:
 	Menu m_menu;

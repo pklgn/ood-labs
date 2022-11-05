@@ -68,13 +68,14 @@ void Editor::StartEditing()
 
 void Editor::InsertParagraph()
 {
-	size_t position = ReadInsertPosition();
+	size_t position = ReadPosition();
 
 	std::string text;
 	std::getline(m_input, text);
 
 	if (m_input.fail())
 	{
+		m_input.clear();
 		throw std::runtime_error("Paragraph text was expected");
 	}
 
@@ -83,22 +84,25 @@ void Editor::InsertParagraph()
 
 void Editor::InsertImage()
 {
-	std::string path;
-	std::getline(m_input, path);
-	if (m_input.fail())
-	{
-		throw std::runtime_error("Image path was expected");
-	}
+	size_t position = ReadPosition();
 
 	size_t width;
 	size_t height;
 	m_input >> width >> height;
 	if (m_input.fail())
 	{
+		m_input.clear();
+		m_input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		throw std::runtime_error("Couldn't resolve image size");
 	}
 
-	size_t position = ReadInsertPosition();
+	std::string path;
+	std::getline(m_input, path);
+	if (m_input.fail())
+	{
+		m_input.clear();
+		throw std::runtime_error("Image path was expected");
+	}
 
 	m_document.InsertImage(path, width, height, position);
 }
@@ -110,6 +114,7 @@ void Editor::SetTitle()
 
 	if (m_input.fail())
 	{
+		m_input.clear();
 		throw std::runtime_error("Title was expected");
 	}
 
@@ -147,17 +152,13 @@ void Editor::List() const
 
 void Editor::ReplaceText()
 {
-	size_t position;
-	m_input >> position;
-	if (m_input.fail())
-	{
-		throw std::runtime_error("Replace position was expected");
-	}
+	size_t position = ReadPosition();
 
 	std::string text;
 	std::getline(m_input, text);
 	if (m_input.fail())
 	{
+		m_input.clear();
 		throw std::runtime_error("Paragraph text was expected");
 	}
 
@@ -173,18 +174,14 @@ void Editor::ReplaceText()
 
 void Editor::ResizeImage()
 {
-	size_t position;
-	m_input >> position;
-	if (m_input.fail())
-	{
-		throw std::runtime_error("Resize position was expected");
-	}
+	size_t position = ReadPosition();
 
 	size_t width;
 	size_t height;
 	m_input >> width >> height;
 	if (m_input.fail())
 	{
+		m_input.clear();
 		throw std::runtime_error("New values for width and height were expected");
 	}
 
@@ -204,6 +201,7 @@ void Editor::DeleteItem()
 	m_input >> position;
 	if (m_input.fail())
 	{
+		m_input.clear();
 		throw std::runtime_error("Delete position was expected");
 	}
 
@@ -249,14 +247,15 @@ void Editor::Exit()
 	m_menu.Exit();
 }
 
-size_t Editor::ReadInsertPosition()
+size_t Editor::ReadPosition()
 {
 	std::string positionString;
 	m_input >> positionString;
 
 	if (m_input.fail())
 	{
-		throw std::runtime_error("Insert position was expected");
+		m_input.clear();
+		throw std::runtime_error("Position was expected");
 	}
 
 	size_t position;
@@ -271,10 +270,7 @@ size_t Editor::ReadInsertPosition()
 
 		if (ss.fail())
 		{
-			m_output << "Couldn't read insert position\n"
-						"Assumed inserting at the end of the document\n";
-
-			position = m_document.GetItemsCount();
+			throw std::runtime_error("Couldn't read position");
 		}
 	}
 
