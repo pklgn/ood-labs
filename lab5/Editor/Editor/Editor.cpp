@@ -171,12 +171,7 @@ void Editor::ResizeImage()
 		HandleInputReadFail("New values for width and height were expected");
 	}
 
-	auto item = m_document.GetItem(position);
-	auto image = item.GetImage();
-	if (image == nullptr)
-	{
-		throw std::runtime_error("Couldn't resize a non-image document item");
-	}
+	m_input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 	m_document.ResizeImage(position, width, height);
 }
