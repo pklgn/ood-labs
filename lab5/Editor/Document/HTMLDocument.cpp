@@ -9,6 +9,7 @@
 #include "Commands/DeleteItemCommand.h"
 #include "Commands/InsertImageCommand.h"
 #include "Commands/InsertParagraphCommand.h"
+#include "Commands/SetTitleCommand.h"
 #include "DocumentItems/Elements/Image/Image.h"
 #include "DocumentItems/Elements/Paragraph/Paragraph.h"
 #include "HTMLDocument.h"
@@ -90,7 +91,7 @@ std::string HTMLDocument::GetTitle() const
 
 void HTMLDocument::SetTitle(const std::string& title)
 {
-	m_title = title;
+	m_history.AddAndExecuteCommand(std::make_unique<SetTitleCommand>(m_title, title));
 }
 
 bool HTMLDocument::CanUndo() const
