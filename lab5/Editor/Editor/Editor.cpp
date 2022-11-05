@@ -162,14 +162,7 @@ void Editor::ReplaceText()
 		throw std::runtime_error("Paragraph text was expected");
 	}
 
-	auto item = m_document.GetItem(position);
-	auto paragraph = item.GetParagraph();
-	if (paragraph == nullptr)
-	{
-		throw std::runtime_error("Couldn't replace text for non-paragraph document item");
-	}
-
-	paragraph->SetText(text);
+	m_document.ReplaceText(position, text);
 }
 
 void Editor::ResizeImage()
