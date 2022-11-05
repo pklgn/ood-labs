@@ -1,6 +1,8 @@
 #include "../pch.h"
 #include "Editor.h"
 
+const std::string END_POSITION_STRING = "end";
+
 Editor::Editor(std::istream& input, std::ostream& output)
 	: m_menu(input, output)
 	, m_input(input)
@@ -66,6 +68,8 @@ void Editor::StartEditing()
 
 void Editor::InsertParagraph()
 {
+	size_t position = ReadInsertPosition();
+
 	std::string text;
 	std::getline(m_input, text);
 
@@ -73,8 +77,6 @@ void Editor::InsertParagraph()
 	{
 		throw std::runtime_error("Paragraph text was expected");
 	}
-
-	size_t position = ReadInsertPosition();
 
 	m_document.InsertParagraph(text, position);
 }
@@ -249,15 +251,31 @@ void Editor::Exit()
 
 size_t Editor::ReadInsertPosition()
 {
-	size_t position;
-	m_input >> position;
+	std::string positionString;
+	m_input >> positionString;
 
 	if (m_input.fail())
 	{
-		m_output << "Couldn't read insert position\n"
-					"Assumed inserting at the end of the document\n";
+		throw std::runtime_error("Insert position was expected");
+	}
 
+	size_t position;
+	if (positionString == END_POSITION_STRING)
+	{
 		position = m_document.GetItemsCount();
+	}
+	else
+	{
+		std::stringstream ss(positionString);
+		ss >> position;
+
+		if (ss.fail())
+		{
+			m_output << "Couldn't read insert position\n"
+						"Assumed inserting at the end of the document\n";
+
+			position = m_document.GetItemsCount();
+		}
 	}
 
 	return position;
