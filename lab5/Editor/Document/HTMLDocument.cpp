@@ -10,6 +10,7 @@
 #include "Commands/InsertParagraphCommand.h"
 #include "Commands/SetTitleCommand.h"
 #include "Commands/ReplaceTextCommand.h"
+#include "Commands/ResizeImageCommand.h"
 #include "DocumentItems/Elements/Image/Image.h"
 #include "DocumentItems/Elements/Paragraph/Paragraph.h"
 #include "HTMLDocument.h"
@@ -178,6 +179,18 @@ void HTMLDocument::ReplaceText(size_t index, const std::string& newText)
 	}
 
 	m_history.AddAndExecuteCommand(std::make_unique<ReplaceTextCommand>(paragraph, newText));
+}
+
+void HTMLDocument::ResizeImage(size_t index, size_t width, size_t height)
+{
+	auto item = GetItem(index);
+	auto image = item.GetImage();
+	if (image == nullptr)
+	{
+		throw std::runtime_error("Couldn't resize non-image document item");
+	}
+
+	m_history.AddAndExecuteCommand(std::make_unique<ResizeImageCommand>(image, width, height));
 }
 
 size_t HTMLDocument::ValidatePosition(const std::optional<size_t>& position)

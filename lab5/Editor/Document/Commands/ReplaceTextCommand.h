@@ -2,7 +2,6 @@
 
 #include "../../Command/AbstractCommand.h"
 #include "../../Document/HTMLDocument.h"
-#include "../DocumentItems/Elements/Paragraph/IParagraph.h"
 
 class ReplaceTextCommand : public AbstractCommand
 {

@@ -96,6 +96,9 @@
     <ClInclude Include="Document\Commands\ReplaceTextCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Document\Commands\ResizeImageCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -141,6 +144,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Document\Commands\ReplaceTextCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Document\Commands\ResizeImageCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

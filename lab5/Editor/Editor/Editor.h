@@ -37,7 +37,7 @@ protected:
 
 	size_t ReadPosition();
 
-	void HandleInputFail(const std::string&) const;
+	void HandleInputReadFail(const std::string&) const;
 
 private:
 	Menu m_menu;

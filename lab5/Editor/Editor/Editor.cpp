@@ -75,7 +75,7 @@ void Editor::InsertParagraph()
 
 	if (m_input.fail())
 	{
-		HandleInputFail("Paragraph text was expected");
+		HandleInputReadFail("Paragraph text was expected");
 	}
 
 	m_document.InsertParagraph(text, position);
@@ -90,14 +90,14 @@ void Editor::InsertImage()
 	m_input >> width >> height;
 	if (m_input.fail())
 	{
-		HandleInputFail("Couldn't resolve image size");
+		HandleInputReadFail("Couldn't resolve image size");
 	}
 
 	std::string path;
 	std::getline(m_input, path);
 	if (m_input.fail())
 	{
-		HandleInputFail("Image path was expected");
+		HandleInputReadFail("Image path was expected");
 	}
 
 	m_document.InsertImage(path, width, height, position);
@@ -110,7 +110,7 @@ void Editor::SetTitle()
 
 	if (m_input.fail())
 	{
-		HandleInputFail("Title was expected");
+		HandleInputReadFail("Title was expected");
 	}
 
 	m_document.SetTitle(title);
@@ -153,7 +153,7 @@ void Editor::ReplaceText()
 	std::getline(m_input, text);
 	if (m_input.fail())
 	{
-		HandleInputFail("Paragraph text was expected");
+		HandleInputReadFail("Paragraph text was expected");
 	}
 
 	m_document.ReplaceText(position, text);
@@ -168,7 +168,7 @@ void Editor::ResizeImage()
 	m_input >> width >> height;
 	if (m_input.fail())
 	{
-		HandleInputFail("New values for width and height were expected");
+		HandleInputReadFail("New values for width and height were expected");
 	}
 
 	auto item = m_document.GetItem(position);
@@ -187,7 +187,7 @@ void Editor::DeleteItem()
 	m_input >> position;
 	if (m_input.fail())
 	{
-		HandleInputFail("Delete position was expected");
+		HandleInputReadFail("Delete position was expected");
 	}
 
 	m_document.DeleteItem(position);
@@ -228,7 +228,7 @@ void Editor::Save() const
 	std::getline(m_input, path);
 	if (m_input.fail())
 	{
-		HandleInputFail("Save path was expected");
+		HandleInputReadFail("Save path was expected");
 	}
 
 	m_document.Save(path);
@@ -246,7 +246,7 @@ size_t Editor::ReadPosition()
 
 	if (m_input.fail())
 	{
-		HandleInputFail("Position was expected");
+		HandleInputReadFail("Position was expected");
 	}
 
 	size_t position;
@@ -268,7 +268,7 @@ size_t Editor::ReadPosition()
 	return position;
 }
 
-void Editor::HandleInputFail(const std::string& message) const
+void Editor::HandleInputReadFail(const std::string& message) const
 {
 	m_input.clear();
 	m_input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
