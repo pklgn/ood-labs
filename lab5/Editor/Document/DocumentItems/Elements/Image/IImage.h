@@ -20,7 +20,7 @@ public:
 	virtual size_t GetHeight() const = 0;
 
 	// Изменяет размер изображения
-	virtual void Resize(int width, int height) = 0;
+	virtual void Resize(size_t width, size_t height) = 0;
 
 	virtual ~IImage() = default;
 };

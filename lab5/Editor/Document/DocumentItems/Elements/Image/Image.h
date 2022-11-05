@@ -13,7 +13,7 @@ public:
 
 	size_t GetHeight() const override;
 
-	void Resize(int width, int height) override;
+	void Resize(size_t width, size_t height) override;
 
 private:
 	size_t m_width;

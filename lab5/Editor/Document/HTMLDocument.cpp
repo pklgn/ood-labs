@@ -13,8 +13,14 @@
 #include "DocumentItems/Elements/Paragraph/Paragraph.h"
 #include "HTMLDocument.h"
 
+const std::string IMAGE_FILENAME_PREFIX = "img";
+const std::string HTML_DOCUMENT_FILENAME_PREFIX = "Untitled";
+const std::string IMAGES_DIRECTORY = "images/";
+
 namespace fs = std::filesystem;
 
+std::string GetCurrentDateTimeString();
+Path GetRelativeImagePath(const Path& path);
 std::string Trim(const std::string& str);
 std::string HTMLEncode(const std::string& data);
 void SaveHtmlDocumentItem(std::ofstream&, ConstDocumentItem&);
@@ -22,9 +28,9 @@ void SaveHtmlDocumentImageItem(std::ofstream&, std::shared_ptr<const IImage>);
 void SaveHtmlDocumentParagraphItem(std::ofstream&, std::shared_ptr<const IParagraph>);
 
 HTMLDocument::HTMLDocument()
-	: m_title("Untitled" + GetCurrentDateTime() + ".html")
+	: m_title(HTML_DOCUMENT_FILENAME_PREFIX + GetCurrentDateTimeString() + ".html")
 {
-	SetSavePath(fs::current_path().generic_string());
+	SetSavePath(fs::current_path().string());
 }
 
 std::shared_ptr<IParagraph> HTMLDocument::InsertParagraph(const std::string& text, std::optional<size_t> position)
@@ -38,15 +44,13 @@ std::shared_ptr<IParagraph> HTMLDocument::InsertParagraph(const std::string& tex
 	return paragraphPtr;
 }
 
-std::shared_ptr<IImage> HTMLDocument::InsertImage(const Path& path, int width, int height, std::optional<size_t> position)
+//TODO: вынести построение относительного пути в функцию
+std::shared_ptr<IImage> HTMLDocument::InsertImage(const Path& path, size_t width, size_t height, std::optional<size_t> position)
 {
-	fs::path filePath = path;
-	std::string imageFileName = "img" + GetCurrentDateTime() + filePath.extension().string();
-	Path relativeImagePath = "images/" + imageFileName;
+	Path relativeImagePath = GetRelativeImagePath(path);
 	std::ofstream(m_savePath + relativeImagePath, std::ios::binary) << std::ifstream(path, std::ios::binary).rdbuf();
 
 	auto insertPosition = ValidatePosition(position);
-
 	auto imagePtr = std::make_shared<Image>(width, height, relativeImagePath);
 
 	m_history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(m_items, imagePtr, insertPosition, m_savePath + relativeImagePath));
@@ -109,6 +113,7 @@ void HTMLDocument::Redo()
 	m_history.Redo();
 }
 
+//TODO: добавить копирование images/ при сохранении
 void HTMLDocument::Save() const
 {
 	std::ofstream outputFile(m_savePath + m_title + ".html");
@@ -158,25 +163,23 @@ std::string Trim(const std::string& str)
 	auto result = str;
 	result.erase(str.find_last_not_of(' ') + 1); // suffixing spaces
 	result.erase(0, str.find_first_not_of(' ')); // prefixing spaces
+
+	return result;
 }
 
 void SaveHtmlDocumentItem(std::ofstream& output, ConstDocumentItem& item)
 {
 	auto imagePtr = item.GetImage();
 	auto paragraphPtr = item.GetParagraph();
-	if (imagePtr == paragraphPtr)
-	{
-		return;
-	}
 
 	if (imagePtr != nullptr)
 	{
 		SaveHtmlDocumentImageItem(output, imagePtr);
-
-		return;
 	}
-
-	SaveHtmlDocumentParagraphItem(output, paragraphPtr);
+	else if (paragraphPtr != nullptr)
+	{
+		SaveHtmlDocumentParagraphItem(output, paragraphPtr);
+	}
 }
 
 void SaveHtmlDocumentImageItem(std::ofstream& output, std::shared_ptr<const IImage> imagePtr)
@@ -227,7 +230,7 @@ std::string HTMLEncode(const std::string& data)
 	return buffer;
 }
 
-std::string GetCurrentDateTime()
+std::string GetCurrentDateTimeString()
 {
 	time_t rawtime;
 	struct tm* timeinfo;
@@ -240,4 +243,12 @@ std::string GetCurrentDateTime()
 	std::string str(buffer);
 
 	return str;
+}
+
+Path GetRelativeImagePath(const Path& path)
+{
+	fs::path filePath = path;
+	std::string imageFileName = IMAGE_FILENAME_PREFIX + GetCurrentDateTimeString() + filePath.extension().string();
+
+	return IMAGES_DIRECTORY + imageFileName;
 }

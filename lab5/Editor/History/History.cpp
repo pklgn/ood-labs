@@ -23,7 +23,7 @@ bool History::CanRedo() const
 
 void History::Undo()
 {
-	if (CanUndo)
+	if (CanUndo())
 	{
 		m_commands[m_nextCommandIndex - 1]->Unexecute();
 		--m_nextCommandIndex;

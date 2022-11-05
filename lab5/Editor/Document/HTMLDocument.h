@@ -22,7 +22,7 @@ public:
 	// Параметр path задает путь к вставляемому изображению
 	// При вставке изображение должно копироваться в подкаталог images
 	// под автоматически сгенерированным именем
-	std::shared_ptr<IImage> InsertImage(const Path& path, int width, int height,
+	std::shared_ptr<IImage> InsertImage(const Path& path, size_t width, size_t height,
 		std::optional<size_t> position = std::nullopt)
 		override;
 

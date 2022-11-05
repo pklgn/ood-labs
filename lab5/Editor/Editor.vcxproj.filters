@@ -21,12 +21,6 @@
     <ClInclude Include="Document\IDocument.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Document\Paragraph\IParagraph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Document\Image\IImage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Document\DocumentItems\ConstDocumentItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -43,12 +37,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Command\AbstractCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Document\Paragraph\Paragraph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Document\Image\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Editor\Menu.h">
@@ -87,18 +75,6 @@
     <ClInclude Include="Editor\Commands\EditorDeleteItemCommand\EditorDeleteItemCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Document\DocumentItems\Paragraph\IParagraph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Document\DocumentItems\Paragraph\Paragraph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Document\DocumentItems\Image\IImage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Document\DocumentItems\Image\Image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="History\IHistory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -128,12 +104,6 @@
     <ClCompile Include="Command\AbstractCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Document\Paragraph\Paragraph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Document\Image\Image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Document\DocumentItems\ConstDocumentItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -146,19 +116,10 @@
     <ClCompile Include="Editor\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Editor\Commands\MenuHelpCommand\MenuHelpCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Commands\MenuExitCommand\MenuExitCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Editor\Editor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Document\Commands\InsertParagraphCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Commands\EditorInsertParagraphCommand\EditorInsertParagraphCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Document\Commands\InsertImageCommand.cpp">
@@ -168,21 +129,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Document\Commands\SetTitleCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Commands\EditorInsertImageCommand\EditorInsertImageCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Commands\EditorSetTitleCommand\EditorSetTitleCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor\Commands\EditorDeleteItemCommand\EditorDeleteItemCommand.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Document\DocumentItems\Paragraph\Paragraph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Document\DocumentItems\Image\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Document\DocumentItems\Elements\Image\Image.cpp">

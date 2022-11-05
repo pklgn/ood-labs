@@ -108,7 +108,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -153,16 +153,8 @@
     <ClInclude Include="Document\DocumentItems\Elements\Image\Image.h" />
     <ClInclude Include="Document\DocumentItems\Elements\Paragraph\IParagraph.h" />
     <ClInclude Include="Document\DocumentItems\Elements\Paragraph\Paragraph.h" />
-    <ClInclude Include="Document\DocumentItems\Image\IImage.h" />
-    <ClInclude Include="Document\DocumentItems\Image\Image.h" />
-    <ClInclude Include="Document\DocumentItems\Paragraph\IParagraph.h" />
-    <ClInclude Include="Document\DocumentItems\Paragraph\Paragraph.h" />
     <ClInclude Include="Document\HTMLDocument.h" />
     <ClInclude Include="Document\IDocument.h" />
-    <ClInclude Include="Document\Image\IImage.h" />
-    <ClInclude Include="Document\Image\Image.h" />
-    <ClInclude Include="Document\Paragraph\IParagraph.h" />
-    <ClInclude Include="Document\Paragraph\Paragraph.h" />
     <ClInclude Include="Editor\Commands\EditorDeleteItemCommand\EditorDeleteItemCommand.h" />
     <ClInclude Include="Editor\Commands\EditorInsertImageCommand\EditorInsertImageCommand.h" />
     <ClInclude Include="Editor\Commands\EditorInsertParagraphCommand\EditorInsertParagraphCommand.h" />
@@ -203,28 +195,8 @@
     <ClCompile Include="Document\DocumentItems\Elements\Paragraph\Paragraph.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Document\DocumentItems\Image\Image.cpp" />
-    <ClCompile Include="Document\DocumentItems\Paragraph\Paragraph.cpp" />
     <ClCompile Include="Document\HTMLDocument.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Document\Image\Image.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Document\Paragraph\Paragraph.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Editor\Commands\EditorDeleteItemCommand\EditorDeleteItemCommand.cpp" />
-    <ClCompile Include="Editor\Commands\EditorInsertImageCommand\EditorInsertImageCommand.cpp" />
-    <ClCompile Include="Editor\Commands\EditorInsertParagraphCommand\EditorInsertParagraphCommand.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Editor\Commands\EditorSetTitleCommand\EditorSetTitleCommand.cpp" />
-    <ClCompile Include="Editor\Commands\MenuExitCommand\MenuExitCommand.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Editor\Commands\MenuHelpCommand\MenuHelpCommand.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Editor\Editor.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
