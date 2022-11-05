@@ -10,6 +10,7 @@ public:
 
 	void StartEditing();
 
+protected:
 	void InsertParagraph();
 
 	void InsertImage();
@@ -32,8 +33,8 @@ public:
 
 	void Save() const;
 
+	void Exit();
 
-protected:
 	size_t ReadInsertPosition();
 
 private:

@@ -1,10 +1,5 @@
 #include "../pch.h"
 #include "Editor.h"
-#include "Commands/EditorInsertParagraphCommand/EditorInsertParagraphCommand.h"
-#include "Commands/EditorInsertImageCommand/EditorInsertImageCommand.h"
-#include "Commands/EditorSetTitleCommand/EditorSetTitleCommand.h"
-#include "../Document/Commands/ListDocumentItemsCommand.h"
-
 
 Editor::Editor(std::istream& input, std::ostream& output)
 	: m_menu(input, output)
@@ -54,6 +49,10 @@ Editor::Editor(std::istream& input, std::ostream& output)
 	m_menu.AddItem("save",
 		"Saves the current state of the document in an html file with images",
 		[this]() { Save(); });
+
+	m_menu.AddItem("exit",
+		"Exit from app",
+		[this]() { Exit(); });
 }
 
 //TODO: убрать команды и заменить на std::function(void)
@@ -241,6 +240,11 @@ void Editor::Redo()
 void Editor::Save() const
 {
 	m_document.Save();
+}
+
+void Editor::Exit()
+{
+	m_menu.Exit();
 }
 
 size_t Editor::ReadInsertPosition()
