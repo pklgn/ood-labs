@@ -1,17 +1,18 @@
 #include "../../pch.h"
 #include "InsertImageCommand.h"
 
-InsertImageCommand::InsertImageCommand(std::vector<DocumentItem>& items, const std::shared_ptr<IImage>& imagePtr, size_t position, const Path& path)
+namespace fs = std::filesystem;
+
+InsertImageCommand::InsertImageCommand(std::vector<DocumentItem>& items, const std::shared_ptr<IImage>& imagePtr, size_t position)
 	: m_items(items)
 	, m_imagePtr(imagePtr)
 	, m_position(position)
-	, m_path(path)
 {
 }
 
 InsertImageCommand::~InsertImageCommand()
 {
-	remove(m_path.c_str());
+	fs::remove(fs::current_path().string() + m_imagePtr->GetPath());
 }
 
 void InsertImageCommand::DoExecute()

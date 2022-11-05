@@ -232,7 +232,15 @@ void Editor::Redo()
 
 void Editor::Save() const
 {
-	m_document.Save();
+	Path path;
+	std::getline(m_input, path);
+	if (m_input.fail())
+	{
+		m_input.clear();
+		throw std::runtime_error("Save path was expected");
+	}
+
+	m_document.Save(path);
 }
 
 void Editor::Exit()

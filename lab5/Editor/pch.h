@@ -15,5 +15,7 @@
 #include <optional>
 #include <stdexcept>
 #include <sstream>
+#include <limits>
+#include <filesystem>
 
 #endif // PCH_H

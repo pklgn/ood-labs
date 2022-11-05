@@ -53,10 +53,7 @@ public:
 
 	// Сохраняет документ в формате html. Изображения сохраняются в подкаталог images.
 	// Пути к изображениям указываются относительно пути к сохраняемому HTML файлу
-	void Save() const override;
-
-	Path GetSavePath() const override;
-	void SetSavePath(const Path&) override;
+	void Save(const Path&) const override;
 
 	void ReplaceText(size_t index, const std::string&);
 
@@ -64,6 +61,8 @@ public:
 
 protected:
 	Path CopyImage(const Path& srcPath);
+
+	void SetSavePath(const Path& path);
 
 private:
 	size_t ValidatePosition(const std::optional<size_t>& position);

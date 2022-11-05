@@ -55,10 +55,7 @@ public:
 
 	// Сохраняет документ в формате html. Изображения сохраняются в подкаталог images.
 	// Пути к изображениям указываются относительно пути к сохраняемому HTML файлу
-	virtual void Save() const = 0;
-
-	virtual Path GetSavePath() const = 0;
-	virtual void SetSavePath(const Path&) = 0;
+	virtual void Save(const Path&) const = 0;
 
 	virtual ~IDocument() = default;
 };

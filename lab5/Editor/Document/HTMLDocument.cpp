@@ -1,7 +1,6 @@
 #include "../pch.h"
 #include <ctime>
 #include <filesystem>
-#include <format>
 #include <fstream>
 #include <stdexcept>
 #include <string>
@@ -26,8 +25,8 @@ std::string GetCurrentDateTimeString();
 Path GetRelativeImagePath(const Path& path);
 std::string Trim(const std::string& str);
 std::string HTMLEncode(const std::string& data);
-void SaveHtmlDocumentItem(std::ofstream&, ConstDocumentItem&);
-void SaveHtmlDocumentImageItem(std::ofstream&, std::shared_ptr<const IImage>);
+void SaveHtmlDocumentItem(std::ofstream&, ConstDocumentItem&, const Path&);
+void SaveHtmlDocumentImageItem(std::ofstream&, std::shared_ptr<const IImage>, const Path&);
 void SaveHtmlDocumentParagraphItem(std::ofstream&, std::shared_ptr<const IParagraph>);
 
 HTMLDocument::HTMLDocument()
@@ -55,7 +54,7 @@ std::shared_ptr<IImage> HTMLDocument::InsertImage(const Path& path, size_t width
 	auto insertPosition = ValidatePosition(position);
 	auto imagePtr = std::make_shared<Image>(width, height, imagePath);
 
-	m_history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(m_items, imagePtr, insertPosition, imagePath));
+	m_history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(m_items, imagePtr, insertPosition));
 
 	return imagePtr;
 }
@@ -126,9 +125,21 @@ void HTMLDocument::Redo()
 }
 
 //TODO: добавить копирование images/ при сохранении
-void HTMLDocument::Save() const
+void HTMLDocument::Save(const Path& path) const
 {
-	std::ofstream outputFile(m_savePath + m_title + ".html");
+	fs::path fsPath = path;
+	if (!fsPath.empty() && fsPath.generic_string().back() != PLATFORM_SEPARATOR)
+	{
+		fsPath += PLATFORM_SEPARATOR;
+	}
+	fs::path savedImagesDirectory = fsPath.string() + IMAGES_DIRECTORY;
+
+	if (!fs::exists(savedImagesDirectory))
+	{
+		fs::create_directory(savedImagesDirectory);
+	}
+
+	std::ofstream outputFile(fsPath.string() + m_title + ".html");
 
 	outputFile << "<html>\n"
 			   << "<head>\n"
@@ -139,16 +150,11 @@ void HTMLDocument::Save() const
 	for (size_t itemIndex = 0; itemIndex < m_items.size(); ++itemIndex)
 	{
 		auto item = GetItem(itemIndex);
-		SaveHtmlDocumentItem(outputFile, item);
+		SaveHtmlDocumentItem(outputFile, item, fsPath.string());
 	}
 
 	outputFile << "</body>\n";
 	outputFile << "</html>\n";
-}
-
-Path HTMLDocument::GetSavePath() const
-{
-	return m_savePath;
 }
 
 void HTMLDocument::SetSavePath(const Path& path)
@@ -193,14 +199,14 @@ std::string Trim(const std::string& str)
 	return result;
 }
 
-void SaveHtmlDocumentItem(std::ofstream& output, ConstDocumentItem& item)
+void SaveHtmlDocumentItem(std::ofstream& output, ConstDocumentItem& item, const Path& path)
 {
 	auto imagePtr = item.GetImage();
 	auto paragraphPtr = item.GetParagraph();
 
 	if (imagePtr != nullptr)
 	{
-		SaveHtmlDocumentImageItem(output, imagePtr);
+		SaveHtmlDocumentImageItem(output, imagePtr, path);
 	}
 	else if (paragraphPtr != nullptr)
 	{
@@ -208,8 +214,15 @@ void SaveHtmlDocumentItem(std::ofstream& output, ConstDocumentItem& item)
 	}
 }
 
-void SaveHtmlDocumentImageItem(std::ofstream& output, std::shared_ptr<const IImage> imagePtr)
+void SaveHtmlDocumentImageItem(std::ofstream& output, std::shared_ptr<const IImage> imagePtr, const Path& path)
 {
+	Path trimmedPath = Trim(path);
+	Path imagePath = imagePtr->GetPath();
+	if (!fs::exists(trimmedPath + imagePath))
+	{
+		fs::copy_file(imagePath, trimmedPath + imagePath);
+	}
+
 	output << "<img "
 		   << "src=" << HTMLEncode(imagePtr->GetPath()) << "\n\t"
 		   << "width=" << imagePtr->GetWidth() << "\n\t"
@@ -291,9 +304,10 @@ Path HTMLDocument::CopyImage(const Path& srcPath)
 		fs::create_directory(IMAGES_DIRECTORY);
 	}
 
-	fs::path imagePath = m_savePath + GetRelativeImagePath(srcPath);
+	Path relativePath = GetRelativeImagePath(srcPath);
+	fs::path imagePath = m_savePath + relativePath;
 
 	fs::copy_file(Trim(srcPath), imagePath);
 
-	return imagePath.string();
+	return relativePath;
 }
