@@ -178,8 +178,8 @@ void Editor::ResizeImage()
 
 void Editor::DeleteItem()
 {
-	size_t position;
-	m_input >> position;
+	size_t position = ReadPosition();
+
 	if (m_input.fail())
 	{
 		HandleInputReadFail("Delete position was expected");
