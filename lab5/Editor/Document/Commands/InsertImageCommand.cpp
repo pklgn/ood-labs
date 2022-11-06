@@ -12,7 +12,13 @@ InsertImageCommand::InsertImageCommand(std::vector<DocumentItem>& items, const s
 
 InsertImageCommand::~InsertImageCommand()
 {
-	fs::remove(fs::current_path().string() + m_imagePtr->GetPath());
+	fs::path removePath = fs::current_path();
+	removePath += fs::path::preferred_separator;
+	removePath += m_imagePtr->GetPath();
+	if (!WasExecuted())
+	{
+		fs::remove(removePath);
+	}
 }
 
 void InsertImageCommand::DoExecute()

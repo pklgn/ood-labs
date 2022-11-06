@@ -8,6 +8,8 @@ class DeleteItemCommand : public AbstractCommand
 public:
 	DeleteItemCommand(std::vector<DocumentItem>& items, size_t position);
 
+	~DeleteItemCommand();
+
 protected:
 	void DoExecute() override;
 
