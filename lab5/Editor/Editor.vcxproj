@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClInclude Include="Command\AbstractCommand.h" />
     <ClInclude Include="Command\ICommand.h" />
+    <ClInclude Include="common\StringCommon.h" />
     <ClInclude Include="Document\Commands\DeleteItemCommand.h" />
     <ClInclude Include="Document\Commands\InsertImageCommand.h" />
     <ClInclude Include="Document\Commands\InsertParagraphCommand.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Document\DocumentItems\Elements\Paragraph\Paragraph.h" />
     <ClInclude Include="Document\HTMLDocument.h" />
     <ClInclude Include="Document\IDocument.h" />
+    <ClInclude Include="Document\Saver\HTMLSaver.h" />
     <ClInclude Include="Editor\Commands\EditorDeleteItemCommand\EditorDeleteItemCommand.h" />
     <ClInclude Include="Editor\Commands\EditorInsertImageCommand\EditorInsertImageCommand.h" />
     <ClInclude Include="Editor\Commands\EditorInsertParagraphCommand\EditorInsertParagraphCommand.h" />
@@ -171,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Command\AbstractCommand.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="common\StringCommon.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Document\Commands\DeleteItemCommand.cpp">
@@ -205,6 +210,9 @@
     </ClCompile>
     <ClCompile Include="Document\HTMLDocument.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Document\Saver\HTMLSaver.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Editor\Editor.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>

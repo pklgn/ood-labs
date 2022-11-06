@@ -15,6 +15,9 @@ public:
 
 	void Resize(size_t width, size_t height) override;
 
+protected:
+	void ValidateImage();
+
 private:
 	size_t m_width;
 	size_t m_height;

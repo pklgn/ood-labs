@@ -5,12 +5,11 @@
 #include "../History/History.h"
 #include "DocumentItems/DocumentItem.h"
 #include "IDocument.h"
+#include "Saver/HTMLSaver.h"
 
 class HTMLDocument : public IDocument
 {
 public:
-	inline static const Path noPath = "";
-
 	HTMLDocument();
 	// Вставляет параграф текста в указанную позицию (сдвигая последующие элементы)
 	// Если параметр position не указан, вставка происходит в конец документа
@@ -71,4 +70,5 @@ private:
 	History m_history;
 	std::vector<DocumentItem> m_items;
 	Path m_savePath;
+	HTMLSaver m_saver;
 };

@@ -14,6 +14,7 @@
 #include "DocumentItems/Elements/Image/Image.h"
 #include "DocumentItems/Elements/Paragraph/Paragraph.h"
 #include "HTMLDocument.h"
+#include "../common/StringCommon.h"
 
 const std::string IMAGE_FILENAME_PREFIX = "img";
 const std::string HTML_DOCUMENT_FILENAME_PREFIX = "Untitled";
@@ -23,15 +24,10 @@ const auto PLATFORM_SEPARATOR = std::filesystem::path::preferred_separator;
 namespace fs = std::filesystem;
 
 std::string GetCurrentDateTimeString();
-Path GetRelativeImagePath(const Path& path);
-std::string Trim(const std::string& str);
-std::string HTMLEncode(const std::string& data);
-void SaveHtmlDocumentItem(std::ofstream&, ConstDocumentItem&, const Path&);
-void SaveHtmlDocumentImageItem(std::ofstream&, std::shared_ptr<const IImage>, const Path&);
-void SaveHtmlDocumentParagraphItem(std::ofstream&, std::shared_ptr<const IParagraph>);
 
 HTMLDocument::HTMLDocument()
 	: m_title(HTML_DOCUMENT_FILENAME_PREFIX + GetCurrentDateTimeString())
+	, m_saver(*this)
 {
 	SetSavePath(fs::current_path().string());
 }
@@ -50,7 +46,7 @@ std::shared_ptr<IParagraph> HTMLDocument::InsertParagraph(const std::string& tex
 //TODO: вынести построение относительного пути в функцию
 std::shared_ptr<IImage> HTMLDocument::InsertImage(const Path& path, size_t width, size_t height, std::optional<size_t> position)
 {
-	Path imagePath = CopyImage(path);
+	Path imagePath = CopyImage(Trim(path));
 
 	auto insertPosition = ValidatePosition(position);
 	auto imagePtr = std::make_shared<Image>(width, height, imagePath);
@@ -125,37 +121,9 @@ void HTMLDocument::Redo()
 	m_history.Redo();
 }
 
-//TODO: добавить копирование images/ при сохранении
 void HTMLDocument::Save(const Path& path) const
 {
-	fs::path fsPath = path;
-	if (!fsPath.empty() && fsPath.generic_string().back() != PLATFORM_SEPARATOR)
-	{
-		fsPath += PLATFORM_SEPARATOR;
-	}
-	fs::path savedImagesDirectory = fsPath.string() + IMAGES_DIRECTORY;
-
-	if (!fs::exists(savedImagesDirectory))
-	{
-		fs::create_directory(savedImagesDirectory);
-	}
-
-	std::ofstream outputFile(fsPath.string() + m_title + ".html");
-
-	outputFile << "<html>\n"
-			   << "<head>\n"
-			   << "<title>" << HTMLEncode(m_title) << "</title>\n"
-			   << "</html>\n"
-			   << "<body>\n";
-
-	for (size_t itemIndex = 0; itemIndex < m_items.size(); ++itemIndex)
-	{
-		auto item = GetItem(itemIndex);
-		SaveHtmlDocumentItem(outputFile, item, fsPath.string());
-	}
-
-	outputFile << "</body>\n";
-	outputFile << "</html>\n";
+	m_saver.Save(path);
 }
 
 void HTMLDocument::SetSavePath(const Path& path)
@@ -203,85 +171,6 @@ size_t HTMLDocument::ValidatePosition(const std::optional<size_t>& position)
 	return position.value_or(m_items.size());
 }
 
-std::string Trim(const std::string& str)
-{
-	auto result = str;
-	result.erase(str.find_last_not_of(' ') + 1); // suffixing spaces
-	result.erase(0, str.find_first_not_of(' ')); // prefixing spaces
-
-	return result;
-}
-
-void SaveHtmlDocumentItem(std::ofstream& output, ConstDocumentItem& item, const Path& path)
-{
-	auto imagePtr = item.GetImage();
-	auto paragraphPtr = item.GetParagraph();
-
-	if (imagePtr != nullptr)
-	{
-		SaveHtmlDocumentImageItem(output, imagePtr, path);
-	}
-	else if (paragraphPtr != nullptr)
-	{
-		SaveHtmlDocumentParagraphItem(output, paragraphPtr);
-	}
-}
-
-void SaveHtmlDocumentImageItem(std::ofstream& output, std::shared_ptr<const IImage> imagePtr, const Path& path)
-{
-	Path trimmedPath = Trim(path);
-	Path imagePath = imagePtr->GetPath();
-	if (!fs::exists(trimmedPath + imagePath))
-	{
-		fs::copy_file(imagePath, trimmedPath + imagePath);
-	}
-
-	output << "<img "
-		   << "src=" << HTMLEncode(imagePtr->GetPath()) << "\n\t"
-		   << "width=" << imagePtr->GetWidth() << "\n\t"
-		   << "height=" << imagePtr->GetHeight() << "\n\t"
-		   << "/>\n";
-}
-
-void SaveHtmlDocumentParagraphItem(std::ofstream& output, std::shared_ptr<const IParagraph> paragraphPtr)
-{
-	output << "<p>"
-		   << HTMLEncode(Trim(paragraphPtr->GetText()))
-		   << "</p>\n";
-}
-
-std::string HTMLEncode(const std::string& data)
-{
-	std::string buffer;
-	buffer.reserve(data.size());
-	for (size_t pos = 0; pos != data.size(); ++pos)
-	{
-		switch (data[pos])
-		{
-		case '&':
-			buffer.append("&amp;");
-			break;
-		case '\"':
-			buffer.append("&quot;");
-			break;
-		case '\'':
-			buffer.append("&apos;");
-			break;
-		case '<':
-			buffer.append("&lt;");
-			break;
-		case '>':
-			buffer.append("&gt;");
-			break;
-		default:
-			buffer.append(&data[pos], 1);
-			break;
-		}
-	}
-
-	return buffer;
-}
-
 std::string GetCurrentDateTimeString()
 {
 	time_t rawtime;
@@ -312,15 +201,23 @@ Path GetRelativeImagePath(const Path& path)
 
 Path HTMLDocument::CopyImage(const Path& srcPath)
 {
-	if (!fs::exists(IMAGES_DIRECTORY))
+	Path relativePath;
+	try
 	{
-		fs::create_directory(IMAGES_DIRECTORY);
+		if (!fs::exists(IMAGES_DIRECTORY))
+		{
+			fs::create_directory(IMAGES_DIRECTORY);
+		}
+
+		relativePath = GetRelativeImagePath(srcPath);
+		fs::path imagePath = m_savePath + relativePath;
+
+		fs::copy_file(srcPath, imagePath);
 	}
-
-	Path relativePath = GetRelativeImagePath(srcPath);
-	fs::path imagePath = m_savePath + relativePath;
-
-	fs::copy_file(Trim(srcPath), imagePath);
+	catch (...)
+	{
+		throw std::runtime_error("Fail to copy image with specified path");
+	}
 
 	return relativePath;
 }

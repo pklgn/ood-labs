@@ -15,6 +15,7 @@
 #include <optional>
 #include <stdexcept>
 #include <sstream>
+#include <fstream>
 #include <limits>
 #include <filesystem>
 

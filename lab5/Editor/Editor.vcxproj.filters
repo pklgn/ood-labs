@@ -99,6 +99,12 @@
     <ClInclude Include="Document\Commands\ResizeImageCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Document\Saver\HTMLSaver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\StringCommon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -147,6 +153,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Document\Commands\ResizeImageCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Document\Saver\HTMLSaver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\StringCommon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
