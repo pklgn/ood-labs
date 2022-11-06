@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Console_Editor", "Console_Editor\Console_Editor.vcxproj", "{9ECCA999-EC69-435F-A39D-A3B1967D5A25}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests_Editor", "Tests_Editor\Tests_Editor.vcxproj", "{BCBEDB62-0E7D-447E-BB03-ACDF36E37295}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{9ECCA999-EC69-435F-A39D-A3B1967D5A25}.Release|x64.Build.0 = Release|x64
 		{9ECCA999-EC69-435F-A39D-A3B1967D5A25}.Release|x86.ActiveCfg = Release|Win32
 		{9ECCA999-EC69-435F-A39D-A3B1967D5A25}.Release|x86.Build.0 = Release|Win32
+		{BCBEDB62-0E7D-447E-BB03-ACDF36E37295}.Debug|x64.ActiveCfg = Debug|x64
+		{BCBEDB62-0E7D-447E-BB03-ACDF36E37295}.Debug|x64.Build.0 = Debug|x64
+		{BCBEDB62-0E7D-447E-BB03-ACDF36E37295}.Debug|x86.ActiveCfg = Debug|Win32
+		{BCBEDB62-0E7D-447E-BB03-ACDF36E37295}.Debug|x86.Build.0 = Debug|Win32
+		{BCBEDB62-0E7D-447E-BB03-ACDF36E37295}.Release|x64.ActiveCfg = Release|x64
+		{BCBEDB62-0E7D-447E-BB03-ACDF36E37295}.Release|x64.Build.0 = Release|x64
+		{BCBEDB62-0E7D-447E-BB03-ACDF36E37295}.Release|x86.ActiveCfg = Release|Win32
+		{BCBEDB62-0E7D-447E-BB03-ACDF36E37295}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
