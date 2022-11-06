@@ -29,16 +29,25 @@ size_t Image::GetHeight() const
 	return m_height;
 }
 
+bool IsValidDimensions(size_t width, size_t height)
+{
+	return MIN_DIMENSION_SIZE <= width && width <= MAX_DIMENSION_SIZE && MIN_DIMENSION_SIZE <= height && height <= MAX_DIMENSION_SIZE;
+}
+
 void Image::Resize(size_t width, size_t height)
 {
+	if (!IsValidDimensions(width, height))
+	{
+		throw std::invalid_argument("Image sizes must have appropriate values");
+	}
+
 	m_width = width;
 	m_height = height;
 }
 
 void Image::ValidateImage()
 {
-	if ((m_width < MIN_DIMENSION_SIZE || MAX_DIMENSION_SIZE < m_width) ||
-		(m_height < MIN_DIMENSION_SIZE || MAX_DIMENSION_SIZE < m_height))
+	if (!IsValidDimensions(m_width, m_height))
 	{
 		throw std::invalid_argument("Image sizes must have appropriate values");
 	}
