@@ -9,15 +9,23 @@ Editor::Editor(std::istream& input, std::ostream& output)
 	, m_output(output)
 {
 	m_menu.AddItem("insert-paragraph",
-		"Inserting specified paragraph with a given position",
+		"Inserting specified paragraph with a given position:\n"
+		"\t<command>\n"
+		"\t<position>\n"
+		"\t<text>",
 		[this]() { InsertParagraph(); });
 
 	m_menu.AddItem("insert-image",
-		"Inserting specified image with a given position and size",
+		"Inserting specified image with a given position and size:\n"
+		"\t<command>\n"
+		"\t<position>\n"
+		"\t<width> <height> <path>",
 		[this]() { InsertImage(); });
 
 	m_menu.AddItem("set-title",
-		"Set a new title for the document",
+		"Set a new title for the document:\n"
+		"\t<command>\n"
+		"\t<title>",
 		[this]() { SetTitle(); });
 
 	m_menu.AddItem("list",
@@ -25,15 +33,23 @@ Editor::Editor(std::istream& input, std::ostream& output)
 		[this]() { List(); });
 
 	m_menu.AddItem("replace-text",
-		"Replaces text in a paragraph at a specified position in the document",
+		"Replaces text in a paragraph at a specified position in the document:\n"
+		"\t<command>\n"
+		"\t<index>\n"
+		"\t<text>",
 		[this]() { ReplaceText(); });
 
 	m_menu.AddItem("resize-image",
-		"Changes the size of the image at a specified position in the document",
+		"Changes the size of the image at a specified position in the document:\n"
+		"\t<command>\n"
+		"\t<index>\n"
+		"\t<width> <height>",
 		[this]() { ResizeImage(); });
 
 	m_menu.AddItem("delete-item",
-		"Deletes the document item in the specified position",
+		"Deletes the document item in the specified position:\n"
+		"\t<command>\n"
+		"\t<index>",
 		[this]() { DeleteItem(); });
 
 	m_menu.AddItem("help",
@@ -49,7 +65,9 @@ Editor::Editor(std::istream& input, std::ostream& output)
 		[this]() { Redo(); });
 
 	m_menu.AddItem("save",
-		"Saves the current state of the document in an html file with images",
+		"Saves the current state of the document in an html file with images:\n"
+		"\t<command>\n"
+		"\t<path>",
 		[this]() { Save(); });
 
 	m_menu.AddItem("exit",
@@ -247,7 +265,6 @@ size_t Editor::ReadPosition()
 	size_t position;
 	if (positionString == END_POSITION_STRING)
 	{
-		std::cout << m_document.GetItemsCount() << std::endl;
 		position = m_document.GetItemsCount();
 	}
 	else
