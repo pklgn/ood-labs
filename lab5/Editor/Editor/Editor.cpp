@@ -237,7 +237,7 @@ void Editor::Exit()
 size_t Editor::ReadPosition()
 {
 	std::string positionString;
-	m_input >> positionString;
+	std::getline(m_input, positionString);
 
 	if (m_input.fail())
 	{
@@ -247,6 +247,7 @@ size_t Editor::ReadPosition()
 	size_t position;
 	if (positionString == END_POSITION_STRING)
 	{
+		std::cout << m_document.GetItemsCount() << std::endl;
 		position = m_document.GetItemsCount();
 	}
 	else

@@ -3,22 +3,12 @@
 
 bool History::CanUndo() const
 {
-	if (m_nextCommandIndex > 0)
-	{
-		return true;
-	}
-
-	return false;
+	return m_nextCommandIndex > 0;
 }
 
 bool History::CanRedo() const
 {
-	if (m_nextCommandIndex < m_commands.size())
-	{
-		return true;
-	}
-
-	return false;
+	return m_nextCommandIndex < m_commands.size();
 }
 
 void History::Undo()
@@ -41,6 +31,7 @@ void History::Redo()
 
 void History::AddAndExecuteCommand(ICommandPtr&& command)
 {
+	//стираем те команды, которые могли бы быть перевыполнены с помощью redo
 	if (CanRedo())
 	{
 		command->Execute();
@@ -51,13 +42,21 @@ void History::AddAndExecuteCommand(ICommandPtr&& command)
 		return;
 	}
 
+	//иначе расширяем историю команд
 	m_commands.emplace_back(nullptr);
 	try
 	{
 		command->Execute();
 
 		m_commands.back() = std::move(command);
-		++m_nextCommandIndex;
+		if (COMMANDS_DEPTH_LEVEL < m_commands.size())
+		{
+			m_commands.pop_front();
+		}
+		else
+		{
+			++m_nextCommandIndex;
+		}
 	}
 	catch (...)
 	{
