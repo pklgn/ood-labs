@@ -8,6 +8,8 @@ public:
 	void Unexecute() final;
 
 protected:
+	bool WasExecuted();
+
 	virtual void DoExecute() = 0;
 	virtual void DoUnexecute() = 0;
 

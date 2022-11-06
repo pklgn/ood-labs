@@ -19,3 +19,8 @@ void AbstractCommand::Unexecute()
 		m_executed = false;
 	}
 }
+
+bool AbstractCommand::WasExecuted()
+{
+	return m_executed;
+}
