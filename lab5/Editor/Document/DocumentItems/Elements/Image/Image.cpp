@@ -4,6 +4,8 @@
 constexpr size_t MIN_DIMENSION_SIZE = 1;
 constexpr size_t MAX_DIMENSION_SIZE = 10000;
 
+const std::vector<std::string> IMAGE_EXTENSIONS = { ".jpg", ".bmp" };
+
 namespace fs = std::filesystem;
 
 Image::Image(size_t width, size_t height, Path path)
@@ -45,6 +47,11 @@ void Image::Resize(size_t width, size_t height)
 	m_height = height;
 }
 
+void Image::SetPath(const Path& path)
+{
+	m_path = path;
+}
+
 void Image::ValidateImage()
 {
 	if (!IsValidDimensions(m_width, m_height))
@@ -55,5 +62,12 @@ void Image::ValidateImage()
 	if (!fs::exists(m_path))
 	{
 		throw std::invalid_argument("Image path can't be found");
+	}
+
+	fs::path fsPath = m_path;
+	auto extension = fsPath.extension();
+	if (std::find(IMAGE_EXTENSIONS.begin(), IMAGE_EXTENSIONS.end(), extension) == IMAGE_EXTENSIONS.end())
+	{
+		throw std::invalid_argument("Invalid image extension");
 	}
 }

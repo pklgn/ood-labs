@@ -21,4 +21,6 @@ public:
 
 	// Изменяет размер изображения
 	virtual void Resize(size_t width, size_t height) = 0;
+
+	virtual void SetPath(const Path&) = 0;
 };

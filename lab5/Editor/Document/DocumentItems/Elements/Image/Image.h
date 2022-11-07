@@ -15,6 +15,8 @@ public:
 
 	void Resize(size_t width, size_t height) override;
 
+	void SetPath(const Path&) override;
+
 protected:
 	void ValidateImage();
 
