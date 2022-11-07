@@ -59,8 +59,6 @@ public:
 	void ResizeImage(size_t index, size_t width, size_t height);
 
 protected:
-	Path CopyImage(const Path& srcPath);
-
 	void SetSavePath(const Path& path);
 
 private:

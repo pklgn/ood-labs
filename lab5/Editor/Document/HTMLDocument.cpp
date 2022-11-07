@@ -16,9 +16,7 @@
 #include "HTMLDocument.h"
 #include "../common/StringCommon.h"
 
-const std::string IMAGE_FILENAME_PREFIX = "img";
 const std::string HTML_DOCUMENT_FILENAME_PREFIX = "Untitled";
-const std::string IMAGES_DIRECTORY = "images";
 const auto PLATFORM_SEPARATOR = std::filesystem::path::preferred_separator;
 
 namespace fs = std::filesystem;
@@ -43,13 +41,10 @@ std::shared_ptr<IParagraph> HTMLDocument::InsertParagraph(const std::string& tex
 	return paragraphPtr;
 }
 
-//TODO: вынести построение относительного пути в функцию
 std::shared_ptr<IImage> HTMLDocument::InsertImage(const Path& path, size_t width, size_t height, std::optional<size_t> position)
 {
-	Path imagePath = CopyImage(Trim(path));
-
 	auto insertPosition = ValidatePosition(position);
-	auto imagePtr = std::make_shared<Image>(width, height, imagePath);
+	auto imagePtr = std::make_shared<Image>(width, height, path);
 
 	m_history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(m_items, imagePtr, insertPosition));
 
@@ -169,55 +164,4 @@ size_t HTMLDocument::ValidatePosition(const std::optional<size_t>& position)
 	}
 
 	return position.value_or(m_items.size());
-}
-
-std::string GetCurrentDateTimeString()
-{
-	time_t rawtime;
-	struct tm* timeinfo;
-	char buffer[80];
-
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
-
-	strftime(buffer, sizeof(buffer), "%d%m%Y%H%M%S", timeinfo);
-	std::string str(buffer);
-
-	return str;
-}
-
-Path GetRelativeImagePath(const Path& path)
-{
-	fs::path filePath = path;
-	std::string imageFileName = IMAGE_FILENAME_PREFIX + GetCurrentDateTimeString() + filePath.extension().string();
-
-	fs::path relativePath;
-	relativePath += IMAGES_DIRECTORY;
-	relativePath += PLATFORM_SEPARATOR;
-	relativePath += imageFileName;
-
-	return relativePath.string();
-}
-
-Path HTMLDocument::CopyImage(const Path& srcPath)
-{
-	Path relativePath;
-	try
-	{
-		if (!fs::exists(IMAGES_DIRECTORY))
-		{
-			fs::create_directory(IMAGES_DIRECTORY);
-		}
-
-		relativePath = GetRelativeImagePath(srcPath);
-		fs::path imagePath = m_savePath + relativePath;
-
-		fs::copy_file(srcPath, imagePath);
-	}
-	catch (...)
-	{
-		throw std::runtime_error("Fail to copy image with specified path");
-	}
-
-	return relativePath;
 }
