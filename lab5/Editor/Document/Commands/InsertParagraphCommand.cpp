@@ -7,6 +7,10 @@ InsertParagraphCommand::InsertParagraphCommand(std::vector<DocumentItem>& items,
 	, m_paragraphPtr(paragraphPtr)
 	, m_position(position)
 {
+	if (items.size() < m_position)
+	{
+		throw std::out_of_range("Position out of range");
+	}
 }
 
 void InsertParagraphCommand::DoExecute()
