@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "../../catch2/catch.hpp"
-
+#include <filesystem>
 #include "../Editor/Editor/Editor.h"
 #include "../Editor/Document/HTMLDocument.h"
 #include "../Editor/Document/DocumentItems/Elements/Paragraph/Paragraph.h"
@@ -13,7 +13,10 @@
 #include "../Editor/Document/Commands/ReplaceTextCommand.h"
 #include "../Editor/Document/Commands/InsertImageCommand.h"
 #include "../Editor/Document/Commands/InsertParagraphCommand.h"
+#include "../Editor/Document/Commands/DeleteItemCommand.h"
 #include "../Editor/Editor/Menu.h"
+
+namespace fs = std::filesystem;
 
 TEST_CASE("Check document creation")
 {
@@ -354,6 +357,11 @@ TEST_CASE("Check InsertParagraphCommand")
 	REQUIRE(items.front().GetParagraph() != nullptr);
 	REQUIRE(items.front().GetParagraph()->GetText() == "TEXT");
 
+	SECTION("Out of range position")
+	{
+		REQUIRE_THROWS(history.AddAndExecuteCommand(std::make_unique<InsertParagraphCommand>(items, iParagraphPtr, 100)));
+	}
+
 	SECTION("Undo")
 	{
 		history.Undo();
@@ -382,24 +390,198 @@ TEST_CASE("Check InsertImageCommand")
 	REQUIRE(items.front().GetImage()->GetWidth() == 800);
 	REQUIRE(items.front().GetImage()->GetHeight() == 600);
 
-	SECTION("Undo")
+	Path imagePath = items.front().GetImage()->GetPath();
+	history.Undo();
+	SECTION("Delete a canceled command")
+	{
+		std::string target;
+		for (size_t counter = 0; counter < history.COMMANDS_DEPTH_LEVEL; ++counter)
+		{
+			history.AddAndExecuteCommand(std::make_unique<SetTitleCommand>(target, std::to_string(counter)));
+		}
+		REQUIRE_FALSE(fs::exists(imagePath));
+	}
+
+	SECTION("Out of range position")
+	{
+		REQUIRE_THROWS(history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(items, iImagePtr, 100)));
+	}
+}
+
+TEST_CASE("Check InsertImageCommand for executed deletion")
+{
+	History history;
+	std::vector<DocumentItem> items;
+	auto imagePtr = std::make_shared<Image>(800, 600, ".\\output1.jpg");
+	auto iImagePtr = std::dynamic_pointer_cast<IImage>(imagePtr);
+	REQUIRE_NOTHROW(history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(items, iImagePtr, 0)));
+	Path imagePath = items.front().GetImage()->GetPath();
+	//overflow history
+	std::string target;
+	for (size_t counter = 0; counter < history.COMMANDS_DEPTH_LEVEL; ++counter)
+	{
+		history.AddAndExecuteCommand(std::make_unique<SetTitleCommand>(target, std::to_string(counter)));
+	}
+
+	REQUIRE(fs::exists(imagePath));
+}
+//TODO: передавать объект в test_case
+TEST_CASE("Check DeleteItemCommand")
+{
+	History history;
+	std::vector<DocumentItem> items;
+	auto imagePtr = std::make_shared<Image>(800, 600, ".\\output.jpg");
+	auto iImagePtr = std::dynamic_pointer_cast<IImage>(imagePtr);
+
+	REQUIRE_NOTHROW(history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(items, iImagePtr, 0)));
+	REQUIRE_NOTHROW(history.AddAndExecuteCommand(std::make_unique<DeleteItemCommand>(items, 0)));
+
+	SECTION("Out of range position")
+	{
+		REQUIRE_THROWS(history.AddAndExecuteCommand(std::make_unique<InsertImageCommand>(items, iImagePtr, 100)));
+	}
+
+	SECTION("Check delete when depth level overflowed")
+	{
+		auto imagePath = iImagePtr->GetPath();
+		REQUIRE(fs::exists(imagePath));
+		std::string target;
+		for (size_t counter = 0; counter < history.COMMANDS_DEPTH_LEVEL; ++counter)
+		{
+			history.AddAndExecuteCommand(std::make_unique<SetTitleCommand>(target, std::to_string(counter)));
+		}
+		REQUIRE_FALSE(fs::exists(imagePath));
+	}
+
+	SECTION("Delete a canceled action")
 	{
 		history.Undo();
-		REQUIRE(items.size() == 0);
-		//imposter
-		history.Redo();
+		std::string target;
+		history.AddAndExecuteCommand(std::make_unique<SetTitleCommand>(target, "NEW"));
+		auto imagePath = iImagePtr->GetPath();
+		REQUIRE(fs::exists(imagePath));
+	}
+}
+
+TEST_CASE("Check document")
+{
+	HTMLDocument document;
+
+	REQUIRE(document.GetItemsCount() == 0);
+
+	SECTION("Add paragraph")
+	{
+		document.InsertParagraph("TEXT", 0);
+
+		REQUIRE(document.GetItemsCount() == 1);
+		auto paragraph = document.GetItem(0).GetParagraph();
+		REQUIRE(paragraph != nullptr);
+		REQUIRE(paragraph->GetText() == "TEXT");
+	}
+
+	SECTION("Add invalid position paragraph")
+	{
+		REQUIRE_THROWS(document.InsertParagraph("TEXT", 100));
+	}
+
+	SECTION("Add image")
+	{
+		document.InsertImage(".\\output.jpg", 200, 100, 0);
+
+		REQUIRE(document.GetItemsCount() == 1);
+		auto image = document.GetItem(0).GetImage();
+		REQUIRE(image != nullptr);
+		REQUIRE(image->GetWidth() == 200);
+		REQUIRE(image->GetHeight() == 100);
+	}
+
+	SECTION("Add invalid position image")
+	{
+		REQUIRE_THROWS(document.InsertImage(".\\output.jpg", 200, 100, 200));
+	}
+
+	SECTION("Set title")
+	{
+		document.SetTitle("NEW TITLE");
+
+		REQUIRE(document.GetTitle() == "NEW TITLE");
+	}
+
+	SECTION("Delete item")
+	{
+		document.InsertParagraph("paragraph", 0);
+		document.InsertParagraph("paragraph1", 1);
+
+		document.DeleteItem(0);
+		auto firstParagraph = document.GetItem(0).GetParagraph();
+		REQUIRE(document.GetItemsCount() == 1);
+		REQUIRE(firstParagraph->GetText() == "paragraph1");
+	}
+
+	SECTION("Delete item wrong position")
+	{
+		REQUIRE_THROWS(document.DeleteItem(10));
+	}
+
+	SECTION("Undo")
+	{
+		document.InsertParagraph("text", 0);
+		document.InsertParagraph("text", 1);
+
+		document.Undo();
+		document.Undo();
+
+		REQUIRE_FALSE(document.CanUndo());
+		REQUIRE(document.CanRedo());
+		REQUIRE(document.GetItemsCount() == 0);
 	}
 
 	SECTION("Redo")
 	{
-		history.Undo();
-		history.Redo();
-		REQUIRE(items.size() == 1);
-		REQUIRE(items.front().GetImage()->GetPath() == ".\\output.jpg");
-	}
-}
+		document.InsertParagraph("text0", 0);
+		document.InsertParagraph("text1", 1);
 
-TEST_CASE("Check DeleteItemCommand")
-{
-	
+		document.Undo();
+		document.Undo();
+		
+		document.Redo();
+		auto paragraph = document.GetItem(0).GetParagraph();
+		REQUIRE(paragraph != nullptr);
+		REQUIRE(paragraph->GetText() == "text0");
+	}
+
+	SECTION("Replace text")
+	{
+		document.InsertParagraph("text", 0);
+		document.ReplaceText(0, "new text");
+
+		auto paragraph = document.GetItem(0).GetParagraph();
+		REQUIRE(paragraph != nullptr);
+		REQUIRE(paragraph->GetText() == "new text");
+	}
+
+	SECTION("Replace text for image")
+	{
+		document.InsertImage(".\\output.jpg", 200, 100, 0);
+
+		REQUIRE_THROWS(document.ReplaceText(0, "new text"));
+	}
+
+	SECTION("Resize image")
+	{
+		document.InsertImage(".\\output.jpg", 200, 100, 0);
+		document.ResizeImage(0, 300, 400);
+
+		auto image = document.GetItem(0).GetImage();
+		REQUIRE(image != nullptr);
+		REQUIRE(image->GetWidth() == 300);
+		REQUIRE(image->GetHeight() == 400);
+	}
+
+	SECTION("Reisze image for text")
+	{
+		document.InsertParagraph("text", 0);
+
+		REQUIRE_THROWS(document.ResizeImage(0, 300, 400));
+	}
 }
