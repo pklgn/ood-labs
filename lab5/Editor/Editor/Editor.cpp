@@ -1,5 +1,6 @@
 #include "../pch.h"
 #include "Editor.h"
+#include "../common/StringCommon.h"
 
 const std::string END_POSITION_STRING = "end";
 
@@ -118,7 +119,7 @@ void Editor::InsertImage()
 		HandleInputReadFail("Image path was expected");
 	}
 
-	m_document.InsertImage(path, width, height, position);
+	m_document.InsertImage(Trim(path), width, height, position);
 }
 
 void Editor::SetTitle()
