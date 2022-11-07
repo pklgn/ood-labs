@@ -398,4 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 #lab5
-*.html
+lab5/**/.html
+lab5/**/*.jpg
