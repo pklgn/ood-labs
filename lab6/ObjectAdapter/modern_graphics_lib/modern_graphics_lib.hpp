@@ -69,6 +69,11 @@ public:
 		m_drawing = false;
 	}
 
+	bool IsDrawing()
+	{
+		return m_drawing;
+	}
+
 private:
 	std::ostream& m_out;
 	bool m_drawing = false;

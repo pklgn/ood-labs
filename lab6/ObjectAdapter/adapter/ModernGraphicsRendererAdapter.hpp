@@ -16,7 +16,10 @@ public:
 
 	~ModernGraphicsRendererAdapter()
 	{
-		m_renderer.EndDraw();
+		if (m_renderer.IsDrawing())
+		{
+			m_renderer.EndDraw();
+		}
 	}
 
 	void MoveTo(int x, int y) override

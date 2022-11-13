@@ -59,8 +59,5 @@ TEST_CASE("Test Adapter")
 		adapter.~ModernGraphicsRendererAdapter();
 		REQUIRE(oss.str() == "<draw>\n"
 							 "</draw>\n");
-
-		//hold this line for non-raising exception in destructor when leave section
-		renderer.BeginDraw();
 	}
 }
