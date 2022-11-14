@@ -14,7 +14,7 @@ TEST_CASE("simple test")
 	Display display(std::cout);
 
 	//Check basic case with one handler
-	weatherData.AddSubscriber(&display, WeatherEvent::TEMPRATURE, [&]() {
+	weatherData.AddObserver(&display, WeatherEvent::TEMPRATURE, [&]() {
 		OnTempratureChange(weatherData);
 		OnTempratureStatisticsChange(weatherData);
 	});
@@ -24,11 +24,11 @@ TEST_CASE("simple test")
 	weatherInfo = { 35, 0.9, 761, 3, 91 };
 	weatherData.SetMeasurements(weatherInfo);
 
-	weatherData.RemoveSubscriber(&display, WeatherEvent::TEMPRATURE);
+	weatherData.RemoveObserver(&display, WeatherEvent::TEMPRATURE);
 
 	//Check after temprature removing and adding wind_angle observer
 	weatherInfo = { 36, 1, 762, 4, 92 };
-	weatherData.AddSubscriber(&display, WeatherEvent::WIND_ANGLE, [&]() {
+	weatherData.AddObserver(&display, WeatherEvent::WIND_ANGLE, [&]() {
 		OnWindAngleChange(weatherData);
 		OnWindAngleStatisticsChange(weatherData);
 	});

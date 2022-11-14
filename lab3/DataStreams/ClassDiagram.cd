@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DecryptInputStream" Collapsed="true">
+    <Position X="10.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAACAAAAAAAAAAAAAAAAgAAAMAAAAAAAAEAAIA=</HashCode>
+      <FileName>InputStreams\Decorators\DecryptInputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DecompressInputStream" Collapsed="true">
+    <Position X="12.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAgCAAAAAAAAAAAAAAAAABAQEAAAAAAAAAAAIA=</HashCode>
+      <FileName>InputStreams\Decorators\DecompressInputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RLEDecompressInputStream" Collapsed="true">
+    <Position X="12.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAABAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>InputStreams\Decorators\RLEDecompressInputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SubstitutionCipherDecryptInputStream" Collapsed="true">
+    <Position X="10.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAIAAAAAAABAAAAAAAAIAAAAAAAAEAAAA=</HashCode>
+      <FileName>InputStreams\Decorators\SubstitutionCipherDecryptInputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileInputStream" Collapsed="true">
+    <Position X="5.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAACAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAAAIA=</HashCode>
+      <FileName>InputStreams\FileInputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IInputStream" Collapsed="true">
+    <Position X="9" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAACAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAIA=</HashCode>
+      <FileName>InputStreams\IInputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemoryInputStream" Collapsed="true">
+    <Position X="7.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACIABAAAAAAAAAAAAAAAAAEAAAAAABAAAAIA=</HashCode>
+      <FileName>InputStreams\MemoryInputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompressOutputStream">
+    <Position X="10.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAEAAAAAAAAAAAAAAAAAAgAAAAAABAAAA=</HashCode>
+      <FileName>OutputStreams\Decorators\CompressOutputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EncryptOutputStream">
+    <Position X="12.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAABAAAACAAAAAAAAAAgAAAAAAFAAAA=</HashCode>
+      <FileName>OutputStreams\Decorators\EncryptOutputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RLECompressOutputStream">
+    <Position X="10.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>OutputStreams\Decorators\RLECompressOutputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SubstitutionCipherEncryptOutputStream">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAEBAAAACAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>OutputStreams\Decorators\SubstitutionCipherEncryptOutputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileOutputStream">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAIAAAAAAAAAAAAAAAAgAAAAAABAAAA=</HashCode>
+      <FileName>OutputStreams\FileOutputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IOutputStream" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAABAAAA=</HashCode>
+      <FileName>OutputStreams\IOutputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MemoryOutputStream">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAgAAAAAABAAAA=</HashCode>
+      <FileName>OutputStreams\MemoryOutputStream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Typedef Name="IInputStreamPtr" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InputStreams\IInputStream.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="IOutputStreamPtr" Collapsed="true">
+    <Position X="17" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>OutputStreams\IOutputStream.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

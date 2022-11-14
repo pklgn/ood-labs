@@ -1,0 +1,10 @@
+rectangle 150 150 450 350 yellow
+triangle 450 150 600 250 450 350 pink
+ellipse 350 250 50 50 blue
+triangle 150 175 150 325 50 250 yellow
+triangle 150 200 150 300 100 250 red
+triangle 150 150 150 50 250 150 green
+triangle 150 350 150 450 250 350 green
+line 400 150 400 75 blue
+regular-polygon 550 250 10 200 red
+ellipse 500 500 100 80 green
