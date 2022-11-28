@@ -6,7 +6,7 @@ template <class T>
 class LineStyleEnumerator : public ILineStyleEnumerator
 {
 public:
-	LineStyleEnumerator(const T& items)
+	LineStyleEnumerator(T& items)
 		: m_items(items)
 	{
 	}
@@ -20,5 +20,5 @@ public:
 	}
 
 private:
-	const T& m_items;
+	T& m_items;
 };

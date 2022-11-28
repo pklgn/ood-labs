@@ -1,7 +1,7 @@
 #include "../../../pch.h"
 #include "CompositeLineStyle.h"
 
-CompositeLineStyle::CompositeLineStyle(std::shared_ptr<ILineStyleEnumerator> emumeratorPtr, bool isEnabled)
+CompositeLineStyle::CompositeLineStyle(std::unique_ptr<ILineStyleEnumerator> emumeratorPtr, bool isEnabled)
 	: AbstractLineStyle(isEnabled)
 	, m_enumeratorPtr(std::move(emumeratorPtr))
 {
