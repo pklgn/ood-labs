@@ -1,7 +1,7 @@
 #pragma once
 #include "../AbstractLineStyle.h"
 
-const Thickness DEFUALT_THICKNESS = 1;
+constexpr Thickness DEFUALT_THICKNESS = 1;
 
 class SimpleLineStyle : public AbstractLineStyle
 {
@@ -11,7 +11,7 @@ public:
 	std::optional<RGBAColor> GetColor() const override;
 	void SetColor(const RGBAColor) override;
 
-	std::optional<uint8_t> GetThickness() const override;
+	std::optional<unsigned int> GetThickness() const override;
 	void SetThickness(const Thickness) override;
 
 private:

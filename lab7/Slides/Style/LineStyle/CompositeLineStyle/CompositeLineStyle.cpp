@@ -42,9 +42,9 @@ void CompositeLineStyle::SetColor(const RGBAColor color)
 
 std::optional<Thickness> CompositeLineStyle::GetThickness() const
 {
-	std::optional<RGBAColor> prevThickness = std::nullopt;
-	std::optional<RGBAColor> currThickness = std::nullopt;
-	std::optional<RGBAColor> resultThickness = std::nullopt;
+	std::optional<Thickness> prevThickness = std::nullopt;
+	std::optional<Thickness> currThickness = std::nullopt;
+	std::optional<Thickness> resultThickness = std::nullopt;
 
 	m_enumeratorPtr->EnumerateAll([&](std::shared_ptr<ILineStyle> stylePtr) {
 		currThickness = stylePtr->GetColor();

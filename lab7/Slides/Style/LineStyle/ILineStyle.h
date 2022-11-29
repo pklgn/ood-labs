@@ -2,7 +2,7 @@
 #include <optional>
 #include "../../Color/Color.h"
 
-typedef uint8_t Thickness;
+typedef unsigned int Thickness;
 
 class ILineStyle
 {
@@ -16,6 +16,6 @@ public:
 	virtual void Enable() = 0;
 	virtual void Disable() = 0;
 
-	virtual std::optional<uint8_t> GetThickness() const = 0;
+	virtual std::optional<unsigned int> GetThickness() const = 0;
 	virtual void SetThickness(const Thickness) = 0;
 };

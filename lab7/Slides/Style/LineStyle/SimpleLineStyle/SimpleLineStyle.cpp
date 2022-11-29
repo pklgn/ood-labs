@@ -18,7 +18,7 @@ void SimpleLineStyle::SetColor(const RGBAColor color)
 	m_color = color;
 }
 
-std::optional<uint8_t> SimpleLineStyle::GetThickness() const
+std::optional<unsigned int> SimpleLineStyle::GetThickness() const
 {
 	return m_thickness;
 }
