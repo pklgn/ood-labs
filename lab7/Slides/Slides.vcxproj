@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Canvas\ConsoleCanvas.h" />
     <ClInclude Include="Canvas\ICanvas.h" />
     <ClInclude Include="Color\Color.h" />
     <ClInclude Include="Frame\Frame.h" />
@@ -166,6 +167,9 @@
     <ClInclude Include="Style\LineStyle\SimpleLineStyle\SimpleLineStyle.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Canvas\ConsoleCanvas.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
