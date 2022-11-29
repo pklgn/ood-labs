@@ -2,7 +2,7 @@
 #include "ILineStyleEnumerator.h"
 #include "../../../Shape/IShape.h"
 
-template <class T>
+template <typename T>
 class LineStyleEnumerator : public ILineStyleEnumerator
 {
 public:

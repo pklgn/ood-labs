@@ -11,10 +11,10 @@ public:
 	std::shared_ptr<GroupShape> GetPtr();
 	std::shared_ptr<const GroupShape> GetPtr() const;
 
-	[[nodiscard]] static std::shared_ptr<GroupShape> Create(std::vector<std::shared_ptr<IShape>> shapes)
+	[[nodiscard]] static std::shared_ptr<GroupShape> Create(std::vector<std::shared_ptr<IShape>>& shapes)
 	{
 		//CARE Not using std::make_shared<Best> because the c'tor is private.
-		return std::make_shared<GroupShape>(shapes);
+		return std::shared_ptr<GroupShape>(new GroupShape(shapes));
 	}
 
 	RectD GetFrame() override;
@@ -30,8 +30,15 @@ public:
 
 	std::shared_ptr<const IShape> GetGroupShape() const override;
 
+	size_t GetShapesCount() override;
+	std::shared_ptr<IShape> GetShapeAtIndex(size_t) override;
+	void InsertShape(std::shared_ptr<IShape>, size_t index) override;
+	void RemoveShapeAtIndex(size_t) override;
+
+	void Draw(ICanvas&) override;
+
 private:
-	GroupShape(std::vector<std::shared_ptr<IShape>>);
+	GroupShape(std::vector<std::shared_ptr<IShape>>&);
 
 	std::vector<std::shared_ptr<IShape>> m_shapes;
 	std::shared_ptr<CompositeLineStyle> m_lineStyle;

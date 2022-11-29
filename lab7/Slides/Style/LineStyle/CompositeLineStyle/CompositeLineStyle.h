@@ -6,7 +6,7 @@
 class CompositeLineStyle : public AbstractLineStyle
 {
 public:
-	CompositeLineStyle(std::unique_ptr<ILineStyleEnumerator>, bool isEnabled = true);
+	explicit CompositeLineStyle(std::unique_ptr<ILineStyleEnumerator>, bool isEnabled = true);
 
 	std::optional<RGBAColor> GetColor() const override;
 	void SetColor(const RGBAColor) override;

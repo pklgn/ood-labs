@@ -5,12 +5,13 @@
 
 typedef std::vector<std::shared_ptr<IShape>> Shapes;
 
-GroupShape::GroupShape(Shapes shapes)
+GroupShape::GroupShape(Shapes& shapes)
 	: m_shapes(shapes)
-	, m_lineStyle(std::make_shared<CompositeLineStyle>(std::make_unique<LineStyleEnumerator<Shapes>>(shapes)))
-	, m_fillStyle(std::make_shared<CompositeFillStyle>(std::make_unique<FillStyleEnumerator<Shapes>>(shapes)))
+	, m_lineStyle(std::make_shared<CompositeLineStyle>(std::make_unique<LineStyleEnumerator<Shapes>>(m_shapes)))
+	, m_fillStyle(std::make_shared<CompositeFillStyle>(std::make_unique<FillStyleEnumerator<Shapes>>(m_shapes)))
 {
 	m_frame = GetFrame();
+	auto test1 = std::make_shared<CompositeLineStyle>(std::make_unique<LineStyleEnumerator<Shapes>>(shapes));
 }
 
 std::shared_ptr<GroupShape> GroupShape::GetPtr()
@@ -132,4 +133,37 @@ void GroupShape::SetFillStyle(std::shared_ptr<IFillStyle> style)
 std::shared_ptr<const IShape> GroupShape::GetGroupShape() const
 {
 	return GetPtr();
+}
+
+size_t GroupShape::GetShapesCount()
+{
+	return m_shapes.size();
+}
+
+std::shared_ptr<IShape> GroupShape::GetShapeAtIndex(size_t index)
+{
+	return m_shapes.at(index);
+}
+
+void GroupShape::InsertShape(std::shared_ptr<IShape> shape, size_t index)
+{
+	m_shapes.insert(m_shapes.begin() + index, shape);
+}
+
+void GroupShape::RemoveShapeAtIndex(size_t index)
+{
+	if (m_shapes.size() <= index)
+	{
+		throw std::out_of_range("Index value is out of range");
+	}
+
+	m_shapes.erase(m_shapes.begin() + index);
+}
+
+void GroupShape::Draw(ICanvas& canvas)
+{
+	for (auto& shape: m_shapes)
+	{
+		shape->Draw(canvas);
+	}
 }
