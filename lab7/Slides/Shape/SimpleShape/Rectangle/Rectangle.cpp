@@ -8,6 +8,7 @@ Rectangle::Rectangle(const Point& leftTop,
 	const std::shared_ptr<SimpleFillStyle> fillStyle
 )
 	: SimpleShape(RectD{leftTop.x, leftTop.y, width, height}, lineStyle, fillStyle)
+	, m_leftTop(leftTop)
 	, m_width(width)
 	, m_height(height)
 {
