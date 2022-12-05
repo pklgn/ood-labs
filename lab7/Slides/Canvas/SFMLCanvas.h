@@ -1,9 +1,14 @@
 #pragma once
 #include "ICanvas.h"
+#include <SFML/Graphics.hpp>
 
-class ConsoleCanvas : public ICanvas
+const unsigned int DEFAULT_CANVAS_LINE_THICKNESS = 1;
+
+class SFMLCanvas : public ICanvas
 {
 public:
+	SFMLCanvas(sf::RenderTarget&);
+
 	void DrawLine(const Point& from, const Point& to) override;
 	void DrawEllipse(const Point& leftTop, double width, double height) override;
 	void FillEllipse(const Point& leftTop, double width, double height) override;
@@ -12,8 +17,11 @@ public:
 	void SetLineColor(uint32_t) override;
 	void SetLineThickness(unsigned int) override;
 
+	void CaptureShapes(const std::string& outputFileName);
+
 private:
-	uint32_t m_lineColor;
-	uint32_t m_fillColor;
-	unsigned int m_lineThickness;
+	sf::Color m_lineColor = sf::Color::White;
+	sf::Color m_fillColor = sf::Color::Black;
+	unsigned int m_lineThickness = DEFAULT_CANVAS_LINE_THICKNESS;
+	sf::RenderTarget& m_renderTarget;
 };

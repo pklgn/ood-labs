@@ -10,7 +10,7 @@ void ConsoleCanvas::DrawLine(const Point& from, const Point& to)
 			  << std::endl;
 }
 
-void ConsoleCanvas::DrawEllipse(const Point& leftTop, float width, float height)
+void ConsoleCanvas::DrawEllipse(const Point& leftTop, double width, double height)
 {
 	std::cout << "DrawEllipse with\n"
 			  << "\tleftTop: " << leftTop << "\n"
@@ -18,13 +18,13 @@ void ConsoleCanvas::DrawEllipse(const Point& leftTop, float width, float height)
 			  << "\theight:\t" << height << "\n";
 }
 
-void ConsoleCanvas::FillEllipse(const Point& leftTop, float width, float height)
+void ConsoleCanvas::FillEllipse(const Point& leftTop, double width, double height)
 {
 	std::cout << "FillEllipse with\n"
 			  << "\tleftTop: " << leftTop << "\n"
 			  << "\twidth: " << width << "\n"
-			  << "\theight" << height << "\n"
-			  << "\tcolor" << m_fillColor << "\n";
+			  << "\theight: " << height << "\n"
+			  << "\tcolor: " << std::hex << m_fillColor << "\n";
 }
 
 void ConsoleCanvas::FillPolygon(std::vector<Point>& points)
@@ -34,7 +34,7 @@ void ConsoleCanvas::FillPolygon(std::vector<Point>& points)
 	{
 		std::cout << "\tpoint: " << point << "\n";
 	}
-	std::cout << "\tcolor" << m_fillColor << "\n";
+	std::cout << "\tcolor: " << std::hex << m_fillColor << "\n";
 }
 
 void ConsoleCanvas::SetFillColor(uint32_t color)
