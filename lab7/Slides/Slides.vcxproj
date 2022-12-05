@@ -74,16 +74,22 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Soft\MyLibs\SFML-2.5.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>C:\Soft\MyLibs\SFML-2.5.1\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;freetype.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;odbccp32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -108,17 +114,22 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Soft\MyLibs\SFML-2.5.1\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>C:\Soft\MyLibs\SFML-2.5.1\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;freetype.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;odbccp32.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -142,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Canvas\ConsoleCanvas.h" />
     <ClInclude Include="Canvas\ICanvas.h" />
+    <ClInclude Include="Canvas\SFMLCanvas.h" />
     <ClInclude Include="Color\Color.h" />
     <ClInclude Include="Frame\Frame.h" />
     <ClInclude Include="pch.h" />
@@ -153,6 +165,7 @@
     <ClInclude Include="Shape\SimpleShape\Rectangle\Rectangle.h" />
     <ClInclude Include="Shape\SimpleShape\SimpleShape.h" />
     <ClInclude Include="Shape\SimpleShape\Triangle\Triangle.h" />
+    <ClInclude Include="Slide\Slide.h" />
     <ClInclude Include="Style\FillStyle\AbstractFillStyle.h" />
     <ClInclude Include="Style\FillStyle\CompositeFillStyle\CompositeFillStyle.h" />
     <ClInclude Include="Style\FillStyle\Enumerator\IFillStyleEnumerator.h" />
@@ -168,6 +181,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Canvas\ConsoleCanvas.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Canvas\SFMLCanvas.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="pch.cpp">
@@ -190,6 +206,9 @@
     </ClCompile>
     <ClCompile Include="Shape\SimpleShape\Triangle\Triangle.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Slide\Slide.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Style\FillStyle\AbstractFillStyle.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>

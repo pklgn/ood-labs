@@ -6,10 +6,13 @@
 
 #ifndef PCH_H
 #define PCH_H
+#define _USE_MATH_DEFINES
 
 // add headers that you want to pre-compile here
 #include <stdexcept>
 #include <memory>
 #include <iostream>
+#include <cmath>
+#include <limits>
 
 #endif //PCH_H

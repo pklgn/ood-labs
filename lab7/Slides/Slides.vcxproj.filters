@@ -90,6 +90,12 @@
     <ClInclude Include="Canvas\ConsoleCanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Slide\Slide.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas\SFMLCanvas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -129,6 +135,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Canvas\ConsoleCanvas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Slide\Slide.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas\SFMLCanvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
