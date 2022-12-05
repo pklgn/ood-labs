@@ -1,21 +1,10 @@
 #include "../../pch.h"
 #include "SimpleShape.h"
 
-SimpleShape::SimpleShape(const RectD& frame, const std::shared_ptr<SimpleLineStyle> lineStyle, const std::shared_ptr<SimpleFillStyle> fillStyle)
-	: m_frame(frame)
-	, m_lineStyle(lineStyle)
+SimpleShape::SimpleShape(const std::shared_ptr<SimpleLineStyle> lineStyle, const std::shared_ptr<SimpleFillStyle> fillStyle)
+	: m_lineStyle(lineStyle)
 	, m_fillStyle(fillStyle)
 {
-}
-
-RectD SimpleShape::GetFrame()
-{
-	return m_frame;
-}
-
-void SimpleShape::SetFrame(const RectD& frame)
-{
-	m_frame = frame;
 }
 
 std::shared_ptr<ILineStyle> SimpleShape::GetLineStyle()

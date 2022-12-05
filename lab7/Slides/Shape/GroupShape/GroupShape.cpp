@@ -10,13 +10,6 @@ GroupShape::GroupShape(Shapes& shapes)
 	, m_lineStyle(std::make_shared<CompositeLineStyle>(std::make_unique<LineStyleEnumerator<Shapes>>(m_shapes)))
 	, m_fillStyle(std::make_shared<CompositeFillStyle>(std::make_unique<FillStyleEnumerator<Shapes>>(m_shapes)))
 {
-	m_frame = GetFrame();
-	auto test1 = std::make_shared<CompositeLineStyle>(std::make_unique<LineStyleEnumerator<Shapes>>(shapes));
-}
-
-std::shared_ptr<GroupShape> GroupShape::GetPtr()
-{
-	return shared_from_this();
 }
 
 std::shared_ptr<const GroupShape> GroupShape::GetPtr() const
@@ -26,22 +19,20 @@ std::shared_ptr<const GroupShape> GroupShape::GetPtr() const
 
 RectD GroupShape::GetFrame()
 {
-	//TODO: refactor this
 	if (m_shapes.size() == 0)
 	{
-		m_frame = { m_frame.left, m_frame.top, 0, 0 };
-
-		return m_frame;
+		return { 0, 0, 0, 0 };
 	}
 
 	auto frontFrame = m_shapes.front()->GetFrame();
-	Point rightBottom = { frontFrame.left, frontFrame.top };
+	Point rightBottom = { frontFrame.left + frontFrame.width, frontFrame.top + frontFrame.height };
 
-	RectD result{ frontFrame.left, frontFrame.top, 0, 0 };
+	RectD result = frontFrame;
 
+	RectD shapeFrame;
 	for (auto& shape: m_shapes)
 	{
-		auto shapeFrame = shape->GetFrame();
+		shapeFrame = shape->GetFrame();
 		result.left = std::min(result.left, shapeFrame.left);
 		result.top = std::min(result.top, shapeFrame.top);
 		if (rightBottom.x < shapeFrame.left + shapeFrame.width)
@@ -62,7 +53,24 @@ RectD GroupShape::GetFrame()
 
 void GroupShape::SetFrame(const RectD& frame)
 {
-	m_frame = frame;
+	auto currFrame = GetFrame();
+
+	auto coefX = frame.width / currFrame.width;
+	auto coefY = frame.height / currFrame.height;
+
+	for (auto& shape : m_shapes)
+	{
+		auto shapeFrame = shape->GetFrame();
+		auto distanceX = shapeFrame.left - currFrame.left;
+		auto distanceY = shapeFrame.top - currFrame.top;
+
+		RectD newShapeFrame = { frame.left + distanceX * coefX,
+			frame.top + distanceY * coefY,
+			shapeFrame.width * coefX,
+			shapeFrame.height * coefY };
+
+		shape->SetFrame(newShapeFrame);
+	}
 }
 
 std::shared_ptr<ILineStyle> GroupShape::GetLineStyle()
@@ -147,6 +155,11 @@ std::shared_ptr<IShape> GroupShape::GetShapeAtIndex(size_t index)
 
 void GroupShape::InsertShape(std::shared_ptr<IShape> shape, size_t index)
 {
+	if (m_shapes.size() < index)
+	{
+		throw std::out_of_range("Index value is out of range");
+	}
+
 	m_shapes.insert(m_shapes.begin() + index, shape);
 }
 

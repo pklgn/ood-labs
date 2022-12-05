@@ -1,49 +1,75 @@
 #include "../../../pch.h"
 #include "Triangle.h"
 
+void TransformVertexPoint(Point& point, const RectD& oldFrame, const RectD& newFrame);
+
 Triangle::Triangle(const Point& vertexA, const Point& vertexB, const Point& vertexC, const std::shared_ptr<SimpleLineStyle> lineStyle, const std::shared_ptr<SimpleFillStyle> fillStyle)
-	: SimpleShape(CalculateFrame(vertexA, vertexB, vertexC), lineStyle, fillStyle)
+	: SimpleShape(lineStyle, fillStyle)
 	, m_vertexA(vertexA)
 	, m_vertexB(vertexB)
 	, m_vertexC(vertexC)
 {
 }
 
+RectD Triangle::GetFrame()
+{
+	double width;
+	double height;
+
+	width = GetFrameDimension(&Point::x);
+	height = GetFrameDimension(&Point::y);
+
+	auto left = std::min(m_vertexA.x, std::min(m_vertexB.x, m_vertexC.x));
+	auto top = std::min(m_vertexA.y, std::min(m_vertexB.y, m_vertexC.y));
+
+	return RectD{ left, top, width, height };
+}
+
+void Triangle::SetFrame(const RectD& frame)
+{
+	auto currFrame = GetFrame();
+	
+	TransformVertexPoint(m_vertexA, currFrame, frame);
+	TransformVertexPoint(m_vertexB, currFrame, frame);
+	TransformVertexPoint(m_vertexC, currFrame, frame);
+}
+
 void Triangle::Draw(ICanvas& canvas)
 {
-	auto lineColor = GetLineStyle()->GetColor().value_or(0xFFFFFFFF);
+	auto lineColor = GetLineStyle()->GetColor().value_or(DEFAULT_LINE_COLOR);
 	canvas.SetLineColor(lineColor);
 
-	auto fillColor = GetFillStyle()->GetColor().value_or(0xFFFFFFFF);
+	auto fillColor = GetFillStyle()->GetColor().value_or(DEFAULT_FILL_COLOR);
 	canvas.SetFillColor(fillColor);
 
-	auto thickness = GetLineStyle()->GetThickness().value_or(1);
+	auto thickness = GetLineStyle()->GetThickness().value_or(DEFAULT_LINE_THICKNESS);
 	canvas.SetLineThickness(thickness);
+
+	auto points = std::vector<Point>{ m_vertexA, m_vertexB, m_vertexC };
+	canvas.FillPolygon(points);
 
 	canvas.DrawLine(m_vertexA, m_vertexB);
 	canvas.DrawLine(m_vertexB, m_vertexC);
 	canvas.DrawLine(m_vertexC, m_vertexA);
 }
 
-double GetFrameDimension(double Point::*dim, const Point& vertexA, const Point& vertexB, const Point& vertexC)
+double Triangle::GetFrameDimension(double Point::*dim)
 {
-	auto dimAB = std::abs(vertexA.*dim - vertexB.*dim);
-	auto dimBC = std::abs(vertexB.*dim - vertexC.*dim);
-	auto dimAC = std::abs(vertexA.*dim - vertexC.*dim);
+	auto dimAB = std::abs(m_vertexA.*dim - m_vertexB.*dim);
+	auto dimBC = std::abs(m_vertexB.*dim - m_vertexC.*dim);
+	auto dimAC = std::abs(m_vertexA.*dim - m_vertexC.*dim);
 
 	return std::max(dimAB, std::max(dimBC, dimAC));
 }
 
-RectD Triangle::CalculateFrame(const Point& vertexA, const Point& vertexB, const Point& vertexC)
+void TransformVertexPoint(Point& point, const RectD& oldFrame, const RectD& newFrame)
 {
-	double width;
-	double height;
+	auto coefX = newFrame.width / oldFrame.width;
+	auto coefY = newFrame.height / oldFrame.height;
 
-	width = GetFrameDimension(&Point::x, vertexA, vertexB, vertexC);
-	height = GetFrameDimension(&Point::y, vertexA, vertexB, vertexC);
+	auto distanceX = point.x - oldFrame.left;
+	auto distanceY = point.y - oldFrame.top;
 
-	auto left = std::min(vertexA.x, std::min(vertexB.x, vertexC.x));
-	auto top = std::min(vertexA.y, std::min(vertexB.y, vertexC.y));
-
-	return RectD{ left, top, width, height };
+	point.x = newFrame.left + distanceX * coefX;
+	point.y = newFrame.top + distanceY * coefY;
 }

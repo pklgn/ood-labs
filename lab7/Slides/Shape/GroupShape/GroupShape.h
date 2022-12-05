@@ -8,12 +8,9 @@
 class GroupShape : public IGroupShape, std::enable_shared_from_this<GroupShape>
 {
 public:
-	std::shared_ptr<GroupShape> GetPtr();
-	std::shared_ptr<const GroupShape> GetPtr() const;
-
 	[[nodiscard]] static std::shared_ptr<GroupShape> Create(std::vector<std::shared_ptr<IShape>>& shapes)
 	{
-		//CARE Not using std::make_shared<Best> because the c'tor is private.
+		//Not using std::make_shared<GroupShape> because the c'tor is private.
 		return std::shared_ptr<GroupShape>(new GroupShape(shapes));
 	}
 
@@ -39,9 +36,9 @@ public:
 
 private:
 	GroupShape(std::vector<std::shared_ptr<IShape>>&);
+	std::shared_ptr<const GroupShape> GetPtr() const;
 
 	std::vector<std::shared_ptr<IShape>> m_shapes;
 	std::shared_ptr<CompositeLineStyle> m_lineStyle;
 	std::shared_ptr<CompositeFillStyle> m_fillStyle;
-	RectD m_frame;
 };

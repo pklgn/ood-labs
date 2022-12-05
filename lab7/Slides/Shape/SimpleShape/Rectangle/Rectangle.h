@@ -11,6 +11,9 @@ public:
 		const std::shared_ptr<SimpleFillStyle> fillStyle
 	);
 
+	RectD GetFrame() override;
+	void SetFrame(const RectD&) override;
+
 	void Draw(ICanvas&) override;
 
 private:

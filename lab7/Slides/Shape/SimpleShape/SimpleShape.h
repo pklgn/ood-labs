@@ -3,14 +3,14 @@
 #include "../../Style/LineStyle/SimpleLineStyle/SimpleLineStyle.h"
 #include "../../Style/FillStyle/SimpleFillStyle/SimpleFillStyle.h"
 
+const RGBAColor DEFAULT_LINE_COLOR = 0xFFFFFFFF;
+const RGBAColor DEFAULT_FILL_COLOR = 0xFFFFFFFF;
+const Thickness DEFAULT_LINE_THICKNESS = 1;
+
 class SimpleShape : public IShape
-	, public std::enable_shared_from_this<SimpleShape>
 {
 public:
-	SimpleShape(const RectD&, const std::shared_ptr<SimpleLineStyle>, const std::shared_ptr<SimpleFillStyle>);
-
-	RectD GetFrame() override;
-	void SetFrame(const RectD&) override;
+	SimpleShape(const std::shared_ptr<SimpleLineStyle>, const std::shared_ptr<SimpleFillStyle>);
 
 	std::shared_ptr<ILineStyle> GetLineStyle() override;
 	std::shared_ptr<const ILineStyle> GetLineStyle() const override;
@@ -23,8 +23,6 @@ public:
 	std::shared_ptr<const IShape> GetGroupShape() const override;
 
 private:
-	//TODO: выпилить frame и перенести в concretesimpleshape: например triangle
-	RectD m_frame;
 	std::shared_ptr<SimpleLineStyle> m_lineStyle;
 	std::shared_ptr<SimpleFillStyle> m_fillStyle;
 };
