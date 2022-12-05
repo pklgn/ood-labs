@@ -6,12 +6,12 @@ constexpr Thickness DEFUALT_THICKNESS = 1;
 class SimpleLineStyle : public AbstractLineStyle
 {
 public:
-	SimpleLineStyle(RGBAColor color, bool isEnabled = true, Thickness thickness = DEFUALT_THICKNESS);
+	SimpleLineStyle(RGBAColor color, Thickness thickness = DEFUALT_THICKNESS, bool isEnabled = true);
 
 	std::optional<RGBAColor> GetColor() const override;
 	void SetColor(const RGBAColor) override;
 
-	std::optional<unsigned int> GetThickness() const override;
+	std::optional<Thickness> GetThickness() const override;
 	void SetThickness(const Thickness) override;
 
 private:

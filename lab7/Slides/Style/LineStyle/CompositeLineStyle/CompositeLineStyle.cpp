@@ -47,7 +47,7 @@ std::optional<Thickness> CompositeLineStyle::GetThickness() const
 	std::optional<Thickness> resultThickness = std::nullopt;
 
 	m_enumeratorPtr->EnumerateAll([&](std::shared_ptr<ILineStyle> stylePtr) {
-		currThickness = stylePtr->GetColor();
+		currThickness = stylePtr->GetThickness();
 		if (prevThickness == std::nullopt)
 		{
 			prevThickness = currThickness;

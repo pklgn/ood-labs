@@ -16,6 +16,6 @@ public:
 	virtual void Enable() = 0;
 	virtual void Disable() = 0;
 
-	virtual std::optional<unsigned int> GetThickness() const = 0;
+	virtual std::optional<Thickness> GetThickness() const = 0;
 	virtual void SetThickness(const Thickness) = 0;
 };

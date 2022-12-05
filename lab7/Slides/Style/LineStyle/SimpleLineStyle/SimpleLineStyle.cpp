@@ -1,7 +1,7 @@
 #include "../../../pch.h"
 #include "SimpleLineStyle.h"
 
-SimpleLineStyle::SimpleLineStyle(RGBAColor color, bool isEnabled, Thickness thickness)
+SimpleLineStyle::SimpleLineStyle(RGBAColor color, Thickness thickness, bool isEnabled)
 	: AbstractLineStyle(isEnabled)
 	, m_color(color)
 	, m_thickness(thickness)
