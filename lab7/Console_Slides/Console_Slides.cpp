@@ -21,7 +21,7 @@ int main()
 	uint32_t fillcolor = 0x00D678FF;
 	uint32_t linecolor = 0xFFFFFFFF;
 
-	auto simpleLineStyle = std::make_shared<SimpleLineStyle>(linecolor);
+	auto simpleLineStyle = std::make_shared<SimpleLineStyle>(linecolor, 10);
 	auto simpleFillStyle = std::make_shared<SimpleFillStyle>(fillcolor);
 	auto triangle = std::make_shared<Triangle>(vertexA, vertexB, vertexC, simpleLineStyle, simpleFillStyle);
 
@@ -59,9 +59,33 @@ int main()
 	//auto shape = slide->GetShapeAtIndex(0);
 	//shape->SetFrame({ 0, 0, 400, 300 });
 
-	auto renderTarget = sf::RenderWindow(sf::VideoMode(800, 600), "canvas");
-	auto sfmlCanvas = SFMLCanvas(renderTarget);
+	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 600), "canvas");
+	auto sfmlCanvas = SFMLCanvas(renderWindow);
+
+	// run the program as long as the window is open
+	while (renderWindow.isOpen())
+	{
+		// check all the window's events that were triggered since the last iteration of the loop
+		sf::Event event;
+		while (renderWindow.pollEvent(event))
+		{
+			// "close requested" event: we close the window
+			if (event.type == sf::Event::Closed)
+			{
+				sfmlCanvas.Capture("OUTPUT.JPG");
+				renderWindow.close();
+			}
+		}
+
+		// clear the window with black color
+		renderWindow.clear(sf::Color::Black);
+
+		// window.draw(...);
+		slide->Draw(sfmlCanvas);
+
+		// end the current frame
+		renderWindow.display();
+	}
 
 	slide->Draw(sfmlCanvas);
-	sfmlCanvas.CaptureShapes("OUTPUT.JPG");
 }
