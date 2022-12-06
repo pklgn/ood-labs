@@ -1,15 +1,13 @@
 #pragma once
-#include <memory>
-#include <vector>
-#include "../Shape/IShape.h"
+#include "ISlide.h"
 
-class Slide : public IDrawable
+class Slide : public ISlide
 {
 public:
-	size_t GetShapesCount() const;
-	std::shared_ptr<IShape> GetShapeAtIndex(size_t index);
-	void InsertShape(const std::shared_ptr<IShape>& shape, size_t index);
-	void RemoveShapeAtIndex(size_t index);
+	size_t GetShapesCount() const override;
+	std::shared_ptr<IShape> GetShapeAtIndex(size_t index) override;
+	void InsertShape(const std::shared_ptr<IShape>& shape, size_t index) override;
+	void RemoveShapeAtIndex(size_t index) override;
 
 	void Draw(ICanvas& canvas) override;
 
