@@ -15,9 +15,9 @@
 
 int main()
 {
-	auto vertexA = Point{ 0, 600 };
+	auto vertexA = Point{ 30, 400 };
 	auto vertexB = Point{ 300, 200 };
-	auto vertexC = Point{ 800, 500 };
+	auto vertexC = Point{ 700, 500 };
 	uint32_t fillcolor = 0x00D678FF;
 	uint32_t linecolor = 0xFFFFFFFF;
 
@@ -58,8 +58,9 @@ int main()
 	//change frame
 	//auto shape = slide->GetShapeAtIndex(0);
 	//shape->SetFrame({ 0, 0, 400, 300 });
-
-	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 600), "canvas");
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
+	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 600), "canvas", sf::Style::Default, settings);
 	auto sfmlCanvas = SFMLCanvas(renderWindow);
 
 	// run the program as long as the window is open
