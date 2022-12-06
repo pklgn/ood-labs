@@ -5,6 +5,7 @@ class ConsoleCanvas : public ICanvas
 {
 public:
 	void DrawLine(const Point& from, const Point& to) override;
+	void DrawClosedPolyLine(std::vector<Point>&) override;
 	void DrawEllipse(const Point& leftTop, double width, double height) override;
 	void FillEllipse(const Point& leftTop, double width, double height) override;
 	void FillPolygon(std::vector<Point>&) override;

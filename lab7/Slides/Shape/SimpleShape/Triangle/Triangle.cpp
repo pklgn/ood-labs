@@ -36,13 +36,14 @@ void Triangle::SetFrame(const RectD& frame)
 
 void Triangle::Draw(ICanvas& canvas)
 {
+	auto points = std::vector<Point>{ m_vertexA, m_vertexB, m_vertexC };
+
 	auto fillStyle = GetFillStyle();
 	if (fillStyle->IsEnabled())
 	{
 		auto fillColor = fillStyle->GetColor().value_or(DEFAULT_FILL_COLOR);
 		canvas.SetFillColor(fillColor);
 
-		auto points = std::vector<Point>{ m_vertexA, m_vertexB, m_vertexC };
 		canvas.FillPolygon(points);
 	}
 
@@ -55,9 +56,7 @@ void Triangle::Draw(ICanvas& canvas)
 		auto thickness = lineStyle->GetThickness().value_or(DEFAULT_LINE_THICKNESS);
 		canvas.SetLineThickness(thickness);
 
-		canvas.DrawLine(m_vertexA, m_vertexB);
-		canvas.DrawLine(m_vertexB, m_vertexC);
-		canvas.DrawLine(m_vertexC, m_vertexA);
+		canvas.DrawClosedPolyLine(points);
 	}
 }
 

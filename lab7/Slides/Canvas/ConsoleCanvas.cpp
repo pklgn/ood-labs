@@ -10,6 +10,11 @@ void ConsoleCanvas::DrawLine(const Point& from, const Point& to)
 			  << std::endl;
 }
 
+void ConsoleCanvas::DrawClosedPolyLine(std::vector<Point>&)
+{
+	//TODO: implement
+}
+
 void ConsoleCanvas::DrawEllipse(const Point& leftTop, double width, double height)
 {
 	std::cout << "DrawEllipse with\n"
