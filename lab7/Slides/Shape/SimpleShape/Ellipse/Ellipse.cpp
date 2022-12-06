@@ -28,15 +28,23 @@ void Ellipse::SetFrame(const RectD& frame)
 
 void Ellipse::Draw(ICanvas& canvas)
 {
-	auto lineColor = GetLineStyle()->GetColor().value_or(DEFAULT_LINE_COLOR);
-	canvas.SetLineColor(lineColor);
+	auto fillStyle = GetFillStyle();
+	if (fillStyle->IsEnabled())
+	{
+		auto fillColor = GetFillStyle()->GetColor().value_or(DEFAULT_FILL_COLOR);
+		canvas.SetFillColor(fillColor);
+		canvas.FillEllipse(m_leftTop, m_width, m_height);
+	}
 
-	auto fillColor = GetFillStyle()->GetColor().value_or(DEFAULT_FILL_COLOR);
-	canvas.SetFillColor(fillColor);
+	auto lineStyle = GetLineStyle();
+	if (lineStyle->IsEnabled())
+	{
+		auto lineColor = lineStyle->GetColor().value_or(DEFAULT_LINE_COLOR);
+		canvas.SetLineColor(lineColor);
 
-	auto thickness = GetLineStyle()->GetThickness().value_or(DEFAULT_LINE_THICKNESS);
-	canvas.SetLineThickness(thickness);
+		auto thickness = GetLineStyle()->GetThickness().value_or(DEFAULT_LINE_THICKNESS);
+		canvas.SetLineThickness(thickness);
 
-	canvas.FillEllipse(m_leftTop, m_width, m_height);
-	canvas.DrawEllipse(m_leftTop, m_width, m_height);
+		canvas.DrawEllipse(m_leftTop, m_width, m_height);
+	}
 }

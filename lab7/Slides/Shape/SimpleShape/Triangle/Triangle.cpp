@@ -36,21 +36,29 @@ void Triangle::SetFrame(const RectD& frame)
 
 void Triangle::Draw(ICanvas& canvas)
 {
-	auto lineColor = GetLineStyle()->GetColor().value_or(DEFAULT_LINE_COLOR);
-	canvas.SetLineColor(lineColor);
+	auto fillStyle = GetFillStyle();
+	if (fillStyle->IsEnabled())
+	{
+		auto fillColor = fillStyle->GetColor().value_or(DEFAULT_FILL_COLOR);
+		canvas.SetFillColor(fillColor);
 
-	auto fillColor = GetFillStyle()->GetColor().value_or(DEFAULT_FILL_COLOR);
-	canvas.SetFillColor(fillColor);
+		auto points = std::vector<Point>{ m_vertexA, m_vertexB, m_vertexC };
+		canvas.FillPolygon(points);
+	}
 
-	auto thickness = GetLineStyle()->GetThickness().value_or(DEFAULT_LINE_THICKNESS);
-	canvas.SetLineThickness(thickness);
+	auto lineStyle = GetLineStyle();
+	if (lineStyle->IsEnabled())
+	{
+		auto lineColor = lineStyle->GetColor().value_or(DEFAULT_LINE_COLOR);
+		canvas.SetLineColor(lineColor);
 
-	auto points = std::vector<Point>{ m_vertexA, m_vertexB, m_vertexC };
-	canvas.FillPolygon(points);
+		auto thickness = lineStyle->GetThickness().value_or(DEFAULT_LINE_THICKNESS);
+		canvas.SetLineThickness(thickness);
 
-	canvas.DrawLine(m_vertexA, m_vertexB);
-	canvas.DrawLine(m_vertexB, m_vertexC);
-	canvas.DrawLine(m_vertexC, m_vertexA);
+		canvas.DrawLine(m_vertexA, m_vertexB);
+		canvas.DrawLine(m_vertexB, m_vertexC);
+		canvas.DrawLine(m_vertexC, m_vertexA);
+	}
 }
 
 double Triangle::GetFrameDimension(double Point::*dim)

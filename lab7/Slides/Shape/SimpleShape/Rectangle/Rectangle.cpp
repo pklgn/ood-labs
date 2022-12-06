@@ -32,20 +32,28 @@ void Rectangle::Draw(ICanvas& canvas)
 	Point rightTop = { rightBottom.x, m_leftTop.y };
 	Point leftBottom = { m_leftTop.x, rightBottom.y };
 
-	auto lineColor = GetLineStyle()->GetColor().value_or(DEFAULT_LINE_COLOR);
-	canvas.SetLineColor(lineColor);
+	auto fillStyle = GetFillStyle();
+	if (fillStyle->IsEnabled())
+	{
+		auto fillColor = fillStyle->GetColor().value_or(DEFAULT_FILL_COLOR);
+		canvas.SetFillColor(fillColor);
 
-	auto fillColor = GetFillStyle()->GetColor().value_or(DEFAULT_FILL_COLOR);
-	canvas.SetFillColor(fillColor);
+		std::vector<Point> points{ m_leftTop, rightTop, rightBottom, leftBottom };
+		canvas.FillPolygon(points);
+	}
 
-	auto thickness = GetLineStyle()->GetThickness().value_or(DEFAULT_LINE_THICKNESS);
-	canvas.SetLineThickness(thickness);
+	auto lineStyle = GetLineStyle();
+	if (lineStyle->IsEnabled())
+	{
+		auto lineColor = lineStyle->GetColor().value_or(DEFAULT_LINE_COLOR);
+		canvas.SetLineColor(lineColor);
 
-	std::vector<Point> points { m_leftTop, rightTop, rightBottom, leftBottom };
-	canvas.FillPolygon(points);
+		auto thickness = GetLineStyle()->GetThickness().value_or(DEFAULT_LINE_THICKNESS);
+		canvas.SetLineThickness(thickness);
 
-	canvas.DrawLine(m_leftTop, rightTop);
-	canvas.DrawLine(rightTop, rightBottom);
-	canvas.DrawLine(rightBottom, leftBottom);
-	canvas.DrawLine(leftBottom, m_leftTop);
+		canvas.DrawLine(m_leftTop, rightTop);
+		canvas.DrawLine(rightTop, rightBottom);
+		canvas.DrawLine(rightBottom, leftBottom);
+		canvas.DrawLine(leftBottom, m_leftTop);
+	}
 }
