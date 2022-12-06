@@ -17,24 +17,24 @@ void SFMLCanvas::DrawLine(const Point& from, const Point& to)
 		? distanceX / cosAngle
 		: distanceY;
 
-	sf::RectangleShape line(sf::Vector2f(std::abs(width), m_lineThickness));
-	line.setPosition(from.x, from.y);
+	sf::RectangleShape line(sf::Vector2f((float)std::abs(width), (float)m_lineThickness));
+	line.setPosition((float)from.x, (float)from.y);
 	line.setOutlineColor(m_fillColor);
 
-	line.rotate(angle * 180 / M_PI);
+	line.rotate((float)(angle * 180 / M_PI));
 
 	m_renderTarget.draw(line);
 }
 
 void SFMLCanvas::DrawEllipse(const Point& leftTop, double width, double height)
 {
-	auto ellipse = sf::CircleShape(width / 2);
+	auto ellipse = sf::CircleShape((float)width / 2);
 
-	ellipse.setPosition(leftTop.x, leftTop.y);
-	ellipse.setScale(1, height / width);
+	ellipse.setPosition((float)leftTop.x, (float)leftTop.y);
+	ellipse.setScale(1, (float)(height / width));
 
 	ellipse.setOutlineColor(m_lineColor);
-	ellipse.setOutlineThickness(m_lineThickness);
+	ellipse.setOutlineThickness((float)m_lineThickness);
 
 	ellipse.setFillColor(sf::Color::Transparent);
 
@@ -43,10 +43,10 @@ void SFMLCanvas::DrawEllipse(const Point& leftTop, double width, double height)
 
 void SFMLCanvas::FillEllipse(const Point& leftTop, double width, double height)
 {
-	auto ellipse = sf::CircleShape(width / 2);
+	auto ellipse = sf::CircleShape((float)width / 2);
 
-	ellipse.setPosition(leftTop.x, leftTop.y);
-	ellipse.setScale(1, height / width);
+	ellipse.setPosition((float)leftTop.x, (float)leftTop.y);
+	ellipse.setScale(1, (float)(height / width));
 
 	ellipse.setFillColor(m_fillColor);
 
@@ -63,12 +63,12 @@ void SFMLCanvas::FillPolygon(std::vector<Point>& points)
 	for (size_t index = 0; index < pointCount; ++index)
 	{
 		Point point = points[index];
-		convex.setPoint(index, sf::Vector2f(point.x, point.y));
+		convex.setPoint(index, sf::Vector2f((float)point.x, (float)point.y));
 	}
 
 	convex.setFillColor(m_fillColor);
-	convex.setOutlineThickness(m_lineThickness);
-	convex.setOutlineColor(sf::Color::Transparent);
+	//convex.setOutlineThickness((float)m_lineThickness);
+	//convex.setOutlineColor(m_lineColor);
 
 	m_renderTarget.draw(convex);
 }
@@ -88,13 +88,21 @@ void SFMLCanvas::SetLineThickness(unsigned int thickness)
 	m_lineThickness = thickness;
 }
 
-void SFMLCanvas::CaptureShapes(const std::string& outputFileName)
+void SFMLCanvas::Capture(const std::string& outputFileName) const
 {
-	sf::Vector2u windowSize = m_renderTarget.getSize();
+	sf::Vector2u renderSize = m_renderTarget.getSize();
 	sf::Texture texture;
-	texture.create(windowSize.x, windowSize.y);
-	auto& window = static_cast<sf::RenderWindow&>(m_renderTarget);
-	texture.update(window);
-	sf::Image screenshot = texture.copyToImage();
-	screenshot.saveToFile(outputFileName);
+	texture.create(renderSize.x, renderSize.y);
+	
+	try
+	{
+		sf::RenderWindow& window = dynamic_cast<sf::RenderWindow&>(m_renderTarget);
+		texture.update(window);
+		sf::Image screenshot = texture.copyToImage();
+		screenshot.saveToFile(outputFileName);
+	}
+	catch (const std::bad_cast&)
+	{
+		throw std::runtime_error("Unable to capture canvas with not sf::RenderWindow render target type");
+	}
 }

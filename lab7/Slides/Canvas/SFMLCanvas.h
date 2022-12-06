@@ -17,7 +17,7 @@ public:
 	void SetLineColor(uint32_t) override;
 	void SetLineThickness(unsigned int) override;
 
-	void CaptureShapes(const std::string& outputFileName);
+	void Capture(const std::string& outputFileName) const;
 
 private:
 	sf::Color m_lineColor = sf::Color::White;
