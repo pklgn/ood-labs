@@ -14,5 +14,6 @@
 #include <iostream>
 #include <cmath>
 #include <limits>
+#include <variant>
 
 #endif //PCH_H

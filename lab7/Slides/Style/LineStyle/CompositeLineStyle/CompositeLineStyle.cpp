@@ -9,6 +9,9 @@ CompositeLineStyle::CompositeLineStyle(std::unique_ptr<ILineStyleEnumerator> emu
 	m_thickness = GetThickness();
 }
 
+//TODO: probably we should extract enumerator to style directory and define methods
+//to 
+// [](std::shared_ptr<ILineStyle> stylePtr)->T {return stylePtr->GetColor();}
 std::optional<RGBAColor> CompositeLineStyle::GetColor() const
 {
 	std::optional<RGBAColor> prevColor = std::nullopt;

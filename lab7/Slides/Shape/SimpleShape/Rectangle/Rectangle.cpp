@@ -37,7 +37,7 @@ void Rectangle::Draw(ICanvas& canvas)
 	{
 		auto fillColor = fillStyle->GetColor().value_or(DEFAULT_FILL_COLOR);
 		canvas.SetFillColor(fillColor);
-
+		
 		std::vector<Point> points{ m_leftTop, rightTop, rightBottom, leftBottom };
 		canvas.FillPolygon(points);
 	}
@@ -51,9 +51,9 @@ void Rectangle::Draw(ICanvas& canvas)
 		auto thickness = GetLineStyle()->GetThickness().value_or(DEFAULT_LINE_THICKNESS);
 		canvas.SetLineThickness(thickness);
 
-		canvas.DrawLine(m_leftTop, rightTop);
+		canvas.DrawLine({ m_leftTop.x - thickness, m_leftTop.y }, {rightTop.x + thickness, rightTop.y});
 		canvas.DrawLine(rightTop, rightBottom);
-		canvas.DrawLine(rightBottom, leftBottom);
+		canvas.DrawLine({ rightBottom.x + thickness, rightBottom.y }, { leftBottom.x - thickness, leftBottom.y });
 		canvas.DrawLine(leftBottom, m_leftTop);
 	}
 }
