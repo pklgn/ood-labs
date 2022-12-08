@@ -37,3 +37,21 @@ void CompositeFillStyle::SetColor(const RGBAColor color)
 		stylePtr->SetColor(color);
 	});
 }
+
+void CompositeFillStyle::Enable()
+{
+	m_enumeratorPtr->EnumerateAll([](std::shared_ptr<IFillStyle> stylePtr) {
+		stylePtr->Enable();
+	});
+
+	m_isEnabled = true;
+}
+
+void CompositeFillStyle::Disable()
+{
+	m_enumeratorPtr->EnumerateAll([](std::shared_ptr<IFillStyle> stylePtr) {
+		stylePtr->Disable();
+	});
+
+	m_isEnabled = false;
+}

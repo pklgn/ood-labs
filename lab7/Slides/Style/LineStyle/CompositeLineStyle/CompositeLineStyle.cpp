@@ -41,6 +41,8 @@ void CompositeLineStyle::SetColor(const RGBAColor color)
 	m_enumeratorPtr->EnumerateAll([color](std::shared_ptr<ILineStyle> stylePtr) {
 		stylePtr->SetColor(color);
 	});
+
+	m_color = color;
 }
 
 std::optional<Thickness> CompositeLineStyle::GetThickness() const
@@ -71,4 +73,24 @@ void CompositeLineStyle::SetThickness(const Thickness thickness)
 	m_enumeratorPtr->EnumerateAll([thickness](std::shared_ptr<ILineStyle> stylePtr) {
 		stylePtr->SetThickness(thickness);
 	});
+
+	m_thickness = thickness;
+}
+
+void CompositeLineStyle::Enable()
+{
+	m_enumeratorPtr->EnumerateAll([](std::shared_ptr<ILineStyle> stylePtr) {
+		stylePtr->Enable();
+	});
+
+	m_isEnabled = true;
+}
+
+void CompositeLineStyle::Disable()
+{
+	m_enumeratorPtr->EnumerateAll([](std::shared_ptr<ILineStyle> stylePtr) {
+		stylePtr->Disable();
+	});
+
+	m_isEnabled = false;
 }

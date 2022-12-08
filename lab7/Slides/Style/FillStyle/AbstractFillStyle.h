@@ -10,6 +10,6 @@ public:
 	void Enable() override;
 	void Disable() override;
 
-private:
+protected:
 	bool m_isEnabled;
 };

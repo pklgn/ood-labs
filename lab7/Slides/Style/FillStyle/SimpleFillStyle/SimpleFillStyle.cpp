@@ -1,6 +1,14 @@
 #include "../../../pch.h"
 #include "SimpleFillStyle.h"
 
+const RGBAColor DEFAULT_COLOR = 0x2F528FFF;
+
+SimpleFillStyle::SimpleFillStyle(bool isEnabled)
+	: AbstractFillStyle(isEnabled)
+	, m_color(DEFAULT_COLOR)
+{
+}
+
 SimpleFillStyle::SimpleFillStyle(RGBAColor color, bool isEnabled)
 	: AbstractFillStyle(isEnabled)
 	, m_color(color)

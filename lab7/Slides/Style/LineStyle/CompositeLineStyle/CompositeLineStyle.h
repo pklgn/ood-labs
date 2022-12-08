@@ -14,6 +14,9 @@ public:
 	std::optional<unsigned int> GetThickness() const override;
 	void SetThickness(const Thickness) override;
 
+	void Enable() override;
+	void Disable() override;
+
 private:
 	std::unique_ptr<ILineStyleEnumerator> m_enumeratorPtr;
 	std::optional<RGBAColor> m_color;

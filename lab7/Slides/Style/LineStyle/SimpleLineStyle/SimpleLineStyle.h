@@ -1,12 +1,12 @@
 #pragma once
 #include "../AbstractLineStyle.h"
 
-constexpr Thickness DEFUALT_THICKNESS = 1;
 
 class SimpleLineStyle : public AbstractLineStyle
 {
 public:
-	SimpleLineStyle(RGBAColor color, Thickness thickness = DEFUALT_THICKNESS, bool isEnabled = true);
+	SimpleLineStyle(bool isEnabled = true);
+	SimpleLineStyle(RGBAColor color, Thickness thickness, bool isEnabled = true);
 
 	std::optional<RGBAColor> GetColor() const override;
 	void SetColor(const RGBAColor) override;

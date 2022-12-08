@@ -11,6 +11,9 @@ public:
 	std::optional<RGBAColor> GetColor() const override;
 	void SetColor(const RGBAColor) override;
 
+	void Enable() override;
+	void Disable() override;
+
 private:
 	std::unique_ptr<IFillStyleEnumerator> m_enumeratorPtr;
 	std::optional<RGBAColor> m_color;
