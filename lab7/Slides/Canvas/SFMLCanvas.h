@@ -2,8 +2,6 @@
 #include "ICanvas.h"
 #include <SFML/Graphics.hpp>
 
-const unsigned int DEFAULT_CANVAS_LINE_THICKNESS = 1;
-
 class SFMLCanvas : public ICanvas
 {
 public:
@@ -23,8 +21,8 @@ public:
 private:
 	void DrawClosedPolyLineSegment(size_t index, const std::vector<Point>& points);
 
-	sf::Color m_lineColor = sf::Color::White;
-	sf::Color m_fillColor = sf::Color::Black;
-	unsigned int m_lineThickness = DEFAULT_CANVAS_LINE_THICKNESS;
+	sf::Color m_lineColor;
+	sf::Color m_fillColor;
+	unsigned int m_lineThickness;
 	sf::RenderTarget& m_renderTarget;
 };

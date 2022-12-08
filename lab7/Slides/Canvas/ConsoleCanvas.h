@@ -4,6 +4,8 @@
 class ConsoleCanvas : public ICanvas
 {
 public:
+	ConsoleCanvas(std::ostream&);
+
 	void DrawLine(const Point& from, const Point& to) override;
 	void DrawClosedPolyLine(std::vector<Point>&) override;
 	void DrawEllipse(const Point& leftTop, double width, double height) override;
@@ -17,4 +19,5 @@ private:
 	uint32_t m_lineColor;
 	uint32_t m_fillColor;
 	unsigned int m_lineThickness;
+	std::ostream& m_output;
 };

@@ -1,12 +1,16 @@
 #include "../pch.h"
-#include "SFMLCanvas.h"
 #include "../SFMLMath/Math.h"
+#include "SFMLCanvas.h"
 
 const size_t CIRCLE_SHAPE_POINT_COUNT = 90;
 const size_t POLYLINE_SEGMENT_VERTICES_COUNT = 5;
+const unsigned int DEFAULT_CANVAS_LINE_THICKNESS = 1;
 
 SFMLCanvas::SFMLCanvas(sf::RenderTarget& target)
 	: m_renderTarget(target)
+	, m_lineColor(sf::Color::White)
+	, m_fillColor(sf::Color::Black)
+	, m_lineThickness(DEFAULT_CANVAS_LINE_THICKNESS)
 {
 }
 
