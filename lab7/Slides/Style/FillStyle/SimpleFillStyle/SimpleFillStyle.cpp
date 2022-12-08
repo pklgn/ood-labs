@@ -3,8 +3,8 @@
 
 const RGBAColor DEFAULT_COLOR = 0x2F528FFF;
 
-SimpleFillStyle::SimpleFillStyle(bool isEnabled)
-	: AbstractFillStyle(isEnabled)
+SimpleFillStyle::SimpleFillStyle()
+	: AbstractFillStyle(true)
 	, m_color(DEFAULT_COLOR)
 {
 }

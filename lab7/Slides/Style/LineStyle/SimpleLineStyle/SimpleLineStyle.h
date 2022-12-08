@@ -5,7 +5,7 @@
 class SimpleLineStyle : public AbstractLineStyle
 {
 public:
-	SimpleLineStyle(bool isEnabled = true);
+	SimpleLineStyle();
 	SimpleLineStyle(RGBAColor color, Thickness thickness, bool isEnabled = true);
 
 	std::optional<RGBAColor> GetColor() const override;

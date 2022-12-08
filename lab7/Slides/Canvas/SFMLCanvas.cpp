@@ -1,4 +1,5 @@
 #include "../pch.h"
+#include <cmath>
 #include "../SFMLMath/Math.h"
 #include "SFMLCanvas.h"
 
@@ -95,6 +96,8 @@ void SFMLCanvas::DrawClosedPolyLineSegment(size_t index, const std::vector<Point
 	polyLineSegment.setPoint(2, m2);
 	polyLineSegment.setPoint(3, nextA);
 	polyLineSegment.setPoint(4, m1);
+
+	polyLineSegment.setFillColor(m_lineColor);
 
 	m_renderTarget.draw(polyLineSegment);
 }

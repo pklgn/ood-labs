@@ -4,8 +4,8 @@
 const RGBAColor DEFAULT_COLOR = 0xFFFFFFFF;
 const Thickness DEFAULT_THICKENSS = 1;
 
-SimpleLineStyle::SimpleLineStyle(bool isEnabled)
-	: AbstractLineStyle(isEnabled)
+SimpleLineStyle::SimpleLineStyle()
+	: AbstractLineStyle(true)
 	, m_color(DEFAULT_COLOR)
 	, m_thickness(DEFAULT_THICKENSS)
 {

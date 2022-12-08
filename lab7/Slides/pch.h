@@ -12,7 +12,6 @@
 #include <stdexcept>
 #include <memory>
 #include <iostream>
-#include <cmath>
 #include <limits>
 #include <variant>
 

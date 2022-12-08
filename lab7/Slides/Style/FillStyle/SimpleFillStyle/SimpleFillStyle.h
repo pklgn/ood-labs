@@ -4,7 +4,7 @@
 class SimpleFillStyle : public AbstractFillStyle
 {
 public:
-	SimpleFillStyle(bool isEnabled = true);
+	SimpleFillStyle();
 	SimpleFillStyle(RGBAColor color, bool isEnabled = true);
 
 	std::optional<RGBAColor> GetColor() const override;
