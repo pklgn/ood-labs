@@ -3,7 +3,12 @@
 
 void TransformVertexPoint(Point& point, const RectD& oldFrame, const RectD& newFrame);
 
-Triangle::Triangle(const Point& vertexA, const Point& vertexB, const Point& vertexC, const std::shared_ptr<SimpleLineStyle> lineStyle, const std::shared_ptr<SimpleFillStyle> fillStyle)
+Triangle::Triangle(const Point& vertexA,
+	const Point& vertexB,
+	const Point& vertexC,
+	const std::shared_ptr<ILineStyle> lineStyle,
+	const std::shared_ptr<IFillStyle> fillStyle
+)
 	: SimpleShape(lineStyle, fillStyle)
 	, m_vertexA(vertexA)
 	, m_vertexB(vertexB)

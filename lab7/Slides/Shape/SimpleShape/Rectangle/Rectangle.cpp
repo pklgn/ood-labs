@@ -4,8 +4,8 @@
 Rectangle::Rectangle(const Point& leftTop,
 	double width,
 	double height,
-	const std::shared_ptr<SimpleLineStyle> lineStyle,
-	const std::shared_ptr<SimpleFillStyle> fillStyle
+	const std::shared_ptr<ILineStyle> lineStyle,
+	const std::shared_ptr<IFillStyle> fillStyle
 )
 	: SimpleShape(lineStyle, fillStyle)
 	, m_leftTop(leftTop)

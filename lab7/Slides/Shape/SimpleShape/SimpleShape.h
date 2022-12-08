@@ -10,19 +10,17 @@ const Thickness DEFAULT_LINE_THICKNESS = 1;
 class SimpleShape : public IShape
 {
 public:
-	SimpleShape(const std::shared_ptr<SimpleLineStyle>, const std::shared_ptr<SimpleFillStyle>);
+	SimpleShape(const std::shared_ptr<ILineStyle>, const std::shared_ptr<IFillStyle>);
 
 	std::shared_ptr<ILineStyle> GetLineStyle() override;
 	std::shared_ptr<const ILineStyle> GetLineStyle() const override;
-	void SetLineStyle(std::shared_ptr<ILineStyle>) override;
 
 	std::shared_ptr<IFillStyle> GetFillStyle() override;
 	std::shared_ptr<const IFillStyle> GetFillStyle() const override;
-	void SetFillStyle(std::shared_ptr<IFillStyle>) override;
 
 	std::shared_ptr<const IShape> GetGroupShape() const override;
 
 private:
-	std::shared_ptr<SimpleLineStyle> m_lineStyle;
-	std::shared_ptr<SimpleFillStyle> m_fillStyle;
+	std::shared_ptr<ILineStyle> m_lineStyle;
+	std::shared_ptr<IFillStyle> m_fillStyle;
 };

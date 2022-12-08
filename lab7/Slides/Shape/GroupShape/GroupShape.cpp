@@ -5,6 +5,12 @@
 
 typedef std::vector<std::shared_ptr<IShape>> Shapes;
 
+GroupShape::GroupShape()
+	: m_lineStyle(std::make_shared<CompositeLineStyle>(std::make_unique<LineStyleEnumerator<Shapes>>(m_shapes)))
+	, m_fillStyle(std::make_shared<CompositeFillStyle>(std::make_unique<FillStyleEnumerator<Shapes>>(m_shapes)))
+{
+}
+
 GroupShape::GroupShape(Shapes& shapes)
 	: m_shapes(shapes)
 	, m_lineStyle(std::make_shared<CompositeLineStyle>(std::make_unique<LineStyleEnumerator<Shapes>>(m_shapes)))
@@ -83,31 +89,6 @@ std::shared_ptr<const ILineStyle> GroupShape::GetLineStyle() const
 	return m_lineStyle;
 }
 
-void GroupShape::SetLineStyle(std::shared_ptr<ILineStyle> style)
-{
-	if (style->GetColor().has_value())
-	{
-		m_lineStyle->SetColor(style->GetColor().value());
-	}
-
-	if (style->GetThickness().has_value())
-	{
-		m_lineStyle->SetThickness(style->GetThickness().value());
-	}
-
-	if (m_lineStyle->IsEnabled() != style->IsEnabled())
-	{
-		if (m_lineStyle->IsEnabled())
-		{
-			m_lineStyle->Disable();
-		}
-		else
-		{
-			m_lineStyle->Enable();
-		}
-	}
-}
-
 std::shared_ptr<IFillStyle> GroupShape::GetFillStyle()
 {
 	return m_fillStyle;
@@ -116,26 +97,6 @@ std::shared_ptr<IFillStyle> GroupShape::GetFillStyle()
 std::shared_ptr<const IFillStyle> GroupShape::GetFillStyle() const
 {
 	return m_fillStyle;
-}
-
-void GroupShape::SetFillStyle(std::shared_ptr<IFillStyle> style)
-{
-	if (style->GetColor().has_value())
-	{
-		m_fillStyle->SetColor(style->GetColor().value());
-	}
-
-	if (m_fillStyle->IsEnabled() != style->IsEnabled())
-	{
-		if (m_fillStyle->IsEnabled())
-		{
-			m_fillStyle->Disable();
-		}
-		else
-		{
-			m_fillStyle->Enable();
-		}
-	}
 }
 
 std::shared_ptr<const IShape> GroupShape::GetGroupShape() const

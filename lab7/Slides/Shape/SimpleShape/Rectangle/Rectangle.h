@@ -7,9 +7,8 @@ public:
 	Rectangle(const Point& leftTop,
 		double width,
 		double height,
-		const std::shared_ptr<SimpleLineStyle> lineStyle,
-		const std::shared_ptr<SimpleFillStyle> fillStyle
-	);
+		const std::shared_ptr<ILineStyle> = std::make_shared<SimpleLineStyle>(),
+		const std::shared_ptr<IFillStyle> = std::make_shared<SimpleFillStyle>());
 
 	RectD GetFrame() override;
 	void SetFrame(const RectD&) override;
