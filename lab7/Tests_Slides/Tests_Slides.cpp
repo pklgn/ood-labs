@@ -44,7 +44,7 @@ TEST_CASE("Create group shape")
 	uint32_t fillcolor = 0x00D678FF;
 	uint32_t linecolor = 0xFFFFFFFF;
 
-	auto simpleLineStyle = std::make_shared<SimpleLineStyle>(linecolor);
+	auto simpleLineStyle = std::make_shared<SimpleLineStyle>(linecolor, 1);
 	auto simpleFillStyle = std::make_shared<SimpleFillStyle>(fillcolor);
 	auto triangle = std::make_shared<Triangle>(vertexA, vertexB, vertexC, simpleLineStyle, simpleFillStyle);
 
@@ -94,7 +94,7 @@ TEST_CASE("Insert into created group shape")
 {
 	uint32_t fillcolor = 0x00D678FF;
 	uint32_t linecolor = 0xFFFFFFFF;
-	auto simpleLineStyle = std::make_shared<SimpleLineStyle>(linecolor);
+	auto simpleLineStyle = std::make_shared<SimpleLineStyle>(linecolor, 1);
 	auto simpleFillStyle = std::make_shared<SimpleFillStyle>(fillcolor);
 
 	auto rectangleWidth = 400;
@@ -157,7 +157,7 @@ TEST_CASE("Modify group shape styles draw and remove")
 	uint32_t fillcolor = 0x123456FF;
 	uint32_t linecolor = 0xFFFFFFFF;
 
-	auto simpleLineStyle = std::make_shared<SimpleLineStyle>(linecolor);
+	auto simpleLineStyle = std::make_shared<SimpleLineStyle>(linecolor, 1);
 	auto simpleFillStyle = std::make_shared<SimpleFillStyle>(fillcolor);
 	auto triangle = std::make_shared<Triangle>(vertexA, vertexB, vertexC, simpleLineStyle, simpleFillStyle);
 
@@ -172,16 +172,17 @@ TEST_CASE("Modify group shape styles draw and remove")
 	defaultGroupShape->InsertShape(triangle, 0);
 	defaultGroupShape->InsertShape(ellipse, 1);
 
-	auto simpleLineStyle2 = std::make_shared<SimpleLineStyle>(linecolor);
-	auto ellipse2 = std::make_shared<Ellipse>(Point{ 0, 0 }, ellipseWidth, ellipseHeight, simpleLineStyle2, simpleFillStyle);
+	auto simpleLineStyle2 = std::make_shared<SimpleLineStyle>(linecolor, 1);
+	auto simpleFillStyle2 = std::make_shared<SimpleFillStyle>(fillcolor);
+	auto ellipse2 = std::make_shared<Ellipse>(Point{ 0, 0 }, ellipseWidth, ellipseHeight, simpleLineStyle2, simpleFillStyle2);
 	std::vector<std::shared_ptr<IShape>> shapes2{ triangle, ellipse2 };
-	auto groupShapeDiffLineStyle = GroupShape::Create(shapes2);
-	auto defaultGroupShapeDiffLineStyle = GroupShape::Create();
-	defaultGroupShapeDiffLineStyle->InsertShape(triangle, 0);
-	defaultGroupShapeDiffLineStyle->InsertShape(ellipse2, 1);
+	auto groupShapeDiffStyle = GroupShape::Create(shapes2);
+	auto defaultGroupShapeDiffStyle = GroupShape::Create();
+	defaultGroupShapeDiffStyle->InsertShape(triangle, 0);
+	defaultGroupShapeDiffStyle->InsertShape(ellipse2, 1);
 
 	auto group = GENERATE_COPY(groupShape, defaultGroupShape);
-	auto groupDiffLineStyle = GENERATE_COPY(groupShapeDiffLineStyle, defaultGroupShapeDiffLineStyle);
+	auto groupDiffStyle = GENERATE_COPY(groupShapeDiffStyle, defaultGroupShapeDiffStyle);
 
 	DYNAMIC_SECTION("Change line color of the group")
 	{
@@ -249,7 +250,7 @@ TEST_CASE("Modify group shape styles draw and remove")
 
 	DYNAMIC_SECTION("Change enabled line style of different shapes with the different style ptr")
 	{
-		auto groupLineStyle = groupDiffLineStyle->GetLineStyle();
+		auto groupLineStyle = groupDiffStyle->GetLineStyle();
 
 		REQUIRE(groupLineStyle->IsEnabled());
 		REQUIRE_NOTHROW(groupLineStyle->Disable());
@@ -282,5 +283,35 @@ TEST_CASE("Modify group shape styles draw and remove")
 
 		group->Draw(canvas);
 		REQUIRE(oss.str() == expectedOutput.str());
+	}
+
+	DYNAMIC_SECTION("Get group line color property with different shapes colors")
+	{
+		auto triangle = groupDiffStyle->GetShapeAtIndex(0);
+		triangle->GetLineStyle()->SetColor(0xDDDDDDFF);
+
+		auto groupLineColor = groupDiffStyle->GetLineStyle()->GetColor();
+
+		REQUIRE(!groupLineColor.has_value());
+	}
+
+	DYNAMIC_SECTION("Get group line thickness property with different shapes thicknesses")
+	{
+		auto ellipse = groupDiffStyle->GetShapeAtIndex(1);
+		ellipse->GetLineStyle()->SetThickness(10);
+
+		auto groupLineThickness = groupDiffStyle->GetLineStyle()->GetThickness();
+
+		REQUIRE(!groupLineThickness.has_value());
+	}
+
+	DYNAMIC_SECTION("Get group fill color property with different shapes colors")
+	{
+		auto triangle = groupDiffStyle->GetShapeAtIndex(0);
+		triangle->GetFillStyle()->SetColor(0xBBBBBBFF);
+
+		auto groupFillColor = groupDiffStyle->GetFillStyle()->GetColor();
+
+		REQUIRE(!groupFillColor.has_value());
 	}
 }
