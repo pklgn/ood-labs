@@ -12,55 +12,60 @@
 #include "../Slides/Canvas/SFMLCanvas.h"
 #include "../Slides/Slide/Slide.h"
 
+std::shared_ptr<IShape> BuildRocketShape()
+{
+	auto bodyLineStyle = std::make_shared<SimpleLineStyle>(0xFFFFFFFF, 3);
+	auto bodyFillStyle = std::make_shared<SimpleFillStyle>(0xccccccFF);
+	auto body = std::make_shared<Rectangle>(Point{ 150, 150 }, 300, 200, bodyLineStyle, bodyFillStyle);
+
+	auto fairingLineStyle = std::make_shared<SimpleLineStyle>(0x32A5CBFF, 4);
+	auto fairingFillStyle = std::make_shared<SimpleFillStyle>(0xFFFFFFFF);
+	auto fairing = std::make_shared<Triangle>(Point{ 450, 148 }, Point{ 600, 250 }, Point{ 450, 350 }, fairingLineStyle);
+
+	auto portholeLineStyle = std::make_shared<SimpleLineStyle>(0x32A5CBFF, 3);
+	auto portholeFillStyle = std::make_shared<SimpleFillStyle>(0x4DB4F0FF);
+	auto porthole = std::make_shared<Ellipse>(Point{300, 200}, 100, 100, portholeLineStyle, portholeFillStyle);
+
+	auto bigFlameLineStyle = std::make_shared<SimpleLineStyle>(0xEF2F2FFF, 1);
+	auto bigFlameFillStyle = std::make_shared<SimpleFillStyle>(0xF7C707FF);
+	auto bigFlame = std::make_shared<Triangle>(Point{ 150, 175 }, Point{ 150, 325 }, Point{ 50, 250 }, bigFlameLineStyle, bigFlameFillStyle);
+
+	auto littleFlameLineStyle = std::make_shared<SimpleLineStyle>(0xF7DD78FF, 2);
+	auto littleFlameFillStyle = std::make_shared<SimpleFillStyle>(0xBF5700FF);
+	auto littleFlame = std::make_shared<Triangle>(Point{ 150, 200 }, Point{ 150, 300 }, Point{ 100, 250 }, littleFlameLineStyle, littleFlameFillStyle);
+
+	auto tailPartLineStyle = std::make_shared<SimpleLineStyle>(0x739A69FF, 2);
+	auto tailPartFillStyle = std::make_shared<SimpleFillStyle>(0x165806FF);
+	auto tailPart1 = std::make_shared<Triangle>(Point{ 150, 150 }, Point{ 150, 50 }, Point{ 250, 150 }, tailPartLineStyle, tailPartFillStyle);
+	auto tailPart2 = std::make_shared<Triangle>(Point{ 150, 450 }, Point{ 150, 350 }, Point{ 250, 350 }, tailPartLineStyle, tailPartFillStyle);
+
+	std::vector<std::shared_ptr<IShape>> parts{ body, fairing, porthole, bigFlame, littleFlame, tailPart1, tailPart2 };
+	
+	return GroupShape::Create(parts);
+}
 
 int main()
 {
-	auto vertexA = Point{ 30, 400 };
-	auto vertexB = Point{ 300, 200 };
-	auto vertexC = Point{ 700, 500 };
-	uint32_t fillcolor = 0x00D678FF;
-	uint32_t linecolor = 0xFFFFFFFF;
-
-	auto simpleLineStyle = std::make_shared<SimpleLineStyle>(linecolor, 10);
-	auto simpleFillStyle = std::make_shared<SimpleFillStyle>(fillcolor);
-	auto triangle = std::make_shared<Triangle>(vertexA, vertexB, vertexC, simpleLineStyle, simpleFillStyle);
-
-	auto consoleCanvas = ConsoleCanvas();
-	triangle->Draw(consoleCanvas);
-	std::cout << "=================\n";
-
-	auto rectangleWidth = 400;
-	auto rectangleHeight = 300;
-	auto rectangle = std::make_shared<Rectangle>(Point{70, 80}, rectangleWidth, rectangleHeight, simpleLineStyle, simpleFillStyle);
-
-	rectangle->Draw(consoleCanvas);
-	std::cout << "=================\n";
-
-	auto ellipseWidth = 300;
-	auto ellipseHeight = 200;
-	auto ellipse = std::make_shared<Ellipse>(Point{0, 0}, ellipseWidth, ellipseHeight, simpleLineStyle, simpleFillStyle);
-	ellipse->Draw(consoleCanvas);
-
-	std::vector<std::shared_ptr<IShape>> shapes{ triangle, rectangle, ellipse };
-	auto group = GroupShape::Create(shapes);
-	//group->Draw(sfmlCanvas);
-	//sfmlCanvas.CaptureShapes("kartina-maslom.jpg");
+	auto rocketShape = BuildRocketShape(); 
+	auto farRocketShape = BuildRocketShape();
+	auto farRocketShapeFrame = farRocketShape->GetFrame();
+	farRocketShapeFrame = {
+		farRocketShapeFrame.left += 450,
+		farRocketShapeFrame.top += 300,
+		farRocketShapeFrame.width /= 2,
+		farRocketShapeFrame.height /= 2,
+	};
+	farRocketShape->SetFrame(farRocketShapeFrame);
 
 	auto slide = std::make_shared<Slide>();
-	//add several shapes independently
-	//slide->InsertShape(triangle, 0);
-	//slide->InsertShape(rectangle, 1);
-	//slide->InsertShape(ellipse, 2);
 
 	//add group
-	slide->InsertShape(group, 0);
+	slide->InsertShape(rocketShape, 0);
+	slide->InsertShape(farRocketShape, 1);
 	
-	//change frame
-	//auto shape = slide->GetShapeAtIndex(0);
-	//shape->SetFrame({ 0, 0, 400, 300 });
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 600), "canvas", sf::Style::Default, settings);
+	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 600), "rockets", sf::Style::Default, settings);
 	auto sfmlCanvas = SFMLCanvas(renderWindow);
 
 	// run the program as long as the window is open
@@ -73,7 +78,7 @@ int main()
 			// "close requested" event: we close the window
 			if (event.type == sf::Event::Closed)
 			{
-				sfmlCanvas.Capture("OUTPUT.JPG");
+				sfmlCanvas.Capture("ROCKETS.JPG");
 				renderWindow.close();
 			}
 		}
