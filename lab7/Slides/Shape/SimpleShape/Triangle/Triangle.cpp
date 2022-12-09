@@ -33,6 +33,12 @@ RectD Triangle::GetFrame()
 void Triangle::SetFrame(const RectD& frame)
 {
 	auto currFrame = GetFrame();
+
+	auto coefX = frame.width / currFrame.width;
+	auto coefY = frame.height / currFrame.height;
+
+	auto currThickness = GetLineStyle()->GetThickness();
+	GetLineStyle()->SetThickness(currThickness.value_or(0) * hypot(coefX, coefY));
 	
 	TransformVertexPoint(m_vertexA, currFrame, frame);
 	TransformVertexPoint(m_vertexB, currFrame, frame);
