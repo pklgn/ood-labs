@@ -160,6 +160,10 @@ TEST_CASE("Act when HAS QUARTER")
 
 TEST_CASE("Act when SOLD OUT")
 {
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+
 	GumballMachine gumballMachineEmpty(0);
 
 	SECTION("Trying to eject quarter")
@@ -169,6 +173,7 @@ TEST_CASE("Act when SOLD OUT")
 
 		gumballMachineEmpty.EjectQuarter();
 
+		REQUIRE(oss.str() == "You can't eject, you haven't inserted a quarter yet\n");
 		REQUIRE_THAT(gumballMachineEmpty, IsSameGumballMachine(expectedNumBalls, expectedState));
 	}
 
@@ -179,6 +184,7 @@ TEST_CASE("Act when SOLD OUT")
 
 		gumballMachineEmpty.InsertQuarter();
 
+		REQUIRE(oss.str() == "You can't insert a quarter, the machine is sold out\n");
 		REQUIRE_THAT(gumballMachineEmpty, IsSameGumballMachine(expectedNumBalls, expectedState));
 	}
 
@@ -189,6 +195,10 @@ TEST_CASE("Act when SOLD OUT")
 
 		gumballMachineEmpty.TurnCrank();
 
+		REQUIRE(oss.str() == "You turned but there's no gumballs\n"
+							 "No gumball dispensed\n");
 		REQUIRE_THAT(gumballMachineEmpty, IsSameGumballMachine(expectedNumBalls, expectedState));
 	}
+
+	std::cout.rdbuf(stdoutBuffer);
 }
