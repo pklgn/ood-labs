@@ -35,6 +35,7 @@ public:
 		case State::NoQuarter:
 			cout << "You inserted a quarter\n";
 			++m_quarterCount;
+			cout << "Accept quarter\n";
 			m_state = State::HasQuarter;
 			break;
 		case State::HasQuarter:
@@ -46,6 +47,7 @@ public:
 			{
 				cout << "You inserted another quarter\n";
 				++m_quarterCount;
+				cout << "Accept quarter\n";
 			}
 			break;
 		case State::Sold:
@@ -57,11 +59,14 @@ public:
 	void EjectQuarter()
 	{
 		using namespace std;
+
+		auto quarterCount = m_quarterCount;
+
 		switch (m_state)
 		{
 		case State::HasQuarter:
 			cout << "Refund off all inserted quarters...\n";
-			for (size_t i = 0; i < m_quarterCount; ++i)
+			for (size_t i = 0; i < quarterCount; ++i)
 			{
 				std::cout << "Refund quarter\n";
 				--m_quarterCount;
@@ -75,8 +80,14 @@ public:
 			cout << "Please wait until we finish issuing the gumball\n";
 			break;
 		case State::SoldOut:
+			if (m_quarterCount == 0)
+			{
+				cout << "Nothing to refund\n";
+
+				return;
+			}
 			cout << "Refund off all inserted quarters...\n";
-			for (size_t i = 0; i < m_quarterCount; ++i)
+			for (size_t i = 0; i < quarterCount; ++i)
 			{
 				std::cout << "Refund quarter\n";
 				--m_quarterCount;
@@ -126,8 +137,11 @@ Mighty Gumball, Inc.
 C++-enabled Standing Gumball Model #2016 (with state)
 Inventory: {} gumball{}
 Machine is {}
+Quarter amount is {}
 )",
-			m_ballCount, (m_ballCount != 1 ? "s" : ""), state);
+			m_ballCount, (m_ballCount != 1 ? "s" : ""), state, m_quarterCount);
+
+		return fmt;
 	}
 
 private:
@@ -137,8 +151,10 @@ private:
 		switch (m_state)
 		{
 		case State::Sold:
-			cout << "A gumball comes rolling out the slot\n";
+			cout << "A gumball comes rolling out the slot...\n";
 			--m_ballCount;
+			--m_quarterCount;
+			cout << "Take quarter\n";
 			if (m_ballCount == 0)
 			{
 				cout << "Oops, out of gumballs\n";
