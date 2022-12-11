@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iostream>
 #include "../GumballMachine/GumballMachine.h"
+#include "../GumballMachine/MultiGumballMachine.h"
+#include "../GumballMachine/Naive/NaiveMultiGumballMachine.h"
 
 using namespace with_state;
 
@@ -211,4 +213,552 @@ TEST_CASE("Act when SOLD OUT")
 	}
 
 	std::cout.rdbuf(stdoutBuffer);
+}
+
+template <typename T>
+class IsSameMultiGumballMachineMatcher : public Catch::Matchers::Impl::MatcherBase<T>
+{
+public:
+	IsSameMultiGumballMachineMatcher(unsigned ballCount, const std::string& state, unsigned quarterCount)
+		: m_ballCount(ballCount)
+		, m_state(state)
+		, m_quarterCount(quarterCount)
+	{
+	}
+
+	bool match(T const& in) const override
+	{
+		auto expectedRepresentation = std::format(R"(
+Mighty Gumball, Inc.
+C++-enabled Standing Gumball Model #2016 (with state)
+Inventory: {} gumball{}
+Machine is {}
+Quarter amount is {}
+)",
+			m_ballCount, (m_ballCount != 1 ? "s" : ""), m_state, m_quarterCount);
+
+		return in.ToString() == expectedRepresentation;
+	}
+
+	std::string describe() const override
+	{
+		std::ostringstream ss;
+		ss << "is have ball count equals to " << m_ballCount
+		   << "state such as " << m_state
+		   << "and quarter count equals " << m_quarterCount;
+		return ss.str();
+	}
+
+private:
+	unsigned m_ballCount;
+	const std::string& m_state;
+	unsigned m_quarterCount;
+};
+
+template <typename T>
+IsSameMultiGumballMachineMatcher<T> IsSameMultiGumballMachine(unsigned ballCount, const std::string& state, unsigned quarterCount)
+{
+	return { ballCount, state, quarterCount };
+}
+
+// Multi tests
+
+TEST_CASE("Act when NO QUARTER for multi gumball machine")
+{
+	auto numBalls = 5;
+	auto numQuarters = 0;
+	MultiGumballMachine multiGumballMachine(numBalls);
+
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+
+	SECTION("Trying to eject quarter")
+	{
+		auto expectedNumBalls = 5;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+
+		multiGumballMachine.EjectQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You haven't inserted any quarters\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to insert quarter")
+	{
+		auto expectedNumBalls = 5;
+		auto expectedNumQuarters = 1;
+		auto expectedState = "waiting for turn of crank";
+
+		multiGumballMachine.InsertQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You inserted a quarter\n"
+							 "Accept quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank")
+	{
+		auto expectedNumBalls = 5;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+
+		multiGumballMachine.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned but there's no quarter\n"
+							 "You need to pay first\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	std::cout.rdbuf(stdoutBuffer);
+}
+
+TEST_CASE("Act when HAS QUARTER for multi gumball machine")
+{
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+
+	auto numBalls = 2;
+	MultiGumballMachine multiGumballMachine(numBalls);
+	multiGumballMachine.InsertQuarter();
+
+	oss.str("");
+
+	SECTION("Trying to eject quarter")
+	{
+		auto expectedNumBalls = numBalls;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+
+		multiGumballMachine.EjectQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Refund off all inserted quarters...\n"
+							 "Refund quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to insert quarter")
+	{
+		auto expectedNumBalls = numBalls;
+		auto expectedNumQuarters = 2;
+		auto expectedState = "waiting for turn of crank";
+
+		multiGumballMachine.InsertQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You inserted another quarter\n"
+							 "Accept quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to insert quarter and exceed quarters limit")
+	{
+		multiGumballMachine.InsertQuarter();
+		multiGumballMachine.InsertQuarter();
+		multiGumballMachine.InsertQuarter();
+		multiGumballMachine.InsertQuarter();
+		auto expectedNumBalls = numBalls;
+		auto expectedNumQuarters = 5;
+		auto expectedState = "waiting for turn of crank";
+		oss.str("");
+
+		multiGumballMachine.InsertQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You have reached the limit of inserted quarters. Turn the crank or eject quarters\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank")
+	{
+		auto expectedNumBalls = numBalls - 1;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+
+		multiGumballMachine.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned...\n"
+							 "A gumball comes rolling out the slot...\n"
+							 "Take quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank when several quarters were inserted")
+	{
+		multiGumballMachine.InsertQuarter();
+		auto expectedNumBalls = numBalls - 1;
+		auto expectedNumQuarters = 1;
+		auto expectedState = "waiting for turn of crank";
+		oss.str("");
+
+		multiGumballMachine.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned...\n"
+							 "A gumball comes rolling out the slot...\n"
+							 "Take quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank when single gumball remain")
+	{
+		multiGumballMachine.TurnCrank();
+
+		multiGumballMachine.InsertQuarter();
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+		oss.str("");
+
+		multiGumballMachine.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned...\n"
+							 "A gumball comes rolling out the slot...\n"
+							 "Take quarter\n"
+							 "Oops, out of gumballs\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	std::cout.rdbuf(stdoutBuffer);
+}
+
+TEST_CASE("Act when SOLD OUT for multi gumball machine")
+{
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+
+	MultiGumballMachine multiGumballMachineEmpty(0);
+
+	SECTION("Trying to eject quarter")
+	{
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+
+		multiGumballMachineEmpty.EjectQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Nothing to refund\n");
+		REQUIRE_THAT(multiGumballMachineEmpty, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to insert quarter")
+	{
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+
+		multiGumballMachineEmpty.InsertQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You can't insert a quarter, the machine is sold out\n");
+		REQUIRE_THAT(multiGumballMachineEmpty, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank")
+	{
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+
+		multiGumballMachineEmpty.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned but there's no gumballs\n"
+							 "No gumball dispensed\n");
+		REQUIRE_THAT(multiGumballMachineEmpty, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	std::cout.rdbuf(stdoutBuffer);
+}
+
+TEST_CASE("Act when SOLD OUT for multi gumball machine and inserted quarters")
+{
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+
+	MultiGumballMachine multiGumballMachine(2);
+	multiGumballMachine.InsertQuarter();
+	multiGumballMachine.InsertQuarter();
+	multiGumballMachine.InsertQuarter();
+	multiGumballMachine.InsertQuarter();
+
+	multiGumballMachine.TurnCrank();
+	multiGumballMachine.TurnCrank();
+	oss.str("");
+
+	SECTION("Refund remain quarters")
+	{
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+		
+		multiGumballMachine.EjectQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Refund off all inserted quarters...\n"
+							 "Refund quarter\n"
+							 "Refund quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+}
+
+// Multi naive tests
+
+TEST_CASE("Act when NO QUARTER for naive multi gumball machine")
+{
+	auto numBalls = 5;
+	auto numQuarters = 0;
+	naive::MultiGumballMachine multiGumballMachine(numBalls);
+
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+
+	SECTION("Trying to eject quarter")
+	{
+		auto expectedNumBalls = 5;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+
+		multiGumballMachine.EjectQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You haven't inserted any quarters\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to insert quarter")
+	{
+		auto expectedNumBalls = 5;
+		auto expectedNumQuarters = 1;
+		auto expectedState = "waiting for turn of crank";
+
+		multiGumballMachine.InsertQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You inserted a quarter\n"
+							 "Accept quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank")
+	{
+		auto expectedNumBalls = 5;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+
+		multiGumballMachine.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned but there's no quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	std::cout.rdbuf(stdoutBuffer);
+}
+
+TEST_CASE("Act when HAS QUARTER for naive multi gumball machine")
+{
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+
+	auto numBalls = 2;
+	naive::MultiGumballMachine multiGumballMachine(numBalls);
+	multiGumballMachine.InsertQuarter();
+
+	oss.str("");
+
+	SECTION("Trying to eject quarter")
+	{
+		auto expectedNumBalls = numBalls;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+
+		multiGumballMachine.EjectQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Refund off all inserted quarters...\n"
+							 "Refund quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to insert quarter")
+	{
+		auto expectedNumBalls = numBalls;
+		auto expectedNumQuarters = 2;
+		auto expectedState = "waiting for turn of crank";
+
+		multiGumballMachine.InsertQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You inserted another quarter\n"
+							 "Accept quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to insert quarter and exceed quarters limit")
+	{
+		multiGumballMachine.InsertQuarter();
+		multiGumballMachine.InsertQuarter();
+		multiGumballMachine.InsertQuarter();
+		multiGumballMachine.InsertQuarter();
+		auto expectedNumBalls = numBalls;
+		auto expectedNumQuarters = 5;
+		auto expectedState = "waiting for turn of crank";
+		oss.str("");
+
+		multiGumballMachine.InsertQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You have reached the limit of inserted quarters. Turn the crank or eject quarters\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank")
+	{
+		auto expectedNumBalls = numBalls - 1;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+
+		multiGumballMachine.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned...\n"
+							 "A gumball comes rolling out the slot...\n"
+							 "Take quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank when several quarters were inserted")
+	{
+		multiGumballMachine.InsertQuarter();
+		auto expectedNumBalls = numBalls - 1;
+		auto expectedNumQuarters = 1;
+		auto expectedState = "waiting for turn of crank";
+		oss.str("");
+
+		multiGumballMachine.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned...\n"
+							 "A gumball comes rolling out the slot...\n"
+							 "Take quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank when single gumball remain")
+	{
+		multiGumballMachine.TurnCrank();
+
+		multiGumballMachine.InsertQuarter();
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+		oss.str("");
+
+		multiGumballMachine.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned...\n"
+							 "A gumball comes rolling out the slot...\n"
+							 "Take quarter\n"
+							 "Oops, out of gumballs\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	std::cout.rdbuf(stdoutBuffer);
+}
+
+TEST_CASE("Act when SOLD OUT for naive multi gumball machine")
+{
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+
+	naive::MultiGumballMachine multiGumballMachineEmpty(0);
+
+	SECTION("Trying to eject quarter")
+	{
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+
+		multiGumballMachineEmpty.EjectQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Nothing to refund\n");
+		REQUIRE_THAT(multiGumballMachineEmpty, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to insert quarter")
+	{
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+
+		multiGumballMachineEmpty.InsertQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You can't insert a quarter, the machine is sold out\n");
+		REQUIRE_THAT(multiGumballMachineEmpty, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Trying to turn crank")
+	{
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+
+		multiGumballMachineEmpty.TurnCrank();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "You turned but there's no gumballs\n");
+		REQUIRE_THAT(multiGumballMachineEmpty, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	std::cout.rdbuf(stdoutBuffer);
+}
+
+TEST_CASE("Act when SOLD OUT for naive multi gumball machine and inserted quarters")
+{
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+
+	naive::MultiGumballMachine multiGumballMachine(2);
+	multiGumballMachine.InsertQuarter();
+	multiGumballMachine.InsertQuarter();
+	multiGumballMachine.InsertQuarter();
+	multiGumballMachine.InsertQuarter();
+
+	multiGumballMachine.TurnCrank();
+	multiGumballMachine.TurnCrank();
+	oss.str("");
+
+	SECTION("Refund remain quarters")
+	{
+		auto expectedNumBalls = 0;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "sold out";
+
+		multiGumballMachine.EjectQuarter();
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Refund off all inserted quarters...\n"
+							 "Refund quarter\n"
+							 "Refund quarter\n");
+		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
 }
