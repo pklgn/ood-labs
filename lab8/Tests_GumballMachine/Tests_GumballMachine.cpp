@@ -1,11 +1,12 @@
 #define CATCH_CONFIG_MAIN
 #include "../../catch2/catch.hpp"
-#include <format>
-#include <sstream>
-#include <iostream>
 #include "../GumballMachine/GumballMachine.h"
 #include "../GumballMachine/MultiGumballMachine.h"
+#include "../GumballMachine/MultiGumballMachineRefillable.h"
 #include "../GumballMachine/Naive/NaiveMultiGumballMachine.h"
+#include <format>
+#include <iostream>
+#include <sstream>
 
 using namespace with_state;
 
@@ -761,4 +762,78 @@ TEST_CASE("Act when SOLD OUT for naive multi gumball machine and inserted quarte
 							 "Refund quarter\n");
 		REQUIRE_THAT(multiGumballMachine, IsSameMultiGumballMachine<naive::MultiGumballMachine>(expectedNumBalls, expectedState, expectedNumQuarters));
 	}
+}
+
+TEST_CASE("Refill multi gumball machine in every possible way")
+{
+	auto stdoutBuffer = std::cout.rdbuf();
+	std::ostringstream oss;
+	std::cout.rdbuf(oss.rdbuf());
+	auto numBalls = 2;
+	MultiGumballMachineRefillable gumballMachine(numBalls);
+	MultiGumballMachineRefillable gumballMachineEmpty(0);
+
+	SECTION("Refill when NO QUARTER")
+	{
+		auto expectedNumBalls = 5;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+
+		gumballMachine.Refill(5);
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Refill machine with 5 balls\n");
+		REQUIRE_THAT(gumballMachine, IsSameMultiGumballMachine<MultiGumballMachineRefillable>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Refill when HAS QUARTER")
+	{
+		gumballMachine.InsertQuarter();
+		gumballMachine.InsertQuarter();
+		auto expectedNumBalls = 6;
+		auto expectedNumQuarters = 2;
+		auto expectedState = "waiting for turn of crank";
+		oss.str("");
+
+		gumballMachine.Refill(6);
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Refill machine with 6 balls\n");
+		REQUIRE_THAT(gumballMachine, IsSameMultiGumballMachine<MultiGumballMachineRefillable>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Refill when SOLD OUT")
+	{
+		auto expectedNumBalls = 6;
+		auto expectedNumQuarters = 0;
+		auto expectedState = "waiting for quarter";
+		oss.str("");
+
+		gumballMachineEmpty.Refill(6);
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Refill machine with 6 balls\n");
+		REQUIRE_THAT(gumballMachineEmpty, IsSameMultiGumballMachine<MultiGumballMachineRefillable>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	SECTION("Refill when SOLD OUT and have inserted quarters")
+	{
+		gumballMachine.InsertQuarter();
+		gumballMachine.InsertQuarter();
+		gumballMachine.InsertQuarter();
+		gumballMachine.TurnCrank();
+		gumballMachine.TurnCrank();
+		auto expectedNumBalls = 6;
+		auto expectedNumQuarters = 1;
+		auto expectedState = "waiting for turn of crank";
+		oss.str("");
+
+		gumballMachine.Refill(6);
+
+		std::cout.rdbuf(stdoutBuffer);
+		REQUIRE(oss.str() == "Refill machine with 6 balls\n");
+		REQUIRE_THAT(gumballMachine, IsSameMultiGumballMachine<MultiGumballMachineRefillable>(expectedNumBalls, expectedState, expectedNumQuarters));
+	}
+
+	std::cout.rdbuf(stdoutBuffer);
 }
