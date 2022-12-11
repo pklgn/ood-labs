@@ -14,8 +14,15 @@ void MultiSoldOutState::InsertQuarter()
 }
 void MultiSoldOutState::EjectQuarter()
 {
-	std::cout << "Refund off all inserted quarters...\n";
 	auto quarterCount = m_gumballMachine.GetQuarterCount();
+	if (quarterCount == 0)
+	{
+		std::cout << "Nothing to refund\n";
+
+		return;
+	}
+
+	std::cout << "Refund off all inserted quarters...\n";
 	for (size_t i = 0; i < quarterCount; ++i)
 	{
 		m_gumballMachine.RefundQuarter();
