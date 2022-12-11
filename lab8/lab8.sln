@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GumballMachine", "GumballMa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests_GumballMachine", "Tests_GumballMachine\Tests_GumballMachine.vcxproj", "{F1FCFFCE-C9E2-46E5-9B73-0EBC3915B6D5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Console_GumballMachine", "Console_GumballMachine\Console_GumballMachine.vcxproj", "{05726FF6-CA27-4C41-A595-42AA70CB7BF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{F1FCFFCE-C9E2-46E5-9B73-0EBC3915B6D5}.Release|x64.Build.0 = Release|x64
 		{F1FCFFCE-C9E2-46E5-9B73-0EBC3915B6D5}.Release|x86.ActiveCfg = Release|Win32
 		{F1FCFFCE-C9E2-46E5-9B73-0EBC3915B6D5}.Release|x86.Build.0 = Release|Win32
+		{05726FF6-CA27-4C41-A595-42AA70CB7BF7}.Debug|x64.ActiveCfg = Debug|x64
+		{05726FF6-CA27-4C41-A595-42AA70CB7BF7}.Debug|x64.Build.0 = Debug|x64
+		{05726FF6-CA27-4C41-A595-42AA70CB7BF7}.Debug|x86.ActiveCfg = Debug|Win32
+		{05726FF6-CA27-4C41-A595-42AA70CB7BF7}.Debug|x86.Build.0 = Debug|Win32
+		{05726FF6-CA27-4C41-A595-42AA70CB7BF7}.Release|x64.ActiveCfg = Release|x64
+		{05726FF6-CA27-4C41-A595-42AA70CB7BF7}.Release|x64.Build.0 = Release|x64
+		{05726FF6-CA27-4C41-A595-42AA70CB7BF7}.Release|x86.ActiveCfg = Release|Win32
+		{05726FF6-CA27-4C41-A595-42AA70CB7BF7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
