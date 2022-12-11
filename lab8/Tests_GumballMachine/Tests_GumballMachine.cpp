@@ -62,6 +62,7 @@ TEST_CASE("Act when NO QUARTER")
 
 		gumballMachine.EjectQuarter();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "You haven't inserted a quarter\n");
 		REQUIRE_THAT(gumballMachine, IsSameGumballMachine(expectedNumBalls, expectedState));
 	}
@@ -73,6 +74,7 @@ TEST_CASE("Act when NO QUARTER")
 
 		gumballMachine.InsertQuarter();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "You inserted a quarter\n");
 		REQUIRE_THAT(gumballMachine, IsSameGumballMachine(expectedNumBalls, expectedState));
 	}
@@ -84,6 +86,7 @@ TEST_CASE("Act when NO QUARTER")
 
 		gumballMachine.TurnCrank();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "You turned but there's no quarter\n"
 							 "You need to pay first\n");
 		REQUIRE_THAT(gumballMachine, IsSameGumballMachine(expectedNumBalls, expectedState));
@@ -111,6 +114,7 @@ TEST_CASE("Act when HAS QUARTER")
 
 		gumballMachine.EjectQuarter();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "Quarter returned\n");
 		REQUIRE_THAT(gumballMachine, IsSameGumballMachine(expectedNumBalls, expectedState));
 	}
@@ -122,6 +126,7 @@ TEST_CASE("Act when HAS QUARTER")
 
 		gumballMachine.InsertQuarter();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "You can't insert another quarter\n");
 		REQUIRE_THAT(gumballMachine, IsSameGumballMachine(expectedNumBalls, expectedState));
 	}
@@ -133,6 +138,7 @@ TEST_CASE("Act when HAS QUARTER")
 
 		gumballMachine.TurnCrank();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "You turned...\n"
 							 "A gumball comes rolling out the slot...\n");
 		REQUIRE_THAT(gumballMachine, IsSameGumballMachine(expectedNumBalls, expectedState));
@@ -149,6 +155,7 @@ TEST_CASE("Act when HAS QUARTER")
 		
 		gumballMachine.TurnCrank();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "You turned...\n"
 							 "A gumball comes rolling out the slot...\n"
 							 "Oops, out of gumballs\n");
@@ -173,6 +180,7 @@ TEST_CASE("Act when SOLD OUT")
 
 		gumballMachineEmpty.EjectQuarter();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "You can't eject, you haven't inserted a quarter yet\n");
 		REQUIRE_THAT(gumballMachineEmpty, IsSameGumballMachine(expectedNumBalls, expectedState));
 	}
@@ -184,6 +192,7 @@ TEST_CASE("Act when SOLD OUT")
 
 		gumballMachineEmpty.InsertQuarter();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "You can't insert a quarter, the machine is sold out\n");
 		REQUIRE_THAT(gumballMachineEmpty, IsSameGumballMachine(expectedNumBalls, expectedState));
 	}
@@ -195,6 +204,7 @@ TEST_CASE("Act when SOLD OUT")
 
 		gumballMachineEmpty.TurnCrank();
 
+		std::cout.rdbuf(stdoutBuffer);
 		REQUIRE(oss.str() == "You turned but there's no gumballs\n"
 							 "No gumball dispensed\n");
 		REQUIRE_THAT(gumballMachineEmpty, IsSameGumballMachine(expectedNumBalls, expectedState));
