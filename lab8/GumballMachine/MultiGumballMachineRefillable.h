@@ -1,21 +1,21 @@
 #pragma once
-#include "IMultiGumballMachine.h"
-#include "MultiState/MultiHasQuarterState.h"
-#include "MultiState/MultiNoQuarterState.h"
-#include "MultiState/MultiSoldOutState.h"
-#include "MultiState/MultiSoldState.h"
+#include "IMultiGumballMachineRefillable.h"
+#include "MultiRefillableState/MultiHasQuarterRefillableState.h"
+#include "MultiRefillableState/MultiNoQuarterRefillableState.h"
+#include "MultiRefillableState/MultiSoldOutRefillableState.h"
+#include "MultiRefillableState/MultiSoldRefillableState.h"
 #include <format>
 #include <iostream>
 #include <string>
 
 namespace with_state
 {
-class MultiGumballMachine : private IMultiGumballMachine
+class MultiGumballMachineRefillable : private IMultiGumballMachineRefillable
 {
 public:
 	const short MAX_QUARTER_COUNT = 5;
 
-	MultiGumballMachine(unsigned numBalls)
+	MultiGumballMachineRefillable(unsigned numBalls)
 		: m_soldState(*this)
 		, m_soldOutState(*this)
 		, m_noQuarterState(*this)
@@ -61,6 +61,10 @@ Quarter amount is {}
 
 		return fmt;
 	}
+	void Refill(unsigned numBalls)
+	{
+		m_state->Refill(numBalls);
+	}
 
 private:
 	unsigned GetBallCount() const override
@@ -74,6 +78,10 @@ private:
 			std::cout << "A gumball comes rolling out the slot...\n";
 			--m_ballCount;
 		}
+	}
+	void RefillBalls(unsigned numBalls) override
+	{
+		m_ballCount = numBalls;
 	}
 	void TakeQuarter() override
 	{
@@ -123,10 +131,10 @@ private:
 private:
 	unsigned m_ballCount = 0;
 	unsigned m_quarterCount = 0;
-	MultiSoldState m_soldState;
-	MultiSoldOutState m_soldOutState;
-	MultiNoQuarterState m_noQuarterState;
-	MultiHasQuarterState m_hasQuarterState;
-	IState* m_state;
+	MultiSoldRefillableState m_soldState;
+	MultiSoldOutRefillabeState m_soldOutState;
+	MultiNoQuarterRefillableState m_noQuarterState;
+	MultiHasQuarterRefillableState m_hasQuarterState;
+	IStateRefillable* m_state;
 };
 } // namespace with_state

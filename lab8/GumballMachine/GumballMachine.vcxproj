@@ -144,7 +144,14 @@
     <ClInclude Include="GumballMachine.h" />
     <ClInclude Include="IGumballMachine.h" />
     <ClInclude Include="IMultiGumballMachine.h" />
+    <ClInclude Include="IMultiGumballMachineRefillable.h" />
     <ClInclude Include="MultiGumballMachine.h" />
+    <ClInclude Include="MultiGumballMachineRefillable.h" />
+    <ClInclude Include="MultiRefillableState\IStateRefillable.h" />
+    <ClInclude Include="MultiRefillableState\MultiHasQuarterRefillableState.h" />
+    <ClInclude Include="MultiRefillableState\MultiNoQuarterRefillableState.h" />
+    <ClInclude Include="MultiRefillableState\MultiSoldOutRefillableState.h" />
+    <ClInclude Include="MultiRefillableState\MultiSoldRefillableState.h" />
     <ClInclude Include="MultiState\MultiHasQuarterState.h" />
     <ClInclude Include="MultiState\MultiNoQuarterState.h" />
     <ClInclude Include="MultiState\MultiSoldOutState.h" />
@@ -159,6 +166,22 @@
     <ClInclude Include="State\SoldState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MultiRefillableState\MultiHasQuarterRefillableState.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="MultiRefillableState\MultiNoQuarterRefillableState.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="MultiRefillableState\MultiSoldOutRefillableState.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="MultiRefillableState\MultiSoldRefillableState.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="MultiState\MultiHasQuarterState.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>

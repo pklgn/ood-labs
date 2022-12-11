@@ -63,6 +63,27 @@
     <ClInclude Include="Naive\NaiveMultiGumballMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MultiGumballMachineRefillable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiRefillableState\MultiHasQuarterRefillableState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiRefillableState\MultiNoQuarterRefillableState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiRefillableState\MultiSoldOutRefillableState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiRefillableState\MultiSoldRefillableState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiRefillableState\IStateRefillable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IMultiGumballMachineRefillable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -90,6 +111,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MultiState\MultiSoldState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiRefillableState\MultiHasQuarterRefillableState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiRefillableState\MultiNoQuarterRefillableState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiRefillableState\MultiSoldOutRefillableState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiRefillableState\MultiSoldRefillableState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
