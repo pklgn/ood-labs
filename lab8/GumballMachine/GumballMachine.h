@@ -1,12 +1,12 @@
 #pragma once
-#include <string>
-#include <format>
-#include <iostream>
 #include "IGumballMachine.h"
 #include "State/HasQuarterState.h"
 #include "State/NoQuarterState.h"
 #include "State/SoldOutState.h"
 #include "State/SoldState.h"
+#include <format>
+#include <iostream>
+#include <string>
 
 namespace with_state
 {
@@ -53,11 +53,11 @@ Machine is {}
 	}
 
 private:
-	unsigned GetBallCount() const
+	unsigned GetBallCount() const override
 	{
 		return m_count;
 	}
-	virtual void ReleaseBall()
+	void ReleaseBall() override
 	{
 		if (m_count != 0)
 		{
@@ -65,19 +65,19 @@ private:
 			--m_count;
 		}
 	}
-	void SetSoldOutState()
+	void SetSoldOutState() override
 	{
 		m_state = &m_soldOutState;
 	}
-	void SetNoQuarterState()
+	void SetNoQuarterState() override
 	{
 		m_state = &m_noQuarterState;
 	}
-	void SetSoldState()
+	void SetSoldState() override
 	{
 		m_state = &m_soldState;
 	}
-	void SetHasQuarterState()
+	void SetHasQuarterState() override
 	{
 		m_state = &m_hasQuarterState;
 	}

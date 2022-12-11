@@ -42,6 +42,27 @@
     <ClInclude Include="Naive\NaiveGumballMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MultiGumballMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiState\MultiHasQuarterState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiState\MultiNoQuarterState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiState\MultiSoldOutState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiState\MultiSoldState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IMultiGumballMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Naive\NaiveMultiGumballMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -57,6 +78,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="State\NoQuarterState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiState\MultiHasQuarterState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiState\MultiNoQuarterState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiState\MultiSoldOutState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiState\MultiSoldState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
