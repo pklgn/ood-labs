@@ -145,6 +145,7 @@
     <ClInclude Include="IGumballMachine.h" />
     <ClInclude Include="IMultiGumballMachine.h" />
     <ClInclude Include="IMultiGumballMachineRefillable.h" />
+    <ClInclude Include="Menu\MenuFP.h" />
     <ClInclude Include="MultiGumballMachine.h" />
     <ClInclude Include="MultiGumballMachineRefillable.h" />
     <ClInclude Include="MultiRefillableState\IStateRefillable.h" />
