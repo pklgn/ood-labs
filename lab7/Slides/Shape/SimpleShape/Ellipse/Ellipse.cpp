@@ -21,14 +21,7 @@ RectD Ellipse::GetFrame()
 
 void Ellipse::SetFrame(const RectD& frame)
 {
-	//TODO: implement template method
-	auto currFrame = GetFrame();
-	auto currSqrt = hypot(currFrame.width, currFrame.height);
-	auto sqrt = hypot(frame.width, frame.height);
-	auto sqrtCoef = sqrt / currSqrt;
-
-	auto currThickness = GetLineStyle()->GetThickness();
-	GetLineStyle()->SetThickness(currThickness.value_or(0) * sqrtCoef);
+	SimpleShape::SetFrame(frame);
 
 	m_leftTop = Point{ frame.left, frame.top };
 	m_width = frame.width;

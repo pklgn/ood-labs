@@ -20,6 +20,8 @@ public:
 
 	std::shared_ptr<const IShape> GetGroupShape() const override;
 
+	void SetFrame(const RectD&) override;
+
 private:
 	std::shared_ptr<ILineStyle> m_lineStyle;
 	std::shared_ptr<IFillStyle> m_fillStyle;
