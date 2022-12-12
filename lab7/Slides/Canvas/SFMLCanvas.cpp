@@ -102,7 +102,7 @@ void SFMLCanvas::DrawClosedPolyLineSegment(size_t index, const std::vector<Point
 	m_renderTarget.draw(polyLineSegment);
 }
 
-
+//TODO: make ISavable
 void SFMLCanvas::DrawEllipse(const Point& leftTop, double width, double height)
 {
 	auto ellipse = sf::CircleShape((float)width / 2, CIRCLE_SHAPE_POINT_COUNT);

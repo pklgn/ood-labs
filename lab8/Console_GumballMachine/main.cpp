@@ -34,6 +34,7 @@ unsigned ReadPosition()
 	return numBalls;
 }
 
+//TODO: make editor like fifth lab
 int main()
 {
 	MultiGumballMachineRefillable gumballMachine(5);

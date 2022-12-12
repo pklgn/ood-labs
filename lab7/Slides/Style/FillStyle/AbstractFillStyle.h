@@ -13,3 +13,5 @@ public:
 protected:
 	bool m_isEnabled;
 };
+
+//TODO: rename abstract 

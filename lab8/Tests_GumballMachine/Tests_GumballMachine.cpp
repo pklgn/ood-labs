@@ -429,6 +429,7 @@ TEST_CASE("Act when HAS QUARTER for multi gumball machine")
 	}
 
 	std::cout.rdbuf(stdoutBuffer);
+	//TODO: TurnCrank several times
 }
 
 TEST_CASE("Act when SOLD OUT for multi gumball machine")
