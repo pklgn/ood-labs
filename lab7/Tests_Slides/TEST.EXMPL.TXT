@@ -1,0 +1,30 @@
+SetFillColor
+	123456ff
+FillPolygon
+	25 300
+	200 400
+	700 200
+	color: 123456ff
+SetLineColor
+	ffffffff
+SetLineThickness
+	1
+DrawClosedPolyLine
+	25 300
+	200 400
+	700 200
+SetFillColor
+	123456ff
+FillEllipse
+	leftTop: 0 0
+	width: 300
+	height: 200
+	color: 123456ff
+SetLineColor
+	ffffffff
+SetLineThickness
+	1
+DrawEllipse
+	leftTop: 0 0
+	width:	300
+	height:	200
