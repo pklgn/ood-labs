@@ -1,6 +1,5 @@
 #include "../../pch.h"
 #include "Shape.h"
-#include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include "../Style/LineStyle/LineStyle.h"
