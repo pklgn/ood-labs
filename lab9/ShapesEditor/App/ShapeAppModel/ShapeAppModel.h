@@ -12,6 +12,7 @@ public:
 
 	std::shared_ptr<Shape> GetShape() const;
 	RectD GetFrame() const;
+	void SetFrame(const RectD& frame);
 	std::shared_ptr<ILineStyle> GetLineStyle() const;
 	std::shared_ptr<IFillStyle> GetFillStyle() const;
 	

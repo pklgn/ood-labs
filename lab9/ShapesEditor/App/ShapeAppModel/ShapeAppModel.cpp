@@ -21,6 +21,12 @@ RectD ShapeAppModel::GetFrame() const
 	return m_frame;
 }
 
+void ShapeAppModel::SetFrame(const RectD& frame)
+{
+	m_frame = frame;
+	m_frameChanged(frame);
+}
+
 std::shared_ptr<ILineStyle> ShapeAppModel::GetLineStyle() const
 {
 	return m_shape->GetLineStyle();
