@@ -20,5 +20,3 @@ private:
 	std::deque<ICommandPtr> m_commands;
 	size_t m_nextCommandIndex = 0;
 };
-
-//FIXED: добавить интерфейс

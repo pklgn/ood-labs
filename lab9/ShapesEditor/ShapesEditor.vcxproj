@@ -140,10 +140,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="App\Command\AbstractCommand.h" />
+    <ClInclude Include="App\Command\ICommand.h" />
+    <ClInclude Include="App\History\History.h" />
+    <ClInclude Include="App\History\IHistory.h" />
     <ClInclude Include="App\PictureDraftAppModel\PictureDraftAppModel.h" />
     <ClInclude Include="App\ShapeAppModel\ShapeAppModel.h" />
     <ClInclude Include="App\ShapeSelectionModel\ShapeSelectionModel.h" />
+    <ClInclude Include="App\UseCases\Commands\ChangeFrameCommand\ChangeFrameCommand.h" />
+    <ClInclude Include="App\UseCases\MoveShapeUseCase\MoveShapeUseCase.h" />
     <ClInclude Include="common\Color\Color.h" />
+    <ClInclude Include="common\Point\Point.h" />
     <ClInclude Include="common\ShapeType\ShapeType.h" />
     <ClInclude Include="Model\PictureDraft\PictureDraft.h" />
     <ClInclude Include="common\Frame\Frame.h" />
@@ -156,6 +163,12 @@
     <ClInclude Include="Model\Style\LineStyle\LineStyle.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="App\Command\AbstractCommand.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="App\History\History.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="App\PictureDraftAppModel\PictureDraftAppModel.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -164,6 +177,12 @@
     </ClCompile>
     <ClCompile Include="App\ShapeSelectionModel\ShapeSelectionModel.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\Commands\ChangeFrameCommand\ChangeFrameCommand.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\MoveShapeUseCase\MoveShapeUseCase.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Model\PictureDraft\PictureDraft.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>

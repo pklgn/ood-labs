@@ -57,6 +57,27 @@
     <ClInclude Include="App\ShapeSelectionModel\ShapeSelectionModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="App\History\History.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\History\IHistory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Command\ICommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Command\AbstractCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\UseCases\MoveShapeUseCase\MoveShapeUseCase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\Point\Point.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\UseCases\Commands\ChangeFrameCommand\ChangeFrameCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -81,6 +102,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="App\ShapeSelectionModel\ShapeSelectionModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\History\History.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\Command\AbstractCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\MoveShapeUseCase\MoveShapeUseCase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\Commands\ChangeFrameCommand\ChangeFrameCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
