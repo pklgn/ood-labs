@@ -48,6 +48,15 @@
     <ClInclude Include="Model\Shape\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="App\ShapeAppModel\ShapeAppModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\PictureDraftAppModel\PictureDraftAppModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\ShapeSelectionModel\ShapeSelectionModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -63,6 +72,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model\Shape\Shape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\ShapeAppModel\ShapeAppModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\PictureDraftAppModel\PictureDraftAppModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\ShapeSelectionModel\ShapeSelectionModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

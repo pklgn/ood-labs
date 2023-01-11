@@ -1,13 +1,17 @@
 #include "../../pch.h"
 #include "ShapeAppModel.h"
 
-ShapeAppModel::ShapeAppModel(std::shared_ptr<IShape> shape)
+ShapeAppModel::ShapeAppModel(std::shared_ptr<Shape> shape)
 	: m_shape(shape)
 	, m_frame(shape->GetFrame())
 {
+	m_shape->DoOnFrameChanged([&, this](const RectD& frame) {
+		m_frame = frame;
+		m_frameChanged(frame);
+	});
 }
 
-std::shared_ptr<IShape> ShapeAppModel::GetShape() const
+std::shared_ptr<Shape> ShapeAppModel::GetShape() const
 {
 	return m_shape;
 }
