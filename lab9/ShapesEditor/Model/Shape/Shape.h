@@ -20,7 +20,7 @@ public:
 	std::shared_ptr<IFillStyle> GetFillStyle() override;
 	std::shared_ptr<const IFillStyle> GetFillStyle() const override;
 
-	connection DoOnFrameChanged(std::function<void(RectD)>);
+	connection DoOnFrameChanged(const std::function<void(const RectD&)>&);
 
 private:
 	ShapeType m_type;
@@ -28,5 +28,5 @@ private:
 	std::shared_ptr<ILineStyle> m_lineStyle;
 	std::shared_ptr<IFillStyle> m_fillStyle;
 	RectD m_frame;
-	signal<void(RectD)> m_frameChanged;
+	signal<void(const RectD&)> m_frameChanged;
 };

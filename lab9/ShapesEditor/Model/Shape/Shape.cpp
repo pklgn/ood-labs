@@ -51,7 +51,7 @@ std::shared_ptr<const IFillStyle> Shape::GetFillStyle() const
 	return m_fillStyle;
 }
 
-connection Shape::DoOnFrameChanged(std::function<void(RectD)> handler)
+connection Shape::DoOnFrameChanged(const std::function<void(const RectD&)>& handler)
 {
 	return m_frameChanged.connect(handler);
 }
