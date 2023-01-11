@@ -149,6 +149,8 @@
     <ClInclude Include="App\ShapeSelectionModel\ShapeSelectionModel.h" />
     <ClInclude Include="App\UseCases\Commands\ChangeFrameCommand\ChangeFrameCommand.h" />
     <ClInclude Include="App\UseCases\MoveShapeUseCase\MoveShapeUseCase.h" />
+    <ClInclude Include="App\UseCases\ResizeShapeUseCase\BasePoint\BasePoint.h" />
+    <ClInclude Include="App\UseCases\ResizeShapeUseCase\ResizeShapeUseCase.h" />
     <ClInclude Include="common\Color\Color.h" />
     <ClInclude Include="common\Point\Point.h" />
     <ClInclude Include="common\ShapeType\ShapeType.h" />
@@ -182,6 +184,9 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="App\UseCases\MoveShapeUseCase\MoveShapeUseCase.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\ResizeShapeUseCase\ResizeShapeUseCase.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Model\PictureDraft\PictureDraft.cpp">

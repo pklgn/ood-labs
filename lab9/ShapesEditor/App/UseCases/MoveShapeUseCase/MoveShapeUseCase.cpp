@@ -2,6 +2,12 @@
 #include "../Commands/ChangeFrameCommand/ChangeFrameCommand.h"
 #include "MoveShapeUseCase.h"
 
+MoveShapeUseCase::MoveShapeUseCase(const std::vector<std::shared_ptr<ShapeAppModel>>& shapes, std::shared_ptr<IHistory> history)
+	: m_shapesToMove(shapes)
+	, m_history(history)
+{
+}
+
 void MoveShapeUseCase::Move(const Point& offset)
 {
 	for (auto&& shape : m_shapesToMove)

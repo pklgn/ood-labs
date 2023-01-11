@@ -1,0 +1,83 @@
+#include "../../../pch.h"
+#include "../Commands/ChangeFrameCommand/ChangeFrameCommand.h"
+#include "ResizeShapeUseCase.h"
+
+const double MIN_WIDTH = 10;
+const double MIN_HEIGHT = 10;
+
+ResizeShapeUseCase::ResizeShapeUseCase(const std::vector<std::shared_ptr<ShapeAppModel>>& shapes, std::shared_ptr<IHistory> history)
+	: m_shapesToResize(shapes)
+	, m_history(history)
+{
+}
+
+void ResizeShapeUseCase::Resize(const Point& offset, BasePoint basePoint)
+{
+	for (auto&& shape : m_shapesToResize)
+	{
+		ResizeShape(shape, offset, basePoint);
+	}
+}
+
+void ResizeShapeUseCase::Commit()
+{
+	for (auto&& shape : m_shapesToResize)
+	{
+		auto domainShape = shape->GetShape();
+		auto frame = shape->GetFrame();
+		m_history->AddAndExecuteCommand(std::make_unique<ChangeFrameCommand>(frame, domainShape));
+	}
+}
+
+void ResizeShapeUseCase::ResizeShape(std::shared_ptr<ShapeAppModel> shape, const Point& offset, BasePoint basePoint)
+{
+	auto frame = shape->GetFrame();
+	double newWidth;
+	double newHeight;
+
+	switch (basePoint)
+	{
+	case BasePoint::LeftTop:
+		newWidth = frame.width + offset.x;
+		frame.width = std::max(MIN_WIDTH, newWidth);
+
+		newHeight = frame.height + offset.y;
+		frame.height = std::max(MIN_HEIGHT, newHeight);
+
+		shape->SetFrame(frame);
+		return;
+	case BasePoint::RightTop:
+		newWidth = frame.width - offset.x;
+		frame.width = std::max(MIN_WIDTH, newWidth);
+
+		newHeight = frame.height + offset.y;
+		frame.height = std::max(MIN_HEIGHT, newHeight);
+
+		frame.left += offset.x;
+		shape->SetFrame(frame);
+		return;
+	case BasePoint::RightBottom:
+		newWidth = frame.width - offset.x;
+		frame.width = std::max(MIN_WIDTH, newWidth);
+
+		newHeight = frame.height - offset.y;
+		frame.height = std::max(MIN_HEIGHT, newHeight);
+
+		frame.left += offset.x;
+		frame.height += offset.y;
+		shape->SetFrame(frame);
+		return;
+	case BasePoint::LeftBottom:
+		newWidth = frame.width + offset.x;
+		frame.width = std::max(MIN_WIDTH, newWidth);
+
+		newHeight = frame.height - offset.y;
+		frame.height = std::max(MIN_HEIGHT, newHeight);
+
+		frame.height += offset.y;
+		shape->SetFrame(frame);
+		return;
+	default:
+		throw std::invalid_argument("Unknown base point type was given");
+	}
+}

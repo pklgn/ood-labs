@@ -5,6 +5,7 @@
 
 class MoveShapeUseCase
 {
+public:
 	MoveShapeUseCase(const std::vector<std::shared_ptr<ShapeAppModel>>&, std::shared_ptr<IHistory>);
 
 	void Move(const Point& offset);
