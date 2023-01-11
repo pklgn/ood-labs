@@ -38,7 +38,7 @@ connection PictureDraft::DoOnShapeAdded(const std::function<void(size_t index)>&
 	return m_shapeAdded.connect(handler);
 }
 
-connection PictureDraft::DoOnShapeDeleted(const std::function<void(size_t index)>& handler)
+connection PictureDraft::DoOnShapeDeleted(const std::function<void(size_t index, std::shared_ptr<Shape> shape)>& handler)
 {
 	return m_shapeDeleted.connect(handler);
 }
