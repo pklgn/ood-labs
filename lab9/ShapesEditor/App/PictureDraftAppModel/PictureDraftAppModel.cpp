@@ -1,8 +1,9 @@
 ﻿#include "../../pch.h"
 #include "PictureDraftAppModel.h"
 
-PictureDraftAppModel::PictureDraftAppModel(std::shared_ptr<PictureDraft> pictureDraft)
+PictureDraftAppModel::PictureDraftAppModel(std::shared_ptr<PictureDraft> pictureDraft, const std::shared_ptr<IHistory> history)
 	: m_pictureDraft(pictureDraft)
+	, m_history(history)
 {
 	m_pictureDraft->DoOnShapeAdded([&, this](size_t index) {
 		auto shapeAppModel = std::make_shared<ShapeAppModel>(pictureDraft->GetShape(index));
@@ -33,9 +34,10 @@ std::shared_ptr<ShapeAppModel> PictureDraftAppModel::GetShape(size_t index) cons
 	return m_shapesAppModel.at(index);
 }
 
-void PictureDraftAppModel::CreateInsertShapeUseCase()
+std::unique_ptr<InsertShapeUseCase> PictureDraftAppModel::CreateInsertShapeUseCase()
 {
-	// TODO: реализовать сначала InsertShapeUseCase
+	// FIXED: реализовать сначала InsertShapeUseCase
+	return std::make_unique<InsertShapeUseCase>(*this, m_history);
 }
 
 connection PictureDraftAppModel::DoOnShapeAdded(const std::function<void(size_t index)>& handler)

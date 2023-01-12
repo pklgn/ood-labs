@@ -2,19 +2,18 @@
 #include "../../Model/PictureDraft/PictureDraft.h"
 #include "../../Model/Shape/Shape.h"
 #include "../ShapeAppModel/ShapeAppModel.h"
-
-//using namespace boost::signals2;
+#include "../UseCases/InsertShapeUseCase/InsertShapeUseCase.h"
 
 class PictureDraftAppModel
 {
 public:
-	PictureDraftAppModel(std::shared_ptr<PictureDraft>);
+	PictureDraftAppModel(std::shared_ptr<PictureDraft>, const std::shared_ptr<IHistory>);
 
 	std::shared_ptr<PictureDraft> GetPictureDraft() const;
 	size_t GetShapeCount() const;
 	std::shared_ptr<ShapeAppModel> GetShape(size_t index) const;
 	// TODO: заменить возвращаемый тип на InsertShapeUseCase
-	void CreateInsertShapeUseCase();
+	std::unique_ptr<InsertShapeUseCase> CreateInsertShapeUseCase();
 
 	connection DoOnShapeAdded(const std::function<void(size_t index)>&);
 	connection DoOnShapeDeleted(const std::function<void(size_t index, std::shared_ptr<ShapeAppModel> shape)>&);
@@ -24,4 +23,5 @@ private:
 	std::vector<std::shared_ptr<ShapeAppModel>> m_shapesAppModel;
 	signal<void(size_t index)> m_shapeAdded;
 	signal<void(size_t index, std::shared_ptr<ShapeAppModel>)> m_shapeDeleted;
+	std::shared_ptr<IHistory> m_history;
 };
