@@ -1,4 +1,5 @@
 #include "../../../pch.h"
+#include "../../Command/MacroCommand/MacroCommand.h"
 #include "../Commands/ChangeFrameCommand/ChangeFrameCommand.h"
 #include "ResizeShapeUseCase.h"
 
@@ -21,12 +22,14 @@ void ResizeShapeUseCase::Resize(const Point& offset, BasePoint basePoint)
 
 void ResizeShapeUseCase::Commit()
 {
+	auto resizeShapesMacro = std::make_unique<MacroCommand>();
 	for (auto&& shape : m_shapesToResize)
 	{
 		auto domainShape = shape->GetShape();
 		auto frame = shape->GetFrame();
-		m_history->AddAndExecuteCommand(std::make_unique<ChangeFrameCommand>(frame, domainShape));
+		resizeShapesMacro->AddCommand(std::make_unique<ChangeFrameCommand>(frame, domainShape));
 	}
+	m_history->AddAndExecuteCommand(std::move(resizeShapesMacro));
 }
 
 void ResizeShapeUseCase::ResizeShape(std::shared_ptr<ShapeAppModel> shape, const Point& offset, BasePoint basePoint)

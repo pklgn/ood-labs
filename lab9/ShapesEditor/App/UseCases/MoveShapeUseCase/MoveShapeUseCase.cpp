@@ -1,4 +1,5 @@
 ﻿#include "../../../pch.h"
+#include "../../Command/MacroCommand/MacroCommand.h"
 #include "../Commands/ChangeFrameCommand/ChangeFrameCommand.h"
 #include "MoveShapeUseCase.h"
 
@@ -21,11 +22,13 @@ void MoveShapeUseCase::Move(const Point& offset)
 
 void MoveShapeUseCase::Commit()
 {
+	auto moveShapesMacro = std::make_unique<MacroCommand>();
 	for (auto&& shape : m_shapesToMove)
 	{
 		auto domainShape = shape->GetShape();
 		auto frame = shape->GetFrame();
 		// FIXED: создать команду по перемещению
-		m_history->AddAndExecuteCommand(std::make_unique<ChangeFrameCommand>(frame, domainShape));
+		moveShapesMacro->AddCommand(std::make_unique<ChangeFrameCommand>(frame, domainShape));
 	}
+	m_history->AddAndExecuteCommand(std::move(moveShapesMacro));
 }
