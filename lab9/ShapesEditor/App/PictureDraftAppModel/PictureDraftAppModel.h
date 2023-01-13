@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../../Model/PictureDraft/PictureDraft.h"
 #include "../../Model/Shape/Shape.h"
+#include "../History/IHistory.h"
 #include "../ShapeAppModel/ShapeAppModel.h"
 #include "../UseCases/InsertShapeUseCase/InsertShapeUseCase.h"
 

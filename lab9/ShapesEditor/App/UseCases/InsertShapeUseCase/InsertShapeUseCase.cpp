@@ -1,23 +1,20 @@
 #include "../../../pch.h"
+#include "../../../Model/Shape/Shape.h"
 #include "InsertShapeUseCase.h"
+#include "../Commands/InsertShapeCommand/InsertShapeCommand.h"
+#include "../../PictureDraftAppModel/PictureDraftAppModel.h"
 
-InsertShapeUseCase::InsertShapeUseCase(const PictureDraftAppModel& pictureDraft, const std::shared_ptr<IHistory>& history)
+
+InsertShapeUseCase::InsertShapeUseCase(PictureDraftAppModel& pictureDraft, const std::shared_ptr<IHistory>& history)
 	: m_pictureDraft(pictureDraft)
 	, m_history(history)
 {
 }
 
-void InsertShapeUseCase::Insert(ShapeType shapeType)
+void InsertShapeUseCase::Insert(size_t index, ShapeType shapeType)
 {
-	switch (shapeType)
-	{
-	case ShapeType::Rectangle:
-		break;
-	case ShapeType::Triangle:
-		break;
-	case ShapeType::Ellipse:
-		break;
-	default:
-		break;
-	}
+	auto shape = std::make_shared<Shape>(shapeType);
+	auto domainPictureDraft = m_pictureDraft.GetPictureDraft();
+	auto insertCommand = std::make_unique<InsertShapeCommand>(index, shape, domainPictureDraft);
+	m_history->AddAndExecuteCommand(std::move(insertCommand));
 }
