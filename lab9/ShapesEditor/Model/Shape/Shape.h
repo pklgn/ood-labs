@@ -8,7 +8,9 @@ using namespace boost::signals2;
 class Shape : public IShape
 {
 public:
-	Shape(ShapeType type, const RectD& frame);
+	static const RectD DEFAULT_FRAME;
+
+	Shape(ShapeType type, const RectD& frame = DEFAULT_FRAME);
 	Id GetId() const override;
 
 	RectD GetFrame() const override;
