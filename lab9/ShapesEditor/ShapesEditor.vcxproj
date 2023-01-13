@@ -142,12 +142,17 @@
   <ItemGroup>
     <ClInclude Include="App\Command\AbstractCommand.h" />
     <ClInclude Include="App\Command\ICommand.h" />
+    <ClInclude Include="App\Command\MacroCommand\MacroCommand.h" />
     <ClInclude Include="App\History\History.h" />
     <ClInclude Include="App\History\IHistory.h" />
     <ClInclude Include="App\PictureDraftAppModel\PictureDraftAppModel.h" />
     <ClInclude Include="App\ShapeAppModel\ShapeAppModel.h" />
     <ClInclude Include="App\ShapeSelectionModel\ShapeSelectionModel.h" />
     <ClInclude Include="App\UseCases\Commands\ChangeFrameCommand\ChangeFrameCommand.h" />
+    <ClInclude Include="App\UseCases\Commands\DeleteShapeCommand\DeleteShapeCommand.h" />
+    <ClInclude Include="App\UseCases\Commands\InsertShapeCommand\InsertShapeCommand.h" />
+    <ClInclude Include="App\UseCases\DeleteShapeUseCase\DeleteShapeUseCase.h" />
+    <ClInclude Include="App\UseCases\InsertShapeUseCase\InsertShapeUseCase.h" />
     <ClInclude Include="App\UseCases\MoveShapeUseCase\MoveShapeUseCase.h" />
     <ClInclude Include="App\UseCases\ResizeShapeUseCase\BasePoint\BasePoint.h" />
     <ClInclude Include="App\UseCases\ResizeShapeUseCase\ResizeShapeUseCase.h" />
@@ -168,6 +173,9 @@
     <ClCompile Include="App\Command\AbstractCommand.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="App\Command\MacroCommand\MacroCommand.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="App\History\History.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -182,6 +190,18 @@
     </ClCompile>
     <ClCompile Include="App\UseCases\Commands\ChangeFrameCommand\ChangeFrameCommand.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\Commands\DeleteShapeCommand\DeleteShapeCommand.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\Commands\InsertShapeCommand\InsertShapeCommand.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\DeleteShapeUseCase\DeleteShapeUseCase.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\InsertShapeUseCase\InsertShapeUseCase.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="App\UseCases\MoveShapeUseCase\MoveShapeUseCase.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>

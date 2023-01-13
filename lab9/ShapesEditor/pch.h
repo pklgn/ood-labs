@@ -9,6 +9,8 @@
 #define _USE_MATH_DEFINES
 
 // add headers that you want to pre-compile here
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include <iostream>
 #include <limits>
 #include <memory>

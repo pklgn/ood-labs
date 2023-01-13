@@ -84,6 +84,21 @@
     <ClInclude Include="App\UseCases\ResizeShapeUseCase\BasePoint\BasePoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="App\UseCases\DeleteShapeUseCase\DeleteShapeUseCase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Command\MacroCommand\MacroCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\UseCases\Commands\DeleteShapeCommand\DeleteShapeCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\UseCases\InsertShapeUseCase\InsertShapeUseCase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\UseCases\Commands\InsertShapeCommand\InsertShapeCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -123,6 +138,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="App\UseCases\ResizeShapeUseCase\ResizeShapeUseCase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\DeleteShapeUseCase\DeleteShapeUseCase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\Command\MacroCommand\MacroCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\Commands\DeleteShapeCommand\DeleteShapeCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\InsertShapeUseCase\InsertShapeUseCase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\Commands\InsertShapeCommand\InsertShapeCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

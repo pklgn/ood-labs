@@ -1,10 +1,9 @@
 #include "../../pch.h"
 #include "Shape.h"
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
 #include "../Style/LineStyle/LineStyle.h"
 #include "../Style/FillStyle/FillStyle.h"
 
+static const RectD DEFAULT_FRAME = { 0, 0, 100, 100 };
 
 Shape::Shape(ShapeType type, const RectD& frame)
 	: m_lineStyle(std::make_shared<LineStyle>())
