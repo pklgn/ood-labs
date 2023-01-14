@@ -44,3 +44,16 @@ void ShapeViewPresenter::OnMouseDown(const Point& point)
 		selectedShapes.push_back(m_shapeAppModel);
 	}
 }
+
+void ShapeViewPresenter::OnDrag(const Point& offset)
+{
+	auto frame = m_shapeAppModel->GetFrame();
+	auto useCase = m_shapeSelectionModel.CreateMoveShapeUseCase();
+	useCase->Move(offset);
+}
+
+void ShapeViewPresenter::OnMouseUp(const Point& offset)
+{
+	auto useCase = m_shapeSelectionModel.CreateMoveShapeUseCase();
+	useCase->Commit();
+}
