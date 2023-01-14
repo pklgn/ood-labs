@@ -168,6 +168,17 @@
     <ClInclude Include="Model\Style\FillStyle\FillStyle.h" />
     <ClInclude Include="Model\Style\LineStyle\ILineStyle.h" />
     <ClInclude Include="Model\Style\LineStyle\LineStyle.h" />
+    <ClInclude Include="View\Canvas\Console\ConsoleCanvas.h" />
+    <ClInclude Include="View\Canvas\ICanvas.h" />
+    <ClInclude Include="View\Canvas\SFML\SFMLCanvas.h" />
+    <ClInclude Include="View\IView.h" />
+    <ClInclude Include="View\PictureDraftView\IPictureDraftViewListener.h" />
+    <ClInclude Include="View\PictureDraftView\PictureDraftView.h" />
+    <ClInclude Include="View\PictureDraftView\PictureDraftViewPresenter\PictureDraftViewPresenter.h" />
+    <ClInclude Include="View\SelectionFrameView\SelectionFrameView.h" />
+    <ClInclude Include="View\ShapeView\IShapeViewListener.h" />
+    <ClInclude Include="View\ShapeView\ShapeView.h" />
+    <ClInclude Include="View\ShapeView\ShapeViewPresenter\ShapeViewPresenter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\Command\AbstractCommand.cpp">
@@ -225,6 +236,21 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Model\Style\LineStyle\LineStyle.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="View\Canvas\Console\ConsoleCanvas.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="View\Canvas\SFML\SFMLCanvas.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="View\PictureDraftView\PictureDraftViewPresenter\PictureDraftViewPresenter.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="View\ShapeView\ShapeView.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="View\ShapeView\ShapeViewPresenter\ShapeViewPresenter.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
