@@ -8,6 +8,9 @@ ShapeViewPresenter::ShapeViewPresenter(const std::shared_ptr<ShapeAppModel>& mod
 	, m_shapeSelectionModel(selectionModel)
 	, m_shapeView(shapeView)
 {
+	m_shapeAppModel->DoOnFrameChanged([&, this](const RectD& frame) {
+		m_shapeView.SetFrame(frame);
+	});
 }
 
 const ShapeView& ShapeViewPresenter::GetShapeView() const
@@ -55,9 +58,9 @@ void ShapeViewPresenter::OnMouseDown(const Point& point)
 	if (IsPointBelongShape &&
 		!IsShapeSelected)
 	{
-		selectedShapes.push_back(m_shapeAppModel);
+		m_shapeSelectionModel.SetSelectedShapes({ m_shapeAppModel });
 	}
-	m_shapeSelectionModel.SetSelectedShapes(selectedShapes);
+	
 }
 
 void ShapeViewPresenter::OnDrag(const Point& offset, const Point& point)

@@ -3,8 +3,8 @@
 #include "../Commands/ChangeFrameCommand/ChangeFrameCommand.h"
 #include "ResizeShapeUseCase.h"
 
-const double MIN_WIDTH = 10;
-const double MIN_HEIGHT = 10;
+const double MIN_WIDTH = 30;
+const double MIN_HEIGHT = 30;
 
 ResizeShapeUseCase::ResizeShapeUseCase(const std::vector<std::shared_ptr<ShapeAppModel>>& shapes, std::shared_ptr<IHistory> history)
 	: m_shapesToResize(shapes)
@@ -77,7 +77,7 @@ void ResizeShapeUseCase::ResizeShape(std::shared_ptr<ShapeAppModel> shape, const
 		newHeight = frame.height - offset.y;
 		frame.height = std::max(MIN_HEIGHT, newHeight);
 
-		frame.height += offset.y;
+		frame.top += offset.y;
 		shape->SetFrame(frame);
 		return;
 	default:

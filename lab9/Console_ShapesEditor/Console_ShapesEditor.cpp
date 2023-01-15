@@ -36,11 +36,13 @@ int main()
 	ShapeSelectionModel shapeSelectionModel;
 	PictureDraftView pictureDraftView(pictureDraftAppModel, shapeSelectionModel);
 	auto pictureDraftViewPresenter = std::make_shared<PictureDraftViewPresenter>(shapeSelectionModel, pictureDraftView, pictureDraftAppModel);
+	//pictureDraftView.SetListener(pictureDraftViewPresenter);
 
-	sf::ContextSettings settings;
-	settings.antialiasingLevel = 8;
-	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 600), "ShapesEditor", sf::Style::Default, settings);
+	//sf::ContextSettings settings;
+	//settings.antialiasingLevel = 8;
+	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 600), "ShapesEditor");
 	auto sfmlCanvas = SFMLCanvas(renderWindow);
+	//renderWindow.setFramerateLimit(30);
 
 	// run the program as long as the window is open
 	bool isDragging = false;
@@ -75,10 +77,10 @@ int main()
 			{
 				auto point = sf::Mouse::getPosition(renderWindow);
 				Point offset = { point.x - clickPoint.x, point.y - clickPoint.y };
-				std::cout << "==========================" << clock.getElapsedTime().asMilliseconds() << "\n";
-				std::cout << "offset    " << offset << std::endl;
-				std::cout << "clickPoint" << clickPoint << std::endl;
-				std::cout << "point     " << point.x << " " << point.y << std::endl;
+				//std::cout << "==========================" << clock.getElapsedTime().asMilliseconds() << "\n";
+				//std::cout << "offset    " << offset << std::endl;
+				//std::cout << "clickPoint" << clickPoint << std::endl;
+				//std::cout << "point     " << point.x << " " << point.y << std::endl;
 				isDragging = true;
 			}
 			else
@@ -89,18 +91,21 @@ int main()
 			{
 				isDragging = false;
 			}
-		}
-		if (isDragging)
-		{
-			auto point = sf::Mouse::getPosition(renderWindow);
-			Point offset = { point.x - clickPoint.x, point.y - clickPoint.y };
-			pictureDraftViewPresenter->OnDrag(offset, clickPoint);
+
 		}
 
 		// clear the window with black color
 		renderWindow.clear(sf::Color::Black);
 
 		// window.draw(...);
+		if (isDragging)
+		{
+			auto point = sf::Mouse::getPosition(renderWindow);
+			Point offset = { point.x - clickPoint.x, point.y - clickPoint.y };
+			pictureDraftViewPresenter->OnDrag(offset, clickPoint);
+			clickPoint.x += offset.x;
+			clickPoint.y += offset.y;
+		}
 		pictureDraftView.Show(sfmlCanvas);
 
 		// end the current frame

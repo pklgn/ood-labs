@@ -17,6 +17,11 @@ PictureDraftViewPresenter::PictureDraftViewPresenter(ShapeSelectionModel& select
 		m_shapeViewPresenters.push_back(shapeViewPresenter);
 		m_pictureDraftView.AppendShapeView(std::move(shapeView));
 	}
+
+	//m_shapeSelectionModel.DoOnSelectionChanged([&](const std::vector<std::shared_ptr<ShapeAppModel>>& selectedShapes) {
+	//	
+	//});
+
 }
 
 void PictureDraftViewPresenter::OnMouseDown(const Point& point)

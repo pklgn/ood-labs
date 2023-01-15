@@ -8,7 +8,7 @@ public:
 	using Id = std::string;
 	SelectionFrameView(ShapeAppModel&);
 	Id GetId() const;
-
+	void SetFrame(const RectD&);
 	void Show(ICanvas&) override;
 
 private:

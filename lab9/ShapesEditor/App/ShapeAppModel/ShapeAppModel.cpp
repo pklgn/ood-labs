@@ -34,7 +34,7 @@ RectD ShapeAppModel::GetFrame() const
 void ShapeAppModel::SetFrame(const RectD& frame)
 {
 	m_frame = frame;
-	m_frameChanged(frame);
+	m_frameChanged(m_frame);
 }
 
 std::shared_ptr<ILineStyle> ShapeAppModel::GetLineStyle() const
@@ -49,5 +49,6 @@ std::shared_ptr<IFillStyle> ShapeAppModel::GetFillStyle() const
 
 connection ShapeAppModel::DoOnFrameChanged(const std::function<void(const RectD&)>& handler)
 {
+	std::cout << "connect\n";
 	return m_frameChanged.connect(handler);
 }
