@@ -3,7 +3,6 @@
 #include "../Style/LineStyle/LineStyle.h"
 #include "../Style/FillStyle/FillStyle.h"
 
-static const RectD DEFAULT_FRAME = { 0, 0, 100, 100 };
 
 Shape::Shape(ShapeType type, const RectD& frame)
 	: m_lineStyle(std::make_shared<LineStyle>())
@@ -18,6 +17,11 @@ Shape::Shape(ShapeType type, const RectD& frame)
 Shape::Id Shape::GetId() const
 {
 	return m_id;
+}
+
+ShapeType Shape::GetType() const
+{
+	return m_type;
 }
 
 RectD Shape::GetFrame() const

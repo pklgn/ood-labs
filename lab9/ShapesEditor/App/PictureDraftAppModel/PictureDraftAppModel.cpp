@@ -17,6 +17,14 @@ PictureDraftAppModel::PictureDraftAppModel(std::shared_ptr<PictureDraft> picture
 		m_shapesAppModel.erase(m_shapesAppModel.begin() + index);
 		m_shapeDeleted(index, shapeAppModel);
 	});
+
+	auto shapeSize = m_pictureDraft->GetShapeCount();
+	for (size_t i = 0; i < shapeSize; ++i)
+	{
+		auto shape = m_pictureDraft->GetShape(i);
+		auto shapeAppModel = std::make_shared<ShapeAppModel>(shape);
+		m_shapesAppModel.push_back(shapeAppModel);
+	}
 }
 
 std::shared_ptr<PictureDraft> PictureDraftAppModel::GetPictureDraft() const

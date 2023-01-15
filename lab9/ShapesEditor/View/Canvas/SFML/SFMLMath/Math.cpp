@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "../../../../pch.h"
 #include "Math.h"
 
 sf::Vector2f Math::Normalized(const sf::Vector2f& source)

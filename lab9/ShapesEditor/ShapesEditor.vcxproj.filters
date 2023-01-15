@@ -132,6 +132,9 @@
     <ClInclude Include="View\ShapeView\ShapeView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="View\Canvas\SFML\SFMLMath\Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -201,6 +204,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="View\ShapeView\ShapeViewPresenter\ShapeViewPresenter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View\SelectionFrameView\SelectionFrameView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View\PictureDraftView\PictureDraftView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View\Canvas\SFML\SFMLMath\Math.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

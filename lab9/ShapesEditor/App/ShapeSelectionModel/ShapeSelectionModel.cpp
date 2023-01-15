@@ -10,6 +10,7 @@ std::vector<std::shared_ptr<ShapeAppModel>> ShapeSelectionModel::GetSelectedShap
 void ShapeSelectionModel::SetSelectedShapes(const std::vector<std::shared_ptr<ShapeAppModel>>& shapes)
 {
 	m_selectedShapes = shapes;
+	m_selectionChanged(shapes);
 }
 
 connection ShapeSelectionModel::DoOnSelectionChanged(const std::function<void(const std::vector<std::shared_ptr<ShapeAppModel>>&)>& handler)

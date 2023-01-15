@@ -3,12 +3,18 @@
 
 const unsigned int DEFAULT_LINE_THICKNESS = 1;
 
-ShapeView::ShapeView(const RectD& frame, ShapeType type, uint32_t lineColor, uint32_t fillColor)
+ShapeView::ShapeView(const Id& id, const RectD& frame, ShapeType type, uint32_t lineColor, uint32_t fillColor)
 	: m_frame(frame)
 	, m_lineColor(lineColor)
 	, m_fillColor(fillColor)
 	, m_type(type)
+	, m_id(id)
 {
+}
+
+ShapeView::Id ShapeView::GetId() const
+{
+	return m_id;
 }
 
 void ShapeView::SetFrame(const RectD& frame)
@@ -71,14 +77,14 @@ void ShapeView::ShowRectangle(ICanvas& canvas)
 	std::vector<Point> points{ leftTop, rightTop, rightBottom, leftBottom };
 	canvas.FillPolygon(points);
 
-	canvas.SetLineColor(m_lineColor);
+	canvas.SetFillColor(m_lineColor);
 
 	auto thickness = DEFAULT_LINE_THICKNESS;
 	canvas.SetLineThickness(thickness);
 
 	canvas.DrawLine({ leftTop.x - thickness, leftTop.y }, { rightTop.x + thickness, rightTop.y });
 	canvas.DrawLine(rightTop, rightBottom);
-	canvas.DrawLine({ rightBottom.x + thickness, rightBottom.y }, { leftBottom.x - thickness, leftBottom.y });
+	canvas.DrawLine({ rightBottom.x + thickness, rightBottom.y + thickness }, { leftBottom.x - thickness, leftBottom.y + thickness });
 	canvas.DrawLine(leftBottom, leftTop);
 }
 

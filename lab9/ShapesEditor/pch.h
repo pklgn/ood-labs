@@ -16,5 +16,6 @@
 #include <memory>
 #include <stdexcept>
 #include <variant>
+#include <SFML/Graphics.hpp>
 
 #endif //PCH_H

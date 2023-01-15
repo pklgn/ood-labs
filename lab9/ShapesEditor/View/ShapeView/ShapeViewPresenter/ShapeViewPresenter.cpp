@@ -1,5 +1,19 @@
-#include "../../../pch.h"
+﻿#include "../../../pch.h"
 #include "ShapeViewPresenter.h"
+
+const size_t DEFAULT_SELECTION_CORNER_SIZE = 10;
+
+ShapeViewPresenter::ShapeViewPresenter(const std::shared_ptr<ShapeAppModel>& model, ShapeSelectionModel& selectionModel, ShapeView& shapeView)
+	: m_shapeAppModel(model)
+	, m_shapeSelectionModel(selectionModel)
+	, m_shapeView(shapeView)
+{
+}
+
+const ShapeView& ShapeViewPresenter::GetShapeView() const
+{
+	return m_shapeView;
+}
 
 void ShapeViewPresenter::OnMouseDown(const Point& point)
 {
@@ -43,11 +57,37 @@ void ShapeViewPresenter::OnMouseDown(const Point& point)
 	{
 		selectedShapes.push_back(m_shapeAppModel);
 	}
+	m_shapeSelectionModel.SetSelectedShapes(selectedShapes);
 }
 
-void ShapeViewPresenter::OnDrag(const Point& offset)
+void ShapeViewPresenter::OnDrag(const Point& offset, const Point& point)
 {
 	auto frame = m_shapeAppModel->GetFrame();
+	if (IsOnCorner({ frame.left, frame.top }, point))
+	{
+		auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
+		useCase->Resize(offset, BasePoint::RightBottom);
+		return;
+	}
+	if (IsOnCorner({ frame.left + frame.width - DEFAULT_SELECTION_CORNER_SIZE, frame.top }, point))
+	{
+		auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
+		useCase->Resize(offset, BasePoint::LeftBottom);
+		return;
+	}
+	if (IsOnCorner({ frame.left + frame.width - DEFAULT_SELECTION_CORNER_SIZE, frame.top + frame.height - DEFAULT_SELECTION_CORNER_SIZE }, point))
+	{
+		auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
+		useCase->Resize(offset, BasePoint::LeftTop);
+		return;
+	}
+	if (IsOnCorner({ frame.left, frame.top + frame.height - DEFAULT_SELECTION_CORNER_SIZE }, point))
+	{
+		auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
+		useCase->Resize(offset, BasePoint::RightTop);
+		return;
+	}
+	// TODO: не создавать при каждом вызове, а обращаться к мемберу класса, у которого затем вызывать нужный метод?
 	auto useCase = m_shapeSelectionModel.CreateMoveShapeUseCase();
 	useCase->Move(offset);
 }
@@ -56,4 +96,10 @@ void ShapeViewPresenter::OnMouseUp(const Point& offset)
 {
 	auto useCase = m_shapeSelectionModel.CreateMoveShapeUseCase();
 	useCase->Commit();
+}
+
+bool ShapeViewPresenter::IsOnCorner(const Point& leftTop, const Point& point)
+{
+	return (leftTop.x <= point.x && point.x <= leftTop.x + DEFAULT_SELECTION_CORNER_SIZE &&
+		leftTop.y <= point.y && point.y <= leftTop.y + DEFAULT_SELECTION_CORNER_SIZE);
 }

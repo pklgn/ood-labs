@@ -9,13 +9,16 @@ ShapeAppModel::ShapeAppModel(std::shared_ptr<Shape> shape)
 		m_frame = frame;
 		m_frameChanged(frame);
 	});
-	auto id = boost::uuids::random_generator_mt19937()();
-	m_id = boost::uuids::to_string(id);
 }
 
 ShapeAppModel::Id ShapeAppModel::GetId() const
 {
-	return m_id;
+	return m_shape->GetId();
+}
+
+ShapeType ShapeAppModel::GetType() const
+{
+	return m_shape->GetType();
 }
 
 std::shared_ptr<Shape> ShapeAppModel::GetShape() const

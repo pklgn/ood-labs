@@ -28,7 +28,7 @@ void SFMLCanvas::DrawLine(const Point& from, const Point& to)
 
 	sf::RectangleShape line(sf::Vector2f((float)std::abs(width), (float)m_lineThickness));
 	line.setPosition((float)from.x, (float)from.y);
-	line.setOutlineColor(m_fillColor);
+	line.setFillColor(m_fillColor);
 
 	auto angleDeg = (float)(angle * 180 / M_PI);
 	if (angle <= M_PI_2)

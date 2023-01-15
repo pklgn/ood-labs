@@ -9,8 +9,9 @@
 class ShapeView : public IView
 {
 public:
-	ShapeView(const RectD&, ShapeType, uint32_t lineColor, uint32_t fillColor);
-
+	using Id = std::string;
+	ShapeView(const Id&, const RectD&, ShapeType, uint32_t lineColor = 0xFF0000FF, uint32_t fillColor = 0x0011FFFF);
+	Id GetId() const;
 	void SetFrame(const RectD&);
 	RectD GetFrame() const;
 	uint32_t GetLineColor() const;
@@ -25,6 +26,7 @@ private:
 	void ShowTriangle(ICanvas&);
 	void ShowEllipse(ICanvas&);
 
+	Id m_id;
 	RectD m_frame;
 	ShapeType m_type;
 	uint32_t m_lineColor;

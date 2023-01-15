@@ -9,15 +9,18 @@
 class PictureDraftView : public IView
 {
 public:
+	PictureDraftView(PictureDraftAppModel&, ShapeSelectionModel&);
+	
 	void InsertSelectionFrame(ShapeAppModel&);
 	void DeleteSelectionFrame();
 	void Show(ICanvas&) override;
-	void SetListener(IPictureDraftViewListener&);
+	void SetListener(const std::shared_ptr<IPictureDraftViewListener>&);
+	void AppendShapeView(std::unique_ptr<ShapeView>&&);
 
 private:
-	std::vector<ShapeView> m_shapesView;
-	std::vector<SelectionFrameView> m_selectionFrameViews;
+	std::vector<std::unique_ptr<ShapeView>> m_shapesView;
+	std::vector<SelectionFrameView> m_selectionFramesView;
 	PictureDraftAppModel& m_pictureDraftAppModel;
 	ShapeSelectionModel& m_shapeSelectionModel;
-	IPictureDraftViewListener& m_listener;
+	std::shared_ptr<IPictureDraftViewListener> m_listener;
 };
