@@ -22,9 +22,11 @@ void PictureDraft::InsertShape(std::shared_ptr<Shape> shape, size_t index)
 	if (size == index)
 	{
 		m_shapes.push_back(shape);
-		return;
 	}
-	m_shapes.insert(m_shapes.begin() + index, shape);
+	else
+	{
+		m_shapes.insert(m_shapes.begin() + index, shape);
+	}
 	m_shapeAdded(index);
 }
 
