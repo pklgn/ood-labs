@@ -18,7 +18,7 @@ void ConsoleCanvas::DrawLine(const Point& from, const Point& to)
 			 << to << '\n';
 }
 
-void ConsoleCanvas::DrawClosedPolyLine(std::vector<Point>& points)
+void ConsoleCanvas::DrawClosedPolyLine(const std::vector<Point>& points)
 {
 	//FIXED: implement
 	m_output << "DrawClosedPolyLine\n";
@@ -45,7 +45,7 @@ void ConsoleCanvas::FillEllipse(const Point& leftTop, double width, double heigh
 			  << "\tcolor: " << std::hex << m_fillColor << "\n";
 }
 
-void ConsoleCanvas::FillPolygon(std::vector<Point>& points)
+void ConsoleCanvas::FillPolygon(const std::vector<Point>& points)
 {
 	m_output << "FillPolygon\n";
 	for (auto& point: points)

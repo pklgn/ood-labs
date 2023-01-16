@@ -60,30 +60,26 @@ void ShapeViewPresenter::OnMouseDown(const Point& point)
 	{
 		m_shapeSelectionModel.SetSelectedShapes({ m_shapeAppModel });
 	}
-	
 }
 
 void ShapeViewPresenter::OnDrag(const Point& offset, const Point& point)
 {
 	auto frame = m_shapeAppModel->GetFrame();
+	auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
 	if (IsOnCorner({ frame.left, frame.top }, point))
 	{
-		auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
 		useCase->Resize(offset, BasePoint::RightBottom);
 	}
 	else if (IsOnCorner({ frame.left + frame.width - DEFAULT_SELECTION_CORNER_SIZE, frame.top }, point))
 	{
-		auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
 		useCase->Resize(offset, BasePoint::LeftBottom);
 	}
 	else if (IsOnCorner({ frame.left + frame.width - DEFAULT_SELECTION_CORNER_SIZE, frame.top + frame.height - DEFAULT_SELECTION_CORNER_SIZE }, point))
 	{
-		auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
 		useCase->Resize(offset, BasePoint::LeftTop);
 	}
 	else if (IsOnCorner({ frame.left, frame.top + frame.height - DEFAULT_SELECTION_CORNER_SIZE }, point))
 	{
-		auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
 		useCase->Resize(offset, BasePoint::RightTop);
 	}
 	else

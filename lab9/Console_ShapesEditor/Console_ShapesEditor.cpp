@@ -48,7 +48,7 @@ int main()
 	
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 700), "ShapesEditor");
+	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 700), "ShapesEditor", sf::Style::Default, settings);
 	auto sfmlCanvas = SFMLCanvas(renderWindow);
 
 	// run the program as long as the window is open
@@ -110,7 +110,7 @@ int main()
 		}
 
 		// clear the window with black color
-		renderWindow.clear(sf::Color::Black);
+		renderWindow.clear(sf::Color::White);
 
 		// window.draw(...);
 		if (isDragging)

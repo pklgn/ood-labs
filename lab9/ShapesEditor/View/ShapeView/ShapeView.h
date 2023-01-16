@@ -10,7 +10,7 @@ class ShapeView : public IView
 {
 public:
 	using Id = std::string;
-	ShapeView(const Id&, const RectD&, ShapeType, uint32_t lineColor = 0xFF0000FF, uint32_t fillColor = 0x0011FFFF);
+	ShapeView(const Id&, const RectD&, ShapeType, uint32_t lineColor = 0x2F528FFF, uint32_t fillColor = 0x4472C4FF);
 	Id GetId() const;
 	void SetFrame(const RectD&);
 	RectD GetFrame() const;

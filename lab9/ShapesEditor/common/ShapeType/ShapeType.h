@@ -18,6 +18,6 @@ inline std::string ShapeTypeToString(ShapeType type)
 	case ShapeType::Ellipse:
 		return "Ellipse";
 	default:
-		break;
+		throw std::invalid_argument("Unknown shape type");
 	}
 }

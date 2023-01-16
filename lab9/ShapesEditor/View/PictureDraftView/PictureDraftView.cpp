@@ -18,6 +18,7 @@ PictureDraftView::PictureDraftView(PictureDraftAppModel& pictureDraft, ShapeSele
 
 void PictureDraftView::Show(ICanvas& canvas)
 {
+	canvas.SetFillColor(0xFFFFFFFF);
 	for (auto&& shape : m_shapesView)
 	{
 		shape->Show(canvas);

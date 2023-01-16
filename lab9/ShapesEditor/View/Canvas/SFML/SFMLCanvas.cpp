@@ -6,11 +6,10 @@
 const size_t CIRCLE_SHAPE_POINT_COUNT = 90;
 const size_t POLYLINE_SEGMENT_VERTICES_COUNT = 5;
 const unsigned int DEFAULT_CANVAS_LINE_THICKNESS = 1;
+const uint32_t BACKGROUND_COLOR = 0xFFFFFFFF;
 
 SFMLCanvas::SFMLCanvas(sf::RenderTarget& target)
 	: m_renderTarget(target)
-	, m_lineColor(sf::Color::White)
-	, m_fillColor(sf::Color::Black)
 	, m_lineThickness(DEFAULT_CANVAS_LINE_THICKNESS)
 {
 }
@@ -41,7 +40,7 @@ void SFMLCanvas::DrawLine(const Point& from, const Point& to)
 	m_renderTarget.draw(line);
 }
 
-void SFMLCanvas::DrawClosedPolyLine(std::vector<Point>& points)
+void SFMLCanvas::DrawClosedPolyLine(const std::vector<Point>& points)
 {
 	auto pointCount = points.size();
 
@@ -131,7 +130,7 @@ void SFMLCanvas::FillEllipse(const Point& leftTop, double width, double height)
 	m_renderTarget.draw(ellipse);
 }
 
-void SFMLCanvas::FillPolygon(std::vector<Point>& points)
+void SFMLCanvas::FillPolygon(const std::vector<Point>& points)
 {
 	sf::ConvexShape convex;
 

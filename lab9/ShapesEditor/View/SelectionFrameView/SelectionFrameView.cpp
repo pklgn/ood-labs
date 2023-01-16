@@ -1,8 +1,8 @@
 ﻿#include "../../pch.h"
 #include "SelectionFrameView.h"
 
-const uint32_t DEFAULT_SELECTION_COLOR = 0x00FF00FF;
-const unsigned int DEFAULT_SELECTION_THICKNESS = 2;
+const uint32_t DEFAULT_SELECTION_COLOR = 0x000000FF;
+const unsigned int DEFAULT_SELECTION_THICKNESS = 1;
 const size_t DEFAULT_SELECTION_CORNER_SIZE = 10;
 
 SelectionFrameView::SelectionFrameView(ShapeAppModel& shape)
