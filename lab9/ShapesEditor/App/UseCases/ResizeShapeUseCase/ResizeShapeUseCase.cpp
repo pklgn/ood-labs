@@ -6,15 +6,16 @@
 const double MIN_WIDTH = 30;
 const double MIN_HEIGHT = 30;
 
-ResizeShapeUseCase::ResizeShapeUseCase(const std::vector<std::shared_ptr<ShapeAppModel>>& shapes, std::shared_ptr<IHistory> history)
-	: m_shapesToResize(shapes)
+ResizeShapeUseCase::ResizeShapeUseCase(ShapeSelectionModel& selectionModel, const std::shared_ptr<IHistory>& history)
+	: m_selectionModel(selectionModel)
 	, m_history(history)
 {
 }
 
 void ResizeShapeUseCase::Resize(const Point& offset, BasePoint basePoint)
 {
-	for (auto&& shape : m_shapesToResize)
+	auto shapesToResize = m_selectionModel.GetSelectedShapes();
+	for (auto&& shape : shapesToResize)
 	{
 		ResizeShape(shape, offset, basePoint);
 	}
@@ -23,11 +24,11 @@ void ResizeShapeUseCase::Resize(const Point& offset, BasePoint basePoint)
 void ResizeShapeUseCase::Commit()
 {
 	auto resizeShapesMacro = std::make_unique<MacroCommand>();
-	for (auto&& shape : m_shapesToResize)
+	auto shapesToResize = m_selectionModel.GetSelectedShapes();
+	for (auto&& shape : shapesToResize)
 	{
-		auto domainShape = shape->GetShape();
-		auto frame = shape->GetFrame();
-		resizeShapesMacro->AddCommand(std::make_unique<ChangeFrameCommand>(frame, domainShape));
+		// FIXED: добавить передачу апп фигуры и selection модели
+		resizeShapesMacro->AddCommand(std::make_unique<ChangeFrameCommand>(shape, m_selectionModel));
 	}
 	m_history->AddAndExecuteCommand(std::move(resizeShapesMacro));
 }

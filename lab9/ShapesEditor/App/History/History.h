@@ -6,7 +6,7 @@
 class History : public IHistory
 {
 public:
-	const size_t COMMANDS_DEPTH_LEVEL = 10;
+	const size_t COMMANDS_DEPTH_LEVEL = 5;
 
 	bool CanUndo() const override;
 	bool CanRedo() const override;

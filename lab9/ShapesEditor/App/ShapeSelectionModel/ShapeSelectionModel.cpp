@@ -25,12 +25,12 @@ connection ShapeSelectionModel::DoOnSelectionChanged(const std::function<void(co
 
 std::unique_ptr<MoveShapeUseCase> ShapeSelectionModel::CreateMoveShapeUseCase()
 {
-	return std::make_unique<MoveShapeUseCase>(m_selectedShapes, m_history);
+	return std::make_unique<MoveShapeUseCase>(*this, m_history);
 }
 
 std::unique_ptr<ResizeShapeUseCase> ShapeSelectionModel::CreateResizeShapeUseCase()
 {
-	return std::make_unique<ResizeShapeUseCase>(m_selectedShapes, m_history);
+	return std::make_unique<ResizeShapeUseCase>(*this, m_history);
 }
 
 std::unique_ptr<DeleteShapeUseCase> ShapeSelectionModel::CreateDeleteShapeUseCase(PictureDraftAppModel& pictureDraft)

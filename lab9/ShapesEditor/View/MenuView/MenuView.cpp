@@ -60,8 +60,9 @@ void MenuView::Show(ICanvas& canvas)
 	auto height = (double)m_height;
 
 	ShowButton(canvas, { 0 + DEFAULT_BUTTON_THICKNESS, m_offsetY, width, height });
-	ShowButton(canvas, { 0 + width * 1 / 5, m_offsetY, width * 1 / 5, height });
-	ShowButton(canvas, { 0 + width * 2 / 5, m_offsetY, width * 1 / 5, height });
-	ShowButton(canvas, { 0 + width * 3 / 5, m_offsetY, width * 1 / 5, height });
-	ShowButton(canvas, { 0 + width * 4 / 5, m_offsetY, width * 1 / 5 - DEFAULT_BUTTON_THICKNESS, height });
+	ShowButton(canvas, { 0 + width * 1 / 6, m_offsetY, width * 1 / 6, height });
+	ShowButton(canvas, { 0 + width * 2 / 6, m_offsetY, width * 1 / 6, height });
+	ShowButton(canvas, { 0 + width * 3 / 6, m_offsetY, width * 1 / 6, height });
+	ShowButton(canvas, { 0 + width * 4 / 6, m_offsetY, width * 1 / 6, height });
+	ShowButton(canvas, { 0 + width * 5 / 6, m_offsetY, width * 1 / 6 - DEFAULT_BUTTON_THICKNESS, height });
 }

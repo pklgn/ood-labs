@@ -13,7 +13,6 @@ std::shared_ptr<Shape> PictureDraft::GetShape(size_t index)
 
 void PictureDraft::InsertShape(std::shared_ptr<Shape> shape, size_t index)
 {
-	// TODO: сделать вставку в конец по умолчанию
 	auto size = m_shapes.size();
 	if (size < index)
 	{

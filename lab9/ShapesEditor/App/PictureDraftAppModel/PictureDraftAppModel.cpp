@@ -9,13 +9,16 @@ PictureDraftAppModel::PictureDraftAppModel(std::shared_ptr<PictureDraft> picture
 		auto shapeAppModel = std::make_shared<ShapeAppModel>(m_pictureDraft->GetShape(index));
 		m_shapesAppModel.insert(m_shapesAppModel.begin() + index, shapeAppModel);
 		m_shapeAdded(index);
+
+		std::cout << "Shape " << ShapeTypeToString(shapeAppModel->GetType()) << " was added\n";
 	});
 
-	// TODO: а нужен ли здесь в качестве второго параметра shape?
 	m_pictureDraft->DoOnShapeDeleted([&, this](size_t index, std::shared_ptr<Shape> shape) {
 		auto shapeAppModel = m_shapesAppModel.at(index);
 		m_shapesAppModel.erase(m_shapesAppModel.begin() + index);
 		m_shapeDeleted(index, shapeAppModel);
+
+		std::cout << "Shape " << ShapeTypeToString(shapeAppModel->GetType()) << " was deleted\n";
 	});
 
 	auto shapeSize = m_pictureDraft->GetShapeCount();

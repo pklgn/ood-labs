@@ -3,15 +3,16 @@
 #include "../Commands/ChangeFrameCommand/ChangeFrameCommand.h"
 #include "MoveShapeUseCase.h"
 
-MoveShapeUseCase::MoveShapeUseCase(const std::vector<std::shared_ptr<ShapeAppModel>>& shapes, std::shared_ptr<IHistory> history)
-	: m_shapesToMove(shapes)
+MoveShapeUseCase::MoveShapeUseCase(ShapeSelectionModel& selectionModel, const std::shared_ptr<IHistory>& history)
+	: m_selectionModel(selectionModel)
 	, m_history(history)
 {
 }
 
 void MoveShapeUseCase::Move(const Point& offset)
 {
-	for (auto&& shape : m_shapesToMove)
+	auto shapesToMove = m_selectionModel.GetSelectedShapes();
+	for (auto&& shape : shapesToMove)
 	{
 		auto frame = shape->GetFrame();
 		frame.left += offset.x;
@@ -26,12 +27,11 @@ void MoveShapeUseCase::Move(const Point& offset)
 void MoveShapeUseCase::Commit()
 {
 	auto moveShapesMacro = std::make_unique<MacroCommand>();
-	for (auto&& shape : m_shapesToMove)
+	auto shapesToMove = m_selectionModel.GetSelectedShapes();
+	for (auto&& shape : shapesToMove)
 	{
-		auto domainShape = shape->GetShape();
-		auto frame = shape->GetFrame();
 		// FIXED: создать команду по перемещению
-		moveShapesMacro->AddCommand(std::make_unique<ChangeFrameCommand>(frame, domainShape));
+		moveShapesMacro->AddCommand(std::make_unique<ChangeFrameCommand>(shape, m_selectionModel));
 	}
 	m_history->AddAndExecuteCommand(std::move(moveShapesMacro));
 }

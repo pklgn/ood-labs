@@ -10,6 +10,7 @@ ShapeViewPresenter::ShapeViewPresenter(const std::shared_ptr<ShapeAppModel>& mod
 {
 	m_shapeAppModel->DoOnFrameChanged([&, this](const RectD& frame) {
 		m_shapeView.SetFrame(frame);
+		//m_shapeSelectionModel.SetSelectedShapes({ model });
 	});
 }
 

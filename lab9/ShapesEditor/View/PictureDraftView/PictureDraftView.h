@@ -12,7 +12,9 @@ public:
 	PictureDraftView(PictureDraftAppModel&, ShapeSelectionModel&, size_t width, size_t height);
 	
 	void Show(ICanvas&) override;
-	void AppendShapeView(std::unique_ptr<ShapeView>&&);
+
+	void InsertShapeView(size_t, std::unique_ptr<ShapeView>&&);
+	void DeleteShapeView(size_t);
 	size_t GetWidth() const;
 	size_t GetHeight() const;
 

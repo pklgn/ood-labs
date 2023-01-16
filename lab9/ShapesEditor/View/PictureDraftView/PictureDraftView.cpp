@@ -18,7 +18,6 @@ PictureDraftView::PictureDraftView(PictureDraftAppModel& pictureDraft, ShapeSele
 
 void PictureDraftView::Show(ICanvas& canvas)
 {
-	canvas.SetFillColor(0xFFFFFFFF);
 	for (auto&& shape : m_shapesView)
 	{
 		shape->Show(canvas);
@@ -31,9 +30,14 @@ void PictureDraftView::Show(ICanvas& canvas)
 	}
 }
 
-void PictureDraftView::AppendShapeView(std::unique_ptr<ShapeView>&& shapeView)
+void PictureDraftView::InsertShapeView(size_t index, std::unique_ptr<ShapeView>&& shapeView)
 {
-	m_shapesView.push_back(std::move(shapeView));
+	m_shapesView.insert(m_shapesView.begin() + index, std::move(shapeView));
+}
+
+void PictureDraftView::DeleteShapeView(size_t index)
+{
+	m_shapesView.erase(m_shapesView.begin() + index);
 }
 
 size_t PictureDraftView::GetWidth() const
