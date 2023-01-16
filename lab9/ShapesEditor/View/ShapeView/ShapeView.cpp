@@ -42,11 +42,6 @@ ShapeType ShapeView::GetShapeType() const
 	return m_type;
 }
 
-void ShapeView::SetListener(std::shared_ptr<IShapeViewListener> listener)
-{
-	m_listener = listener;
-}
-
 void ShapeView::Show(ICanvas& canvas)
 {
 	switch (m_type)

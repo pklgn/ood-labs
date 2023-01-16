@@ -8,6 +8,12 @@ ShapeAppModel::ShapeAppModel(std::shared_ptr<Shape> shape)
 	m_shape->DoOnFrameChanged([&, this](const RectD& frame) {
 		m_frame = frame;
 		m_frameChanged(frame);
+		std::cout << "Domain model of the " << ShapeTypeToString(m_shape->GetType()) << " changed\n"
+				  << "New frame is:\n"
+				  << "  left  : " << frame.left << '\n'
+				  << "  top   : " << frame.top << '\n'
+				  << "  width : " << frame.width << '\n'
+				  << "  height: " << frame.height << '\n';
 	});
 }
 
@@ -49,6 +55,5 @@ std::shared_ptr<IFillStyle> ShapeAppModel::GetFillStyle() const
 
 connection ShapeAppModel::DoOnFrameChanged(const std::function<void(const RectD&)>& handler)
 {
-	std::cout << "connect\n";
 	return m_frameChanged.connect(handler);
 }

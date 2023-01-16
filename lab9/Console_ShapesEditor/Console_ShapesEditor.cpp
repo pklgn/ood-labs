@@ -5,15 +5,17 @@
 #include <iostream>
 #include <memory>
 #include <SFML/Graphics.hpp>
+#include "../ShapesEditor/App/History/History.h"
+#include "../ShapesEditor/App/PictureDraftAppModel/PictureDraftAppModel.h"
 #include "../ShapesEditor/Model/PictureDraft/PictureDraft.h"
 #include "../ShapesEditor/Model/Shape/Shape.h"
 #include "../ShapesEditor/Model/Style/FillStyle/FillStyle.h"
 #include "../ShapesEditor/Model/Style/LineStyle/LineStyle.h"
-#include "../ShapesEditor/App/History/History.h"
-#include "../ShapesEditor/App/PictureDraftAppModel/PictureDraftAppModel.h"
+#include "../ShapesEditor/View/Canvas/SFML/SFMLCanvas.h"
+#include "../ShapesEditor/View/MenuView/MenuView.h"
+#include "../ShapesEditor/View/MenuView/MenuViewPresenter/MenuViewPresenter.h"
 #include "../ShapesEditor/View/PictureDraftView/PictureDraftView.h"
 #include "../ShapesEditor/View/PictureDraftView/PictureDraftViewPresenter/PictureDraftViewPresenter.h"
-#include "../ShapesEditor/View/Canvas/SFML/SFMLCanvas.h"
 
 std::shared_ptr<Shape> BuildRocketShape()
 {
@@ -27,22 +29,27 @@ std::shared_ptr<Shape> BuildRocketShape()
 
 int main()
 {
-    std::cout << "Hello World!\n";
 	auto pictureDraft = std::make_shared<PictureDraft>();
 	pictureDraft->InsertShape(BuildRocketShape(), 0);
+	RectD frame = { -10,
+		150,
+		300,
+		200 };
+	pictureDraft->InsertShape(std::make_shared<Shape>(ShapeType::Triangle, frame), 1);
 	auto history = std::make_shared<History>();
 
 	PictureDraftAppModel pictureDraftAppModel(pictureDraft, history);
-	ShapeSelectionModel shapeSelectionModel;
-	PictureDraftView pictureDraftView(pictureDraftAppModel, shapeSelectionModel);
-	auto pictureDraftViewPresenter = std::make_shared<PictureDraftViewPresenter>(shapeSelectionModel, pictureDraftView, pictureDraftAppModel);
-	//pictureDraftView.SetListener(pictureDraftViewPresenter);
-
-	//sf::ContextSettings settings;
-	//settings.antialiasingLevel = 8;
-	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 600), "ShapesEditor");
+	ShapeSelectionModel shapeSelectionModel(history);
+	PictureDraftView pictureDraftView(pictureDraftAppModel, shapeSelectionModel, 800, 600);
+	auto pictureDraftViewPresenter = std::make_shared<PictureDraftViewPresenter>(shapeSelectionModel, pictureDraftView, pictureDraftAppModel, *history);
+	size_t menuHeight = 100;
+	MenuView menuView(800, menuHeight, 600);
+	MenuViewPresenter menuViewPresenter(menuView, *pictureDraftViewPresenter);
+	
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 8;
+	auto renderWindow = sf::RenderWindow(sf::VideoMode(800, 700), "ShapesEditor");
 	auto sfmlCanvas = SFMLCanvas(renderWindow);
-	//renderWindow.setFramerateLimit(30);
 
 	// run the program as long as the window is open
 	bool isDragging = false;
@@ -58,12 +65,11 @@ int main()
 			// "close requested" event: we close the window
 			if (event.type == sf::Event::Closed)
 			{
-				sfmlCanvas.Capture("ROCKETS.JPG");
 				renderWindow.close();
 			}
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
-				Point point = { event.mouseButton.x, event.mouseButton.y };
+				Point point = { (double)event.mouseButton.x, (double)event.mouseButton.y };
 				if (!isDragging)
 				{
 					clickPoint = point;
@@ -71,16 +77,18 @@ int main()
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
 					pictureDraftViewPresenter->OnMouseDown(point);
+
+					if (600 < point.y && point.y <= 700 )
+					{
+						point.y -= 600;
+						menuViewPresenter.OnMouseDown(point);
+					}
 				}
 			}
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && clock.getElapsedTime().asMilliseconds() >= 100)
 			{
 				auto point = sf::Mouse::getPosition(renderWindow);
 				Point offset = { point.x - clickPoint.x, point.y - clickPoint.y };
-				//std::cout << "==========================" << clock.getElapsedTime().asMilliseconds() << "\n";
-				//std::cout << "offset    " << offset << std::endl;
-				//std::cout << "clickPoint" << clickPoint << std::endl;
-				//std::cout << "point     " << point.x << " " << point.y << std::endl;
 				isDragging = true;
 			}
 			else
@@ -89,9 +97,16 @@ int main()
 			}
 			if (event.type == sf::Event::MouseButtonReleased)
 			{
+				Point point = { (double)event.mouseButton.x, (double)event.mouseButton.y };
+				pictureDraftViewPresenter->OnMouseUp(point);
 				isDragging = false;
 			}
-
+			if (isDragging && event.type == sf::Event::MouseLeft)
+			{
+				Point point = { (double)event.mouseButton.x, (double)event.mouseButton.y };
+				pictureDraftViewPresenter->OnMouseUp(point);
+				pictureDraftViewPresenter->OnMouseDown({ -1, -1 });
+			}
 		}
 
 		// clear the window with black color
@@ -107,6 +122,7 @@ int main()
 			clickPoint.y += offset.y;
 		}
 		pictureDraftView.Show(sfmlCanvas);
+		menuView.Show(sfmlCanvas);
 
 		// end the current frame
 		renderWindow.display();

@@ -15,10 +15,15 @@ public:
 	void OnDrag(const Point& offset, const Point& point) override;
 	void OnMouseUp(const Point&) override;
 
+	void SetRespectFrameBorders(size_t width, size_t height);
+
 private:
 	bool IsOnCorner(const Point& leftTop, const Point& point);
+	void RespectFrameBorders(const std::shared_ptr<ShapeAppModel>&);
 
 	std::shared_ptr<ShapeAppModel> m_shapeAppModel;
 	ShapeSelectionModel& m_shapeSelectionModel;
 	ShapeView& m_shapeView;
+	size_t m_respectFrameWidth = SIZE_MAX;
+	size_t m_respectFrameHeight = SIZE_MAX;
 };

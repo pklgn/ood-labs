@@ -16,10 +16,9 @@ void MoveShapeUseCase::Move(const Point& offset)
 		auto frame = shape->GetFrame();
 		frame.left += offset.x;
 		frame.top += offset.y;
-		std::cout << "================================Model frame  " << frame.left << " " << frame.top << std::endl;
 		if (offset.x != 0 || offset.y != 0)
 		{
-			(*shape).SetFrame(frame);
+			shape->SetFrame(frame);
 		}
 	}
 }

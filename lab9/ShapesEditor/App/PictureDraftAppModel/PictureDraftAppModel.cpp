@@ -6,8 +6,8 @@ PictureDraftAppModel::PictureDraftAppModel(std::shared_ptr<PictureDraft> picture
 	, m_history(history)
 {
 	m_pictureDraft->DoOnShapeAdded([&, this](size_t index) {
-		auto shapeAppModel = std::make_shared<ShapeAppModel>(pictureDraft->GetShape(index));
-		m_shapesAppModel.push_back(shapeAppModel);
+		auto shapeAppModel = std::make_shared<ShapeAppModel>(m_pictureDraft->GetShape(index));
+		m_shapesAppModel.insert(m_shapesAppModel.begin() + index, shapeAppModel);
 		m_shapeAdded(index);
 	});
 

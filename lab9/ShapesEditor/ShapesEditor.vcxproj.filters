@@ -135,6 +135,15 @@
     <ClInclude Include="View\Canvas\SFML\SFMLMath\Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="View\MenuView\MenuView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="View\MenuView\MenuViewPresenter\MenuViewPresenter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="View\MenuView\IMenuViewListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -213,6 +222,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="View\Canvas\SFML\SFMLMath\Math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View\MenuView\MenuView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="View\MenuView\MenuViewPresenter\MenuViewPresenter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

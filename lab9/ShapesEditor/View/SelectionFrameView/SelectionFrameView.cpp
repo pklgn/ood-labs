@@ -7,25 +7,7 @@ const size_t DEFAULT_SELECTION_CORNER_SIZE = 10;
 
 SelectionFrameView::SelectionFrameView(ShapeAppModel& shape)
 	: m_shapeAppModel(shape)
-	, m_frame(shape.GetFrame())
-	, m_id(shape.GetId())
 {
-	// TODO: выпилить к чертям этот m_frame;
-	std::cout << "=====================================================Create new selection\n";
-	m_shapeAppModel.DoOnFrameChanged([=, *this](const RectD& frame) mutable {
-		m_frame = m_shapeAppModel.GetFrame();
-		std::cout << "m_frame " << m_frame.left << " " << m_frame.top << " " << m_frame.width << " " << m_frame.height << std::endl;
-	});
-}
-
-SelectionFrameView::Id SelectionFrameView::GetId() const
-{
-	return m_id;
-}
-
-void SelectionFrameView::SetFrame(const RectD& frame)
-{
-	m_frame = frame;
 }
 
 void SelectionFrameView::Show(ICanvas& canvas)
@@ -36,9 +18,6 @@ void SelectionFrameView::Show(ICanvas& canvas)
 	Point rightBottom = { frame.left + frame.width, frame.top + frame.height };
 	Point rightTop = { rightBottom.x, frame.top };
 	Point leftBottom = { frame.left, rightBottom.y };
-
-	std::cout << "leftTop " << leftTop << std::endl;
-	std::cout << "SelectionView " << std::addressof(*this) << std::endl;
 
 	canvas.SetFillColor(DEFAULT_SELECTION_COLOR);
 

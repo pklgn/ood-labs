@@ -9,6 +9,7 @@
 class ShapeSelectionModel
 {
 public:
+	ShapeSelectionModel(const std::shared_ptr<IHistory>&);
 	std::vector<std::shared_ptr<ShapeAppModel>> GetSelectedShapes() const;
 	void SetSelectedShapes(const std::vector<std::shared_ptr<ShapeAppModel>>&);
 
@@ -17,7 +18,7 @@ public:
 	// FIXED: сначала реализовать use case'ы
 	std::unique_ptr<MoveShapeUseCase> CreateMoveShapeUseCase();
 	std::unique_ptr<ResizeShapeUseCase> CreateResizeShapeUseCase();
-	std::unique_ptr<DeleteShapeUseCase> CreateDeleteShapeUseCase(const std::shared_ptr<PictureDraftAppModel>&);
+	std::unique_ptr<DeleteShapeUseCase> CreateDeleteShapeUseCase(PictureDraftAppModel&);
 
 private:
 	std::vector<std::shared_ptr<ShapeAppModel>> m_selectedShapes;

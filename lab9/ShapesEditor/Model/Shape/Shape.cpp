@@ -32,6 +32,7 @@ RectD Shape::GetFrame() const
 void Shape::SetFrame(const RectD& frame)
 {
 	m_frame = frame;
+	m_frameChanged(frame);
 }
 
 std::shared_ptr<ILineStyle> Shape::GetLineStyle()

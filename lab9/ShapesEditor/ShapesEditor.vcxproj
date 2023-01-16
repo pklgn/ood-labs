@@ -174,6 +174,9 @@
     <ClInclude Include="View\Canvas\SFML\SFMLCanvas.h" />
     <ClInclude Include="View\Canvas\SFML\SFMLMath\Math.h" />
     <ClInclude Include="View\IView.h" />
+    <ClInclude Include="View\MenuView\IMenuViewListener.h" />
+    <ClInclude Include="View\MenuView\MenuView.h" />
+    <ClInclude Include="View\MenuView\MenuViewPresenter\MenuViewPresenter.h" />
     <ClInclude Include="View\PictureDraftView\IPictureDraftViewListener.h" />
     <ClInclude Include="View\PictureDraftView\PictureDraftView.h" />
     <ClInclude Include="View\PictureDraftView\PictureDraftViewPresenter\PictureDraftViewPresenter.h" />
@@ -267,6 +270,12 @@
     </ClCompile>
     <ClCompile Include="View\Canvas\SFML\SFMLMath\Math.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="View\MenuView\MenuView.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="View\MenuView\MenuViewPresenter\MenuViewPresenter.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="View\PictureDraftView\PictureDraftView.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>

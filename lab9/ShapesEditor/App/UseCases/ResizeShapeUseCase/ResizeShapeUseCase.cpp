@@ -67,7 +67,7 @@ void ResizeShapeUseCase::ResizeShape(std::shared_ptr<ShapeAppModel> shape, const
 		frame.height = std::max(MIN_HEIGHT, newHeight);
 
 		frame.left += offset.x;
-		frame.height += offset.y;
+		frame.top += offset.y;
 		shape->SetFrame(frame);
 		return;
 	case BasePoint::LeftBottom:

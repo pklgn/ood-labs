@@ -25,12 +25,14 @@ void PictureDraft::InsertShape(std::shared_ptr<Shape> shape, size_t index)
 		return;
 	}
 	m_shapes.insert(m_shapes.begin() + index, shape);
+	m_shapeAdded(index);
 }
 
 std::shared_ptr<Shape> PictureDraft::DeleteShape(size_t index)
 {
 	auto shapeToDelete = m_shapes.at(index);
 	m_shapes.erase(m_shapes.begin() + index);
+	m_shapeDeleted(index, shapeToDelete);
 	return shapeToDelete;
 }
 

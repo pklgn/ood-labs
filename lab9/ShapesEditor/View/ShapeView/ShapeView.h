@@ -17,7 +17,6 @@ public:
 	uint32_t GetLineColor() const;
 	uint32_t GetFillColor() const;
 	ShapeType GetShapeType() const;
-	void SetListener(std::shared_ptr<IShapeViewListener>);
 	
 	void Show(ICanvas&) override;
 
@@ -31,5 +30,4 @@ private:
 	ShapeType m_type;
 	uint32_t m_lineColor;
 	uint32_t m_fillColor;
-	std::shared_ptr<IShapeViewListener> m_listener;
 };
