@@ -16,4 +16,5 @@ public:
 	virtual void SetFillColor(uint32_t) = 0;
 	virtual void SetLineColor(uint32_t) = 0;
 	virtual void SetLineThickness(unsigned int) = 0;
+	virtual void DrawText(const std::string&, const Point& position) = 0;
 };

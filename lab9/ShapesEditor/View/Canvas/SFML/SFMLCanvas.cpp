@@ -163,6 +163,23 @@ void SFMLCanvas::SetLineThickness(unsigned int thickness)
 	m_lineThickness = thickness;
 }
 
+void SFMLCanvas::DrawText(const std::string& string, const Point& position)
+{
+	sf::Font font;
+	if (!font.loadFromFile("Fonts/Roboto-Regular.ttf"))
+	{
+		throw std::invalid_argument("Unable to load specified font");
+	}
+	sf::Text text;
+	text.setFont(font);
+	text.setString(string);
+	text.setCharacterSize(18);
+	text.setFillColor(sf::Color::Black);
+	text.setPosition(position.x, position.y);
+
+	m_renderTarget.draw(text);
+}
+
 void SFMLCanvas::Capture(const std::string& outputFileName) const
 {
 	sf::Vector2u renderSize = m_renderTarget.getSize();

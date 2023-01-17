@@ -21,6 +21,7 @@ public:
 
 private:
 	void SetupShapeView(size_t index);
+	void CleanUpShapeView(size_t index, const std::shared_ptr<ShapeAppModel>& shape);
 
 	ShapeSelectionModel& m_shapeSelectionModel;
 	PictureDraftView& m_pictureDraftView;

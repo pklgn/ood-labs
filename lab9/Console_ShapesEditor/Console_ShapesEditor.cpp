@@ -27,16 +27,16 @@ int main()
 
 	// Edit window
 	Point pictureDraftSize = { 800, 600 };
-	PictureDraftView pictureDraftView(pictureDraftAppModel, shapeSelectionModel, pictureDraftSize.x, pictureDraftSize.y);
+	PictureDraftView pictureDraftView(pictureDraftAppModel, shapeSelectionModel, (size_t)pictureDraftSize.x, (size_t)pictureDraftSize.y);
 	auto pictureDraftViewPresenter = std::make_shared<PictureDraftViewPresenter>(shapeSelectionModel, pictureDraftView, pictureDraftAppModel, *history);
 
 	Point menuSize = { 800, 100 };
-	MenuView menuView(menuSize.x, menuSize.y, pictureDraftSize.y);
+	MenuView menuView((size_t)menuSize.x, (size_t)menuSize.y, (size_t)pictureDraftSize.y);
 	MenuViewPresenter menuViewPresenter(menuView, *pictureDraftViewPresenter);
 	
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-	auto renderWindow = sf::RenderWindow(sf::VideoMode(pictureDraftSize.x, pictureDraftSize.y + menuSize.y), "ShapesEditor", sf::Style::Default, settings);
+	auto renderWindow = sf::RenderWindow(sf::VideoMode((unsigned int)pictureDraftSize.x, (unsigned int)(pictureDraftSize.y + menuSize.y)), "ShapesEditor", sf::Style::Default, settings);
 	auto sfmlCanvas = SFMLCanvas(renderWindow);
 
 	// run the program as long as the window is open
@@ -94,6 +94,13 @@ int main()
 				Point point = { (double)event.mouseButton.x, (double)event.mouseButton.y };
 				pictureDraftViewPresenter->OnMouseUp(point);
 				pictureDraftViewPresenter->OnMouseDown({ -1, -1 });
+			}
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Delete)
+				{
+					pictureDraftViewPresenter->DeleteShape();
+				}
 			}
 		}
 		if (isDragging)

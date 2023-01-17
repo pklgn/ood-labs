@@ -18,12 +18,7 @@ PictureDraftViewPresenter::PictureDraftViewPresenter(ShapeSelectionModel& select
 	});
 
 	m_pictureDraftAppModel.DoOnShapeDeleted([this](size_t index, std::shared_ptr<ShapeAppModel> shape) {
-		auto id = shape->GetId();
-		m_shapeViewPresenters.erase(std::find_if(m_shapeViewPresenters.begin(), m_shapeViewPresenters.end(),
-			[&id](const std::shared_ptr<ShapeViewPresenter>& presenter) {
-				return presenter->GetShapeView().GetId() == id;
-			}));
-		m_pictureDraftView.DeleteShapeView(index);
+		CleanUpShapeView(index, shape);
 	});
 }
 
@@ -159,5 +154,15 @@ void PictureDraftViewPresenter::SetupShapeView(size_t index)
 	shapeViewPresenter->SetRespectFrameBorders(m_pictureDraftView.GetWidth(), m_pictureDraftView.GetHeight());
 	m_shapeViewPresenters.push_back(shapeViewPresenter);
 	m_pictureDraftView.InsertShapeView(index, std::move(shapeView));
+}
+
+void PictureDraftViewPresenter::CleanUpShapeView(size_t index, const std::shared_ptr<ShapeAppModel>& shape)
+{
+	auto id = shape->GetId();
+	m_shapeViewPresenters.erase(std::find_if(m_shapeViewPresenters.begin(), m_shapeViewPresenters.end(),
+		[&id](const std::shared_ptr<ShapeViewPresenter>& presenter) {
+			return presenter->GetShapeView().GetId() == id;
+		}));
+	m_pictureDraftView.DeleteShapeView(index);
 }
 

@@ -10,7 +10,6 @@ ShapeViewPresenter::ShapeViewPresenter(const std::shared_ptr<ShapeAppModel>& mod
 {
 	m_shapeAppModel->DoOnFrameChanged([&, this](const RectD& frame) {
 		m_shapeView.SetFrame(frame);
-		//m_shapeSelectionModel.SetSelectedShapes({ model });
 	});
 }
 
@@ -45,7 +44,8 @@ void ShapeViewPresenter::OnMouseDown(const Point& point)
 	{
 		Point center = { frame.left + frame.width / 2,
 			frame.top + frame.height / 2 };
-		IsPointBelongShape = pow(point.x - center.x, 2) / pow(frame.width, 2) + pow(point.y - center.y, 2) / pow(frame.height, 2);
+		IsPointBelongShape = (pow(point.x - center.x, 2) / pow(frame.width / 2, 2) +
+			pow(point.y - center.y, 2) / pow(frame.height / 2, 2)) <= 1;
 	}
 		break;
 	default:
@@ -140,25 +140,25 @@ void ShapeViewPresenter::RespectFrameBorders(const std::shared_ptr<ShapeAppModel
 		frameChanged = true;
 		frame.top = 0;
 	}
-	if (800. < frame.width)
+	if (m_respectFrameWidth < frame.width)
 	{
 		frameChanged = true;
-		frame.width = 800;
+		frame.width = m_respectFrameWidth;
 	}
-	if (600. < frame.height)
+	if (m_respectFrameHeight < frame.height)
 	{
 		frameChanged = true;
-		frame.height = 600;
+		frame.height = m_respectFrameHeight;
 	}
-	if (800. - frame.width < frame.left)
+	if (m_respectFrameWidth - frame.width < frame.left)
 	{
 		frameChanged = true;
-		frame.left = 800. - frame.width;
+		frame.left = m_respectFrameWidth - frame.width;
 	}
-	if (600. - frame.height < frame.top)
+	if (m_respectFrameHeight - frame.height < frame.top)
 	{
 		frameChanged = true;
-		frame.top = 600. - frame.height;
+		frame.top = m_respectFrameHeight - frame.height;
 	}
 	if (frameChanged)
 	{

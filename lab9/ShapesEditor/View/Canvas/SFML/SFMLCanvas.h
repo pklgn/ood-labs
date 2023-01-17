@@ -15,6 +15,7 @@ public:
 	void SetFillColor(uint32_t) override;
 	void SetLineColor(uint32_t) override;
 	void SetLineThickness(unsigned int) override;
+	void DrawText(const std::string&, const Point& position) override;
 
 	void Capture(const std::string& outputFileName) const;
 
