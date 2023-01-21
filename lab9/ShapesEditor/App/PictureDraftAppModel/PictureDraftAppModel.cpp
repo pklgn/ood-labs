@@ -1,5 +1,7 @@
 ﻿#include "../../pch.h"
 #include "PictureDraftAppModel.h"
+#include "../UseCases/Commands/InsertShapeCommand/InsertShapeCommand.h"
+#include "../UseCases/Commands/DeleteShapeCommand/DeleteShapeCommand.h"
 
 PictureDraftAppModel::PictureDraftAppModel(std::shared_ptr<PictureDraft> pictureDraft, const std::shared_ptr<IHistory> history)
 	: m_pictureDraft(pictureDraft)
@@ -13,7 +15,7 @@ PictureDraftAppModel::PictureDraftAppModel(std::shared_ptr<PictureDraft> picture
 		std::cout << "Shape " << ShapeTypeToString(shapeAppModel->GetType()) << " was added\n";
 	});
 
-	m_pictureDraft->DoOnShapeDeleted([&, this](size_t index, std::shared_ptr<Shape> shape) {
+	m_pictureDraft->DoOnShapeDeleted([&, this](size_t index, const std::shared_ptr<IShape>& shape) {
 		auto shapeAppModel = m_shapesAppModel.at(index);
 		m_shapesAppModel.erase(m_shapesAppModel.begin() + index);
 		m_shapeDeleted(index, shapeAppModel);
@@ -45,12 +47,6 @@ std::shared_ptr<ShapeAppModel> PictureDraftAppModel::GetShape(size_t index) cons
 	return m_shapesAppModel.at(index);
 }
 
-std::unique_ptr<InsertShapeUseCase> PictureDraftAppModel::CreateInsertShapeUseCase()
-{
-	// FIXED: реализовать сначала InsertShapeUseCase
-	return std::make_unique<InsertShapeUseCase>(*this, m_history);
-}
-
 connection PictureDraftAppModel::DoOnShapeAdded(const std::function<void(size_t index)>& handler)
 {
 	return m_shapeAdded.connect(handler);
@@ -59,4 +55,14 @@ connection PictureDraftAppModel::DoOnShapeAdded(const std::function<void(size_t 
 connection PictureDraftAppModel::DoOnShapeDeleted(const std::function<void(size_t index, std::shared_ptr<ShapeAppModel> shape)>& handler)
 {
 	return m_shapeDeleted.connect(handler);
+}
+
+void PictureDraftAppModel::Undo()
+{
+	m_history->Undo();
+}
+
+void PictureDraftAppModel::Redo()
+{
+	m_history->Redo();
 }

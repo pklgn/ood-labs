@@ -1,17 +1,17 @@
 #include "../../pch.h"
-#include "History.h"
+#include "CommandsHistory.h"
 
-bool History::CanUndo() const
+bool CommandsHistory::CanUndo() const
 {
 	return m_nextCommandIndex > 0;
 }
 
-bool History::CanRedo() const
+bool CommandsHistory::CanRedo() const
 {
 	return m_nextCommandIndex < m_commands.size();
 }
 
-void History::Undo()
+void CommandsHistory::Undo()
 {
 	if (CanUndo())
 	{
@@ -20,7 +20,7 @@ void History::Undo()
 	}
 }
 
-void History::Redo()
+void CommandsHistory::Redo()
 {
 	if (CanRedo())
 	{
@@ -29,7 +29,7 @@ void History::Redo()
 	}
 }
 
-void History::AddAndExecuteCommand(ICommandPtr&& command)
+void CommandsHistory::AddAndExecuteCommand(ICommandPtr&& command)
 {
 	//стираем те команды, которые могли бы быть перевыполнены с помощью redo
 	if (CanRedo())

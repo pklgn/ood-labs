@@ -30,7 +30,7 @@ void PictureDraftView::Show(ICanvas& canvas)
 	}
 }
 
-void PictureDraftView::InsertShapeView(size_t index, std::unique_ptr<ShapeView>&& shapeView)
+void PictureDraftView::InsertShapeView(size_t index, std::shared_ptr<ShapeView>&& shapeView)
 {
 	m_shapesView.insert(m_shapesView.begin() + index, std::move(shapeView));
 }

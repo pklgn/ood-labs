@@ -3,17 +3,18 @@
 
 const size_t DEFAULT_SELECTION_CORNER_SIZE = 10;
 
-ShapeViewPresenter::ShapeViewPresenter(const std::shared_ptr<ShapeAppModel>& model, ShapeSelectionModel& selectionModel, ShapeView& shapeView)
+ShapeViewPresenter::ShapeViewPresenter(const std::shared_ptr<ShapeAppModel>& model, IUseCaseFactory& useCaseFactory, ShapeSelectionModel& selectionModel, const std::shared_ptr<ShapeView>& shapeView)
 	: m_shapeAppModel(model)
 	, m_shapeSelectionModel(selectionModel)
 	, m_shapeView(shapeView)
+	, m_useCaseFactory(useCaseFactory)
 {
-	m_shapeAppModel->DoOnFrameChanged([&, this](const RectD& frame) {
-		m_shapeView.SetFrame(frame);
+	m_shapeAppModel->DoOnFrameChanged([=, *this](const RectD& frame) {
+		m_shapeView->SetFrame(frame);
 	});
 }
 
-const ShapeView& ShapeViewPresenter::GetShapeView() const
+std::shared_ptr<ShapeView> ShapeViewPresenter::GetShapeView() const
 {
 	return m_shapeView;
 }
@@ -21,8 +22,8 @@ const ShapeView& ShapeViewPresenter::GetShapeView() const
 void ShapeViewPresenter::OnMouseDown(const Point& point)
 {
 	bool IsPointBelongShape = false;
-	auto frame = m_shapeView.GetFrame();
-	switch (m_shapeView.GetShapeType())
+	auto frame = m_shapeView->GetFrame();
+	switch (m_shapeView->GetShapeType())
 	{
 	case ShapeType::Rectangle:
 		IsPointBelongShape = true;
@@ -66,7 +67,7 @@ void ShapeViewPresenter::OnMouseDown(const Point& point)
 void ShapeViewPresenter::OnDrag(const Point& offset, const Point& point)
 {
 	auto frame = m_shapeAppModel->GetFrame();
-	auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
+	auto useCase = m_useCaseFactory.CreateResizeShapeUseCase();
 	if (IsOnCorner({ frame.left, frame.top }, point))
 	{
 		useCase->Resize(offset, BasePoint::RightBottom);
@@ -85,7 +86,7 @@ void ShapeViewPresenter::OnDrag(const Point& offset, const Point& point)
 	}
 	else
 	{
-		auto useCase = m_shapeSelectionModel.CreateMoveShapeUseCase();
+		auto useCase = m_useCaseFactory.CreateMoveShapeUseCase();
 		useCase->Move(offset);
 	}
 	
@@ -104,12 +105,12 @@ void ShapeViewPresenter::OnMouseUp(const Point& point)
 		IsOnCorner({ frame.left + frame.width - DEFAULT_SELECTION_CORNER_SIZE, frame.top + frame.height - DEFAULT_SELECTION_CORNER_SIZE }, point) ||
 		IsOnCorner({ frame.left, frame.top + frame.height - DEFAULT_SELECTION_CORNER_SIZE }, point))
 	{
-		auto useCase = m_shapeSelectionModel.CreateResizeShapeUseCase();
+		auto useCase = m_useCaseFactory.CreateResizeShapeUseCase();
 		useCase->Commit();
 	}
 	else
 	{
-		auto useCase = m_shapeSelectionModel.CreateMoveShapeUseCase();
+		auto useCase = m_useCaseFactory.CreateMoveShapeUseCase();
 		useCase->Commit();
 	}
 }

@@ -2,7 +2,7 @@
 #include "ChangeFrameCommand.h"
 #include "../../../ShapeAppModel/ShapeAppModel.h"
 
-ChangeFrameCommand::ChangeFrameCommand(const std::shared_ptr<ShapeAppModel>& shape, ShapeSelectionModel& selectionModel)
+ChangeFrameCommand::ChangeFrameCommand(const std::shared_ptr<ShapeAppModel>& shape, IShapeSelectionModel& selectionModel)
 	: m_frameToApply(shape->GetFrame())
 	, m_target(shape)
 	, m_selectionModel(selectionModel)

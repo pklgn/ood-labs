@@ -1,17 +1,18 @@
 #pragma once
-#include <memory>
-#include "../../History/IHistory.h"
-
-class PictureDraftAppModel;
+#include "../../History/ICommandsContainer.h"
+#include "../../ShapeSelectionModel/IShapeSelectionModel.h"
+#include "../../History/ICommandsContainer.h"
+#include "../../PictureDraftAppModel/PictureDraftAppModel.h"
 
 class InsertShapeUseCase
 {
 public:
-	InsertShapeUseCase(PictureDraftAppModel&, const std::shared_ptr<IHistory>&);
+	InsertShapeUseCase(PictureDraftAppModel&, IShapeSelectionModel&, ICommandsContainer&);
 
 	void Insert(size_t index, ShapeType);
 
 private:
-	PictureDraftAppModel& m_pictureDraft;
-	std::shared_ptr<IHistory> m_history;
+	PictureDraftAppModel& m_pictureDraftAppModel;
+	IShapeSelectionModel& m_selectionModel;
+	ICommandsContainer& m_commandsContainer;
 };

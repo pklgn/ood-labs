@@ -1,15 +1,16 @@
 #pragma once
-#include "../IShapeViewListener.h"
 #include "../../../App/ShapeAppModel/ShapeAppModel.h"
 #include "../../../App/ShapeSelectionModel/ShapeSelectionModel.h"
+#include "../../../App/UseCases/UseCaseFactory/IUseCaseFactory.h"
+#include "../IShapeViewListener.h"
 #include "../ShapeView.h"
 
 class ShapeViewPresenter : public IShapeViewListener
 {
 public:
-	ShapeViewPresenter(const std::shared_ptr<ShapeAppModel>& model, ShapeSelectionModel& selectionModel, ShapeView& shapeView);
+	ShapeViewPresenter(const std::shared_ptr<ShapeAppModel>& model, IUseCaseFactory&, ShapeSelectionModel& selectionModel, const std::shared_ptr<ShapeView>& shapeView);
 
-	const ShapeView& GetShapeView() const;
+	std::shared_ptr<ShapeView> GetShapeView() const;
 
 	void OnMouseDown(const Point&) override;
 	void OnDrag(const Point& offset, const Point& point) override;
@@ -22,8 +23,9 @@ private:
 	void RespectFrameBorders(const std::shared_ptr<ShapeAppModel>&);
 
 	std::shared_ptr<ShapeAppModel> m_shapeAppModel;
+	IUseCaseFactory& m_useCaseFactory;
 	ShapeSelectionModel& m_shapeSelectionModel;
-	ShapeView& m_shapeView;
+	std::shared_ptr<ShapeView> m_shapeView;
 	size_t m_respectFrameWidth = SIZE_MAX;
 	size_t m_respectFrameHeight = SIZE_MAX;
 };

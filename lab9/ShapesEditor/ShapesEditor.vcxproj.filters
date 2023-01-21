@@ -57,7 +57,7 @@
     <ClInclude Include="App\ShapeSelectionModel\ShapeSelectionModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\History\History.h">
+    <ClInclude Include="App\History\CommandsHistory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="App\History\IHistory.h">
@@ -144,6 +144,21 @@
     <ClInclude Include="View\MenuView\IMenuViewListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="App\History\ICommandsContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\ShapeSelectionModel\IShapeSelectionModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\PictureDraft\IPictureDraft.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\UseCases\UseCaseFactory\IUseCaseFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="App\UseCases\UseCaseFactory\UseCaseFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -170,7 +185,7 @@
     <ClCompile Include="App\ShapeSelectionModel\ShapeSelectionModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="App\History\History.cpp">
+    <ClCompile Include="App\History\CommandsHistory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="App\Command\AbstractCommand.cpp">
@@ -228,6 +243,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="View\MenuView\MenuViewPresenter\MenuViewPresenter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\UseCases\UseCaseFactory\UseCaseFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

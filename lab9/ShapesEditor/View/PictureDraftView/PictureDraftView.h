@@ -13,13 +13,13 @@ public:
 	
 	void Show(ICanvas&) override;
 
-	void InsertShapeView(size_t, std::unique_ptr<ShapeView>&&);
+	void InsertShapeView(size_t, std::shared_ptr<ShapeView>&&);
 	void DeleteShapeView(size_t);
 	size_t GetWidth() const;
 	size_t GetHeight() const;
 
 private:
-	std::vector<std::unique_ptr<ShapeView>> m_shapesView;
+	std::vector<std::shared_ptr<ShapeView>> m_shapesView;
 	std::vector<SelectionFrameView> m_selectionFramesView;
 	PictureDraftAppModel& m_pictureDraftAppModel;
 	ShapeSelectionModel& m_shapeSelectionModel;

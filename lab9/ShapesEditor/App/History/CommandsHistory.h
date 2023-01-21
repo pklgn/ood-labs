@@ -1,9 +1,9 @@
 #pragma once
 #include <deque>
 
-#include "IHistory.h"
+#include "ICommandsContainer.h"
 
-class History : public IHistory
+class CommandsHistory : public IHistory, public ICommandsContainer
 {
 public:
 	const size_t COMMANDS_DEPTH_LEVEL = 5;

@@ -1,17 +1,17 @@
 #pragma once
-#include "../../History/IHistory.h"
-#include "../../ShapeAppModel/ShapeAppModel.h"
+#include "../../History/ICommandsContainer.h"
 #include "../../PictureDraftAppModel/PictureDraftAppModel.h"
+#include "../../ShapeSelectionModel/IShapeSelectionModel.h"
 
 class DeleteShapeUseCase
 {
 public:
-	DeleteShapeUseCase(const std::vector<std::shared_ptr<ShapeAppModel>>&, PictureDraftAppModel&, const std::shared_ptr<IHistory>&);
+	DeleteShapeUseCase(PictureDraftAppModel&, IShapeSelectionModel&, ICommandsContainer&);
 
 	void Delete();
 
 private:
-	std::vector<std::shared_ptr<ShapeAppModel>> m_shapesToDelete;
+	IShapeSelectionModel& m_selectionModel;
 	PictureDraftAppModel& m_pictureDraft;
-	std::shared_ptr<IHistory> m_history;
+	ICommandsContainer& m_commandsContainer;
 };

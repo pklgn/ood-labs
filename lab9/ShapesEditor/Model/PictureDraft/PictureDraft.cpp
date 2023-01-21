@@ -1,17 +1,17 @@
 #include "../../pch.h"
 #include "PictureDraft.h"
 
-size_t PictureDraft::GetShapeCount()
+size_t PictureDraft::GetShapeCount() const
 {
 	return m_shapes.size();
 }
 
-std::shared_ptr<Shape> PictureDraft::GetShape(size_t index)
+std::shared_ptr<Shape> PictureDraft::GetShape(size_t index) const
 {
 	return m_shapes.at(index);
 }
 
-void PictureDraft::InsertShape(std::shared_ptr<Shape> shape, size_t index)
+void PictureDraft::InsertShape(const std::shared_ptr<Shape>& shape, size_t index)
 {
 	auto size = m_shapes.size();
 	if (size < index)
@@ -42,7 +42,7 @@ connection PictureDraft::DoOnShapeAdded(const std::function<void(size_t index)>&
 	return m_shapeAdded.connect(handler);
 }
 
-connection PictureDraft::DoOnShapeDeleted(const std::function<void(size_t index, std::shared_ptr<Shape> shape)>& handler)
+connection PictureDraft::DoOnShapeDeleted(const std::function<void(size_t index, const std::shared_ptr<IShape>& shape)>& handler)
 {
 	return m_shapeDeleted.connect(handler);
 }

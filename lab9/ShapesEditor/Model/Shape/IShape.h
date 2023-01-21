@@ -18,4 +18,6 @@ public:
 
 	virtual std::shared_ptr<IFillStyle> GetFillStyle() = 0;
 	virtual std::shared_ptr<const IFillStyle> GetFillStyle() const = 0;
+
+
 };

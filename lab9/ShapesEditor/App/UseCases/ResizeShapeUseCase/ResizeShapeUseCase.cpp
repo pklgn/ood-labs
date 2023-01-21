@@ -6,9 +6,9 @@
 const double MIN_WIDTH = 30;
 const double MIN_HEIGHT = 30;
 
-ResizeShapeUseCase::ResizeShapeUseCase(ShapeSelectionModel& selectionModel, const std::shared_ptr<IHistory>& history)
+ResizeShapeUseCase::ResizeShapeUseCase(IShapeSelectionModel& selectionModel, ICommandsContainer& commandsContainer)
 	: m_selectionModel(selectionModel)
-	, m_history(history)
+	, m_commandsContainer(commandsContainer)
 {
 }
 
@@ -30,10 +30,10 @@ void ResizeShapeUseCase::Commit()
 		// FIXED: добавить передачу апп фигуры и selection модели
 		resizeShapesMacro->AddCommand(std::make_unique<ChangeFrameCommand>(shape, m_selectionModel));
 	}
-	m_history->AddAndExecuteCommand(std::move(resizeShapesMacro));
+	m_commandsContainer.AddAndExecuteCommand(std::move(resizeShapesMacro));
 }
 
-void ResizeShapeUseCase::ResizeShape(std::shared_ptr<ShapeAppModel> shape, const Point& offset, BasePoint basePoint)
+void ResizeShapeUseCase::ResizeShape(const std::shared_ptr<ShapeAppModel>& shape, const Point& offset, BasePoint basePoint)
 {
 	auto frame = shape->GetFrame();
 	double newWidth;

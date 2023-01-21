@@ -1,12 +1,12 @@
 #pragma once
 #include "../../../../common/Frame/Frame.h"
 #include "../../../Command/AbstractCommand.h"
-#include "../../../ShapeSelectionModel/ShapeSelectionModel.h"
+#include "../../../ShapeSelectionModel/IShapeSelectionModel.h"
 
 class ChangeFrameCommand : public AbstractCommand
 {
 public:
-	ChangeFrameCommand(const std::shared_ptr<ShapeAppModel>&, ShapeSelectionModel&);
+	ChangeFrameCommand(const std::shared_ptr<ShapeAppModel>&, IShapeSelectionModel&);
 
 protected:
 	void DoExecute() override;
@@ -17,6 +17,6 @@ protected:
 private:
 	RectD m_frameToApply;
 	std::shared_ptr<ShapeAppModel> m_target;
-	ShapeSelectionModel& m_selectionModel;
+	IShapeSelectionModel& m_selectionModel;
 }
 ;

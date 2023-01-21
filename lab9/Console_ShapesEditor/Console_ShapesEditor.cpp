@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include "../ShapesEditor/App/History/History.h"
+#include "../ShapesEditor/App/History/CommandsHistory.h"
 #include "../ShapesEditor/App/PictureDraftAppModel/PictureDraftAppModel.h"
 #include "../ShapesEditor/Model/PictureDraft/PictureDraft.h"
 #include "../ShapesEditor/Model/Shape/Shape.h"
@@ -14,21 +14,23 @@
 #include "../ShapesEditor/View/MenuView/MenuViewPresenter/MenuViewPresenter.h"
 #include "../ShapesEditor/View/PictureDraftView/PictureDraftView.h"
 #include "../ShapesEditor/View/PictureDraftView/PictureDraftViewPresenter/PictureDraftViewPresenter.h"
+#include "../ShapesEditor/App/UseCases/UseCaseFactory/UseCaseFactory.h"
 
 
 int main()
 {
 	// Document
 	auto pictureDraft = std::make_shared<PictureDraft>();
-	auto history = std::make_shared<History>();
+	auto history = std::make_shared<CommandsHistory>();
 
 	PictureDraftAppModel pictureDraftAppModel(pictureDraft, history);
-	ShapeSelectionModel shapeSelectionModel(history);
+	ShapeSelectionModel shapeSelectionModel(*history);
 
 	// Edit window
 	Point pictureDraftSize = { 800, 600 };
 	PictureDraftView pictureDraftView(pictureDraftAppModel, shapeSelectionModel, (size_t)pictureDraftSize.x, (size_t)pictureDraftSize.y);
-	auto pictureDraftViewPresenter = std::make_shared<PictureDraftViewPresenter>(shapeSelectionModel, pictureDraftView, pictureDraftAppModel, *history);
+	auto useCaseFactory = UseCaseFactory(shapeSelectionModel, *history); 
+	auto pictureDraftViewPresenter = std::make_shared<PictureDraftViewPresenter>(shapeSelectionModel, pictureDraftView, pictureDraftAppModel, useCaseFactory);
 
 	Point menuSize = { 800, 100 };
 	MenuView menuView((size_t)menuSize.x, (size_t)menuSize.y, (size_t)pictureDraftSize.y);

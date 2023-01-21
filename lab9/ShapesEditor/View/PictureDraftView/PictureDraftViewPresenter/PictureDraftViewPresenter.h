@@ -7,7 +7,7 @@
 class PictureDraftViewPresenter : public IPictureDraftViewListener
 {
 public:
-	PictureDraftViewPresenter(ShapeSelectionModel&, PictureDraftView&, PictureDraftAppModel&, IHistory&);
+	PictureDraftViewPresenter(ShapeSelectionModel&, PictureDraftView&, PictureDraftAppModel&, IUseCaseFactory&);
 
 	void OnMouseDown(const Point&) override;
 	void OnDrag(const Point& offset, const Point& point) override;
@@ -27,5 +27,5 @@ private:
 	PictureDraftView& m_pictureDraftView;
 	PictureDraftAppModel& m_pictureDraftAppModel;
 	std::vector<std::shared_ptr<ShapeViewPresenter>> m_shapeViewPresenters;
-	IHistory& m_history;
+	IUseCaseFactory& m_useCaseFactory;
 };

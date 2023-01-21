@@ -1,11 +1,11 @@
 #include "../../../pch.h"
 #include "PictureDraftViewPresenter.h"
 
-PictureDraftViewPresenter::PictureDraftViewPresenter(ShapeSelectionModel& selectionModel, PictureDraftView& pictureDraftView, PictureDraftAppModel& pictureDraftModel, IHistory& history)
+PictureDraftViewPresenter::PictureDraftViewPresenter(ShapeSelectionModel& selectionModel, PictureDraftView& pictureDraftView, PictureDraftAppModel& pictureDraftModel, IUseCaseFactory& useCaseFactory)
 	: m_shapeSelectionModel(selectionModel)
 	, m_pictureDraftView(pictureDraftView)
 	, m_pictureDraftAppModel(pictureDraftModel)
-	, m_history(history)
+	, m_useCaseFactory(useCaseFactory)
 {
 	auto shapeSize = m_pictureDraftAppModel.GetShapeCount();
 	for (size_t i = 0; i < shapeSize; ++i)
@@ -15,10 +15,12 @@ PictureDraftViewPresenter::PictureDraftViewPresenter(ShapeSelectionModel& select
 
 	m_pictureDraftAppModel.DoOnShapeAdded([this](size_t index) {
 		SetupShapeView(index);
+		m_shapeSelectionModel.SetSelectedShapes({ m_pictureDraftAppModel.GetShape(index) });
 	});
 
 	m_pictureDraftAppModel.DoOnShapeDeleted([this](size_t index, std::shared_ptr<ShapeAppModel> shape) {
 		CleanUpShapeView(index, shape);
+		m_shapeSelectionModel.SetSelectedShapes({});
 	});
 }
 
@@ -39,7 +41,7 @@ void PictureDraftViewPresenter::OnMouseDown(const Point& point)
 		{
 			for (auto&& shapeViewPresenter : m_shapeViewPresenters)
 			{
-				if (shapeViewPresenter->GetShapeView().GetId() == shape->GetId())
+				if (shapeViewPresenter->GetShapeView()->GetId() == shape->GetId())
 				{
 					shapeViewPresenter->OnMouseDown(point);
 					auto selectedShapes = m_shapeSelectionModel.GetSelectedShapes();
@@ -80,7 +82,7 @@ void PictureDraftViewPresenter::OnDrag(const Point& offset, const Point& point)
 		{
 			for (auto&& shapeViewPresenter : m_shapeViewPresenters)
 			{
-				if (shapeViewPresenter->GetShapeView().GetId() == shape->GetId() &&
+				if (shapeViewPresenter->GetShapeView()->GetId() == shape->GetId() &&
 					std::find_if(selectedShapes.begin(), selectedShapes.end(), [&, shape](const std::shared_ptr<ShapeAppModel>& currShape) {
 						return currShape->GetId() == shape->GetId();
 					}) != selectedShapes.end())
@@ -108,7 +110,7 @@ void PictureDraftViewPresenter::OnMouseUp(const Point& point)
 		{
 			for (auto&& shapeViewPresenter : m_shapeViewPresenters)
 			{
-				if (shapeViewPresenter->GetShapeView().GetId() == shape->GetId())
+				if (shapeViewPresenter->GetShapeView()->GetId() == shape->GetId())
 				{
 					shapeViewPresenter->OnMouseUp(point);
 					break;
@@ -121,36 +123,34 @@ void PictureDraftViewPresenter::OnMouseUp(const Point& point)
 
 void PictureDraftViewPresenter::InsertShape(ShapeType type)
 {
-	auto useCase = m_pictureDraftAppModel.CreateInsertShapeUseCase();
+	auto useCase = m_useCaseFactory.CreateInsertShapeUseCase(m_pictureDraftAppModel);
 	auto index = m_pictureDraftAppModel.GetShapeCount();
 	useCase->Insert(index, type);
-	m_shapeSelectionModel.SetSelectedShapes({ m_pictureDraftAppModel.GetShape(index) });
 }
 
 void PictureDraftViewPresenter::DeleteShape()
 {
-	auto useCase = m_shapeSelectionModel.CreateDeleteShapeUseCase(m_pictureDraftAppModel);
+	auto useCase = m_useCaseFactory.CreateDeleteShapeUseCase(m_pictureDraftAppModel);
 	useCase->Delete();
-	m_shapeSelectionModel.SetSelectedShapes({});
 }
 
 void PictureDraftViewPresenter::Undo()
 {
-	m_history.Undo();
+	m_pictureDraftAppModel.Undo();
 }
 
 void PictureDraftViewPresenter::Redo()
 {
-	m_history.Redo();
+	m_pictureDraftAppModel.Redo();
 }
 
 void PictureDraftViewPresenter::SetupShapeView(size_t index)
 {
 	auto shape = m_pictureDraftAppModel.GetShape(index);
-	auto shapeView = std::make_unique<ShapeView>(shape->GetId(),
+	auto shapeView = std::make_shared<ShapeView>(shape->GetId(),
 		shape->GetFrame(),
 		shape->GetType());
-	auto shapeViewPresenter = std::make_shared<ShapeViewPresenter>(shape, m_shapeSelectionModel, *shapeView);
+	auto shapeViewPresenter = std::make_shared<ShapeViewPresenter>(shape, m_useCaseFactory, m_shapeSelectionModel, shapeView);
 	shapeViewPresenter->SetRespectFrameBorders(m_pictureDraftView.GetWidth(), m_pictureDraftView.GetHeight());
 	m_shapeViewPresenters.push_back(shapeViewPresenter);
 	m_pictureDraftView.InsertShapeView(index, std::move(shapeView));
@@ -161,7 +161,7 @@ void PictureDraftViewPresenter::CleanUpShapeView(size_t index, const std::shared
 	auto id = shape->GetId();
 	m_shapeViewPresenters.erase(std::find_if(m_shapeViewPresenters.begin(), m_shapeViewPresenters.end(),
 		[&id](const std::shared_ptr<ShapeViewPresenter>& presenter) {
-			return presenter->GetShapeView().GetId() == id;
+			return presenter->GetShapeView()->GetId() == id;
 		}));
 	m_pictureDraftView.DeleteShapeView(index);
 }

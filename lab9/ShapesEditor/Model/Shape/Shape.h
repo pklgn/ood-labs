@@ -8,7 +8,6 @@ using namespace boost::signals2;
 class Shape : public IShape
 {
 public:
-	// TODO: разобраться, как вынести значение в cpp файл и нужно ли это?
 	inline static const RectD DEFAULT_FRAME = { 0, 0, 100, 100 };
 
 	Shape(ShapeType type, const RectD& frame = DEFAULT_FRAME);

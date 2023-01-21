@@ -3,9 +3,9 @@
 #include "../Commands/ChangeFrameCommand/ChangeFrameCommand.h"
 #include "MoveShapeUseCase.h"
 
-MoveShapeUseCase::MoveShapeUseCase(ShapeSelectionModel& selectionModel, const std::shared_ptr<IHistory>& history)
+MoveShapeUseCase::MoveShapeUseCase(IShapeSelectionModel& selectionModel, ICommandsContainer& commandsContainer)
 	: m_selectionModel(selectionModel)
-	, m_history(history)
+	, m_commandsContainer(commandsContainer)
 {
 }
 
@@ -33,5 +33,5 @@ void MoveShapeUseCase::Commit()
 		// FIXED: создать команду по перемещению
 		moveShapesMacro->AddCommand(std::make_unique<ChangeFrameCommand>(shape, m_selectionModel));
 	}
-	m_history->AddAndExecuteCommand(std::move(moveShapesMacro));
+	m_commandsContainer.AddAndExecuteCommand(std::move(moveShapesMacro));
 }

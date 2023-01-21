@@ -3,10 +3,10 @@
 #include "../Commands/DeleteShapeCommand/DeleteShapeCommand.h"
 #include "DeleteShapeUseCase.h"
 
-DeleteShapeUseCase::DeleteShapeUseCase(const std::vector<std::shared_ptr<ShapeAppModel>>& shapes, PictureDraftAppModel& pictureDraft, const std::shared_ptr<IHistory>& history)
-	: m_shapesToDelete(shapes)
+DeleteShapeUseCase::DeleteShapeUseCase(PictureDraftAppModel& pictureDraft, IShapeSelectionModel& selection, ICommandsContainer& commandsContainer)
+	: m_selectionModel(selection)
 	, m_pictureDraft(pictureDraft)
-	, m_history(history)
+	, m_commandsContainer(commandsContainer)
 {
 }
 
@@ -14,9 +14,10 @@ void DeleteShapeUseCase::Delete()
 {
 	auto deleteShapesMacro = std::make_unique<MacroCommand>();
 	auto domainPictureDraft = m_pictureDraft.GetPictureDraft();
-	for (auto&& shape : m_shapesToDelete)
+	auto shapesToDelete = m_selectionModel.GetSelectedShapes();
+	for (auto&& shape : shapesToDelete)
 	{
-		deleteShapesMacro->AddCommand(std::make_unique<DeleteShapeCommand>(shape->GetShape(), domainPictureDraft));
+		deleteShapesMacro->AddCommand(std::make_unique<DeleteShapeCommand>(shape->GetShape(), domainPictureDraft, m_selectionModel));
 	}
-	m_history->AddAndExecuteCommand(std::move(deleteShapesMacro));
+	m_commandsContainer.AddAndExecuteCommand(std::move(deleteShapesMacro));
 }
