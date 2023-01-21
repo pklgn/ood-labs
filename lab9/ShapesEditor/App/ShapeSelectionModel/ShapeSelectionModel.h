@@ -7,8 +7,6 @@
 class ShapeSelectionModel : public IShapeSelectionModel
 {
 public:
-	ShapeSelectionModel(ICommandsContainer&);
-
 	std::vector<std::shared_ptr<ShapeAppModel>> GetSelectedShapes() const;
 	void SetSelectedShapes(const std::vector<std::shared_ptr<ShapeAppModel>>&);
 
@@ -17,5 +15,4 @@ public:
 private:
 	std::vector<std::shared_ptr<ShapeAppModel>> m_selectedShapes;
 	signal<void(const std::vector<std::shared_ptr<ShapeAppModel>>&)> m_selectionChanged;
-	ICommandsContainer& m_commandsContainer;
 };

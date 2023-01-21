@@ -144,6 +144,7 @@
     <ClInclude Include="App\Command\AbstractCommand.h" />
     <ClInclude Include="App\Command\ICommand.h" />
     <ClInclude Include="App\Command\MacroCommand\MacroCommand.h" />
+    <ClInclude Include="App\Document\Document.h" />
     <ClInclude Include="App\History\CommandsHistory.h" />
     <ClInclude Include="App\History\ICommandsContainer.h" />
     <ClInclude Include="App\History\IHistory.h" />
@@ -198,6 +199,10 @@
     <ClCompile Include="App\Command\MacroCommand\MacroCommand.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="App\Document\Document.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="App\History\CommandsHistory.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../pch.h</PrecompiledHeaderFile>

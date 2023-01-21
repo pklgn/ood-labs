@@ -2,11 +2,6 @@
 #include "ShapeSelectionModel.h"
 #include "../UseCases/MoveShapeUseCase/MoveShapeUseCase.h"
 
-ShapeSelectionModel::ShapeSelectionModel(ICommandsContainer& commandsContainer)
-	: m_commandsContainer(commandsContainer)
-{
-}
-
 std::vector<std::shared_ptr<ShapeAppModel>> ShapeSelectionModel::GetSelectedShapes() const
 {
 	return m_selectedShapes;

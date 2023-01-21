@@ -7,7 +7,7 @@
 class PictureDraftAppModel
 {
 public:
-	PictureDraftAppModel(std::shared_ptr<PictureDraft>, const std::shared_ptr<IHistory>);
+	PictureDraftAppModel(const std::shared_ptr<PictureDraft>&, const std::shared_ptr<IHistory>);
 
 	std::shared_ptr<PictureDraft> GetPictureDraft() const;
 	size_t GetShapeCount() const;

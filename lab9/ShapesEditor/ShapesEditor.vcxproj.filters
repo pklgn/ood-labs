@@ -159,6 +159,9 @@
     <ClInclude Include="App\UseCases\UseCaseFactory\UseCaseFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="App\Document\Document.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -246,6 +249,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="App\UseCases\UseCaseFactory\UseCaseFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="App\Document\Document.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

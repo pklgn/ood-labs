@@ -3,7 +3,7 @@
 #include "../UseCases/Commands/InsertShapeCommand/InsertShapeCommand.h"
 #include "../UseCases/Commands/DeleteShapeCommand/DeleteShapeCommand.h"
 
-PictureDraftAppModel::PictureDraftAppModel(std::shared_ptr<PictureDraft> pictureDraft, const std::shared_ptr<IHistory> history)
+PictureDraftAppModel::PictureDraftAppModel(const std::shared_ptr<PictureDraft>& pictureDraft, const std::shared_ptr<IHistory> history)
 	: m_pictureDraft(pictureDraft)
 	, m_history(history)
 {
@@ -11,16 +11,12 @@ PictureDraftAppModel::PictureDraftAppModel(std::shared_ptr<PictureDraft> picture
 		auto shapeAppModel = std::make_shared<ShapeAppModel>(m_pictureDraft->GetShape(index));
 		m_shapesAppModel.insert(m_shapesAppModel.begin() + index, shapeAppModel);
 		m_shapeAdded(index);
-
-		std::cout << "Shape " << ShapeTypeToString(shapeAppModel->GetType()) << " was added\n";
 	});
 
 	m_pictureDraft->DoOnShapeDeleted([&, this](size_t index, const std::shared_ptr<IShape>& shape) {
 		auto shapeAppModel = m_shapesAppModel.at(index);
 		m_shapesAppModel.erase(m_shapesAppModel.begin() + index);
 		m_shapeDeleted(index, shapeAppModel);
-
-		std::cout << "Shape " << ShapeTypeToString(shapeAppModel->GetType()) << " was deleted\n";
 	});
 
 	auto shapeSize = m_pictureDraft->GetShapeCount();
